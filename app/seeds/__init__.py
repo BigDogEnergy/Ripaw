@@ -2,7 +2,6 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .accounts import seed_accounts, undo_accounts
 from .transactions import seed_transactions, undo_transactions
-
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -14,6 +13,10 @@ seed_commands = AppGroup('seed')
 @seed_commands.command('all')
 def seed():
     if environment == 'production':
+        db.session.execute(f"TRUNCATE table {SCHEMA}.transactions RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.accounts RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.commit()
         # Before seeding in production, you want to run the seed undo 
         # command, which will  truncate all tables prefixed with 
         # the schema name (see comment in users.py undo_users function).
