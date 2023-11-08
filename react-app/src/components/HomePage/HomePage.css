@@ -1,0 +1,21 @@
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .box {
+    flex: 1;
+    max-width: calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .box img {
+    max-width: 100%;
+    height: auto;
+  }
+  

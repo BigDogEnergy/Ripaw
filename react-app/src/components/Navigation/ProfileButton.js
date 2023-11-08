@@ -4,6 +4,10 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { faWallet } from '@fortawesome/free-solid-svg-icons'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -19,10 +23,11 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
+    
 
     document.addEventListener("click", closeMenu);
 
@@ -39,9 +44,10 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button type="button" onClick={openMenu}>
+        <FontAwesomeIcon icon={faWallet} size="3x"/>
       </button>
+
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
