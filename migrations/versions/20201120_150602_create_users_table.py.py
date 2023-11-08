@@ -55,8 +55,7 @@ def upgrade():
     sa.Column('amount', sa.Float(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.ForeignKeyConstraint(['senderId'], ['accounts.id']),
-    sa.ForeignKeyConstraint(['receiverId'], ['accounts.id']),
+    sa.ForeignKeyConstraint(['senderId'], ['users.id']),
     )
 
     if environment == "production":
