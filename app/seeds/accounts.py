@@ -1,16 +1,19 @@
 from app.models import db, Account, environment, SCHEMA
 
 def seed_accounts():
-    account1 = Account(accountName="Test",
+    account1 = Account(accountName="Checking",
                    accountBalance=150.47,
                    userId=1)
     account2 = Account(accountName="My Dog's Acorn Collection",
                        accountBalance=999.99,
                        userId=2)
+    account3 = Account(accountName="Savings",
+                       accountBalance=3.21,
+                       userId=1)
 
     
 
-    db.session.add_all([account1, account2])
+    db.session.add_all([account1, account2, account3])
 
 
     db.session.commit()

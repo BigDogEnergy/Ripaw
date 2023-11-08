@@ -1,5 +1,37 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-div {
+  height: 70px;
+}
+
+.logo-div img {
+  height: 70px;
+  border-radius: 10px;
+}
+
+.nav-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+}
+
+.nav-button button {
+  height: 100%;
+  width: 70px;
+  box-sizing: border-box;
+}
+
 .profile-dropdown {
   position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
 }
 
 .hidden {
