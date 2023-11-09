@@ -8,7 +8,7 @@ class Account(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     accountName = db.Column(db.String(40), nullable=False)
-    accountBalance = db.Column(db.Float(), default=0, nullable=False)
+    accountBalance = db.Column(db.Float(), default=0.00)
     primaryOwner_id = db.Column(db.Integer(), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     secondaryOwner_id = db.Column(db.String(40), nullable=True)
     
