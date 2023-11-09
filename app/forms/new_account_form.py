@@ -3,7 +3,7 @@ from wtforms import StringField, FloatField
 from wtforms.validators import DataRequired
 
 
-class newAccountForm(FlaskForm):
+class NewAccountForm(FlaskForm):
     accountName= StringField(
         'name', validators=[DataRequired()])
     accountBalance=FloatField(

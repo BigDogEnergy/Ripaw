@@ -54,6 +54,7 @@ def upgrade():
     sa.Column('createdAt', sa.DateTime(), nullable=False),
     sa.Column('amount', sa.Float(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
+    sa.Column('message', sa.String(200)),
     sa.PrimaryKeyConstraint('id'),
     sa.ForeignKeyConstraint(['senderId'], ['users.id']),
     )

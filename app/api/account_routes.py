@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from app.models import Account, db
 from flask_login import current_user, login_required
-from ..forms import newAccountForm
+from ..forms import NewAccountForm
 account_routes = Blueprint('accounts', __name__)
 
 # Retreieve all accounts for a user
@@ -23,48 +23,7 @@ def single_account(id):
 @account_routes.route('/', methods=['POST'])
 @login_required
 def create_account():
-    form = newAccountForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        account = Account()
-        form.populate_obj(account)
-        
-        if current_user.id:
-            account.userId = current_user.id
-            db.session.add(account)
-            db.session.commit()
-            return account.to_dict(), 201
-        else:
-            return jsonify({'error': 'No valid user logged in'}), 400
-    else:
-        return jsonify({'error': 'Invalid form data', 'form_errors': form.errors}), 400
-
-from flask import Blueprint, jsonify, session, request
-from app.models import Account, db
-from flask_login import current_user, login_required
-from ..forms import newAccountForm
-account_routes = Blueprint('accounts', __name__)
-
-# Retreieve all accounts for a user
-@account_routes.route('/')
-@login_required
-def get_accounts():
-    accounts = Account.query.filter_by(userId=current_user.id)
-    return {'accounts': [account.to_dict() for account in accounts]}, 200
-
-# Retrieve details for a specific account
-@account_routes.route('/<int:id>', methods=['GET'])
-@login_required
-def single_account(id):
-    account = Account.query.get(id)
-    if account:
-        return account.to_dict(), 200
-    
-# Create an account for the signed in user
-@account_routes.route('/', methods=['POST'])
-@login_required
-def create_account():
-    form = newAccountForm()
+    form = NewAccountForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         account = Account()
@@ -86,7 +45,7 @@ def create_account():
 def update_account(id):
     targetAccount = Account.query.get(id)
     if targetAccount and targetAccount.userId == current_user.id:
-        form = newAccountForm()
+        form = NewAccountForm()
         form['csrf_token'].data = request.cookies['csrf_token']
         if form.validate_on_submit():
             form.populate_obj(targetAccount)
