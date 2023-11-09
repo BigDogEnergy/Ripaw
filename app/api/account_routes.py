@@ -96,7 +96,6 @@ def update_account(id):
         return jsonify({'error': 'Account not found or not owned by current user'}), 404
 
 # Delete an account
-
 @account_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_account(id):
