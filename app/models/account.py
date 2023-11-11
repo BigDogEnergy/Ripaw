@@ -1,3 +1,4 @@
+from decimal import Decimal
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Account(db.Model):
@@ -8,7 +9,7 @@ class Account(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     accountName = db.Column(db.String(40), nullable=False)
-    accountBalance = db.Column(db.Float(), default=0.00)
+    accountBalance = db.Column(db.Numeric(scale=2), default=Decimal('0.00'))
     userId = db.Column(db.Integer(), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
     user = db.relationship('User', backref=db.backref('accounts'))

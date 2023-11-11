@@ -11,9 +11,9 @@ class Transaction(db.Model):
     senderId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     receiverId = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.now())
-    amount = db.Column(db.Float, nullable=False)
+    amount = db.Column(db.Numeric(scale=2), nullable=False)
     message = db.Column(db.String(200))
-    status = db.Column(db.String, default="Pending")
+    status = db.Column(db.String)
 
 
     sender = db.relationship('User', backref=db.backref('transactions'))
