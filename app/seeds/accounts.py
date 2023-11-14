@@ -5,7 +5,7 @@ def seed_accounts():
     account1 = Account(accountName="Checking",
                    accountBalance=Decimal('150.47'),
                    userId=1)
-    account2 = Account(accountName="My Dog's Acorn Collection",
+    account2 = Account(accountName="Beau's Acorn Collection",
                        accountBalance=Decimal('999.99'),
                        userId=1)
     account3 = Account(accountName="Savings",
@@ -14,8 +14,8 @@ def seed_accounts():
     account4 = Account(accountName="Checking",
                    accountBalance=Decimal('143.00'),
                    userId=2)
-    account5 = Account(accountName="My Cat's College Fund",
-                       accountBalance=Decimal('123.18'),
+    account5 = Account(accountName="Stray Backyard Cats College Fund",
+                       accountBalance=Decimal('0.01'),
                        userId=2)
     account6 = Account(accountName="Savings",
                        accountBalance=Decimal('500.91'),

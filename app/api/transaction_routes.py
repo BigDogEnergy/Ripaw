@@ -29,7 +29,7 @@ def single_transaction(id):
 
     # Validation / Error Handling
     if transaction and (transaction.senderId == current_user.id or transaction.receiverId == current_user.id):
-        return jsonify(transaction.to_dict()), 200
+        return jsonify({'message': 'Transaction retrieved successfully', 'data': transaction.to_dict()}), 200
     elif transaction:
         return jsonify({'error': 'Unauthorized'}), 403
     else:
@@ -37,6 +37,7 @@ def single_transaction(id):
 
 # Create and Process a new Transaction
 @transaction_routes.route('/', methods=['POST'])
+@login_required
 def create_transaction():
     form = TransactionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -72,10 +73,10 @@ def create_transaction():
 
         db.session.add(transaction)
         db.session.commit()
-        return jsonify(transaction.to_dict()), 201
-    
+        return jsonify({'message': 'Transaction created successfully', 'data': transaction.to_dict()}), 201
+
     else:
-        return jsonify({'error': 'Invalid transaction data', 'form_errors': form.errors}), 400
+        return jsonify({'error': 'Invalid transaction data', 'errors': form.errors}), 400
     
 # Update a PENDING Transaction
 @transaction_routes.route('/<int:id>', methods=['PUT'])
@@ -116,6 +117,24 @@ def update_transaction(id):
             return jsonify({'error': 'Invalid status update'}), 400
 
         db.session.commit()
-        return jsonify(transaction.to_dict()), 200
+        return jsonify({'message': 'Transaction updated successfully', 'data': transaction.to_dict()}), 200
     else:
-        return jsonify({'error': 'Invalid transaction data', 'form_errors': form.errors}), 400
+        return jsonify({'error': 'Invalid transaction data', 'error': form.errors}), 400
+
+# Delete a PENDING Transaction (Admin Only)
+@transaction_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_transaction(id):
+   transaction = Transaction.query.get(id)
+
+   # Validation / Error Handling
+   if transaction is None:
+    return jsonify({'error': 'Transaction not found'}), 404
+   if transaction.senderId != current_user.id:
+    return jsonify({'error': 'Unauthorized'}), 403
+   if transaction.status != 'Pending':
+    return jsonify({'error': 'Only pending transactions can be updated'}), 400
+   if current_user.type == 'Admin':
+    db.session.delete(transaction)
+    db.session.commit()
+    return jsonify({'message': 'Transaction deleted successfully'}), 200

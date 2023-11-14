@@ -1,0 +1,38 @@
+.account-card__link-container {
+    text-decoration: none;
+    color: black;
+}
+
+.account-card__container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease;
+    width: 500px;
+    align-content: center;
+}
+
+.account-card-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.account-card__details {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-card__details-name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.account-card__top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+
+

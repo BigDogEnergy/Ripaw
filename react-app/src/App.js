@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import HomePage from "./components/HomePage"
+import AccountsPage from "./components/AccountsPage"
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -20,8 +21,12 @@ function App() {
       {isLoaded && (
         <Switch>
 
-          <Route path='/' >
+          <Route exact path='/' >
             <HomePage />
+          </Route>
+
+          <Route path='/accounts'>
+            <AccountsPage />
           </Route>
 
           <Route path="/login" >

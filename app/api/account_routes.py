@@ -6,7 +6,7 @@ from ..forms import NewAccountForm
 account_routes = Blueprint('accounts', __name__)
 
 # Retrieve all accounts for a user
-@account_routes.route('/')
+@account_routes.route('')
 @login_required
 def get_accounts():
     accounts = Account.query.filter_by(userId=current_user.id).all()
