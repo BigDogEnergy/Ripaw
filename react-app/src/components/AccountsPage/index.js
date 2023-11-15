@@ -28,7 +28,7 @@ function AccountsPage() {
     };
 
     return (
-        <div className='account-cards-container'>
+        <div className='account-card__container'>
             {accountsList}
         </div>
     )

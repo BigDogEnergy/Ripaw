@@ -4,7 +4,7 @@ import './AccountCards.css';
 
 function AccountDetails({ account }) {
     return (
-        <Link className="account-card__link-container" to={`/accounts/${account.id}`}>
+        <Link className="account-card__link-container" to={`/accounts/${account.id}/tranasctions`}>
             <div className='account-card__container'>
                 <div className='account-card__details'>
                     <div className='account-card__top'>

@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(40), default='Standard User')
+    profile_pic = db.Column(db.String())
 
     @property
     def password(self):
@@ -34,5 +35,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'type': self.type,
+            'profile_pic': self.profile_pic
         }
 

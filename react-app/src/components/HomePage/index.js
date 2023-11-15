@@ -12,7 +12,7 @@ function HomePage() {
                 <h2>Accounts</h2>
                 <img src={accountDetails} alt='Account Details' />
             </Link>
-            <Link to="/transactions" className="home__box home__box--transactions">
+            <Link to="/accounts/transactions" className="home__box home__box--transactions">
                 <h2>Transactions</h2>
                 <img src={transactions} alt='Transactions' />
             </Link>
