@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./AccountForm.css";
 
-function AccountLoginFormModal() {
+function AccountForm() {
   const dispatch = useDispatch();
   const [ accountName, setAccountName ] = useState("");
   const [ errors, setErrors ] = useState([]);
@@ -12,6 +12,7 @@ function AccountLoginFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('handleSubmit accountForm accountName', accountName)
     const data = await dispatch(createAccount(accountName));
     if (data) {
       setErrors(data);
@@ -38,10 +39,10 @@ function AccountLoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Create</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );
 }
 
-export default AccountLoginFormModal;
+export default AccountForm;

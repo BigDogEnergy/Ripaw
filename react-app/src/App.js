@@ -22,7 +22,6 @@ function App() {
         <>
           <div className="app__main-content">
             <Switch>
-              {/* Routes */}
               <Route path='/accounts'>
                 <AccountsPage />
               </Route>
@@ -34,7 +33,7 @@ function App() {
               </Route>
             </Switch>
           </div>
-          <HomePage className="app__homepage"/>
+          <HomePage />
         </>
       )}
     </>

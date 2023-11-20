@@ -76,11 +76,15 @@ export const fetchOneAccount = accountId => async dispatch => {
     };
 };
 
-export const createAccount = account => async dispatch => {
+export const createAccount = accountName => async dispatch => {
+    console.log('createAccount thunk accountName', accountName)
     try {
         const response = await fetch(`/api/accounts`, {
             method: 'POST',
-            body: JSON.stringify(account)
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(accountName)
         });
 
         if (response.ok) {
@@ -93,17 +97,20 @@ export const createAccount = account => async dispatch => {
     };
 };
 
-export const updateAccount = (account, accountId) => async dispatch => {
+export const updateAccount = (accountName, accountId) => async dispatch => {
     try {
         const response = await fetch(`/api/accounts/${accountId}`, {
             method: 'PUT',
-            body: JSON.stringify(account)
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(accountName)
         });
 
         if (response.ok) {
-            const account = await response.json()
-            dispatch(updateAccountDetails(account))
-            return account
+            const targetUpdate = await response.json()
+            dispatch(updateAccountDetails(targetUpdate))
+            return targetUpdate
         };
     } catch (error) {
         console.log('updateAccount error', error)
@@ -117,7 +124,7 @@ export const deleteAccount = (accountId) => async dispatch => {
         });
 
         if (response.ok) {
-            const account = response.json()
+            const account = await response.json()
             dispatch(deleteAccountById(account))
             return account
         }
@@ -128,7 +135,8 @@ export const deleteAccount = (accountId) => async dispatch => {
 // Initial State
 
 const initialState = {
-    accounts: {}
+    accounts: {},
+    singleAccount: {}
 }
 
 // Reducer
@@ -139,7 +147,19 @@ export default function reducer(state = initialState, action) {
 
     switch (action.type) {
         case ALL_ACCOUNTS:
-            newState.accounts = action.payload;
+            newState.accounts = action.payload
+            return newState
+        case ONE_ACCOUNT:
+            newState.singleAccount = action.payload
+            return newState
+        case ADD_ACCOUNT:
+            newState.accounts[action.payload.id] = action.payload
+            return newState
+        case EDIT_ACCOUNT:
+            newState.accounts[action.payload.id] = action.payload
+            return newState
+        case REMOVE_ACCOUNT:
+            delete newState.accounts[action.payload.id]
             return newState
         default:
             return state;

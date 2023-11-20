@@ -66,3 +66,12 @@ const initialState = {
 };
 
 // Reducer
+
+export default function reducer( state = initialState, action) {
+
+    let newState = { ...state};
+
+    switch(action.type) {
+        
+    }
+}

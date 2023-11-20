@@ -8,6 +8,7 @@ class Account(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer(), primary_key=True)
+    status = db.Column(db.String, default='Open')
     accountName = db.Column(db.String(40), nullable=False)
     accountBalance = db.Column(db.Numeric(scale=2), default=Decimal('0.00'))
     userId = db.Column(db.Integer(), db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
@@ -17,6 +18,7 @@ class Account(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
+            "status": self.status,
             "accountName": self.accountName,
             "accountBalance": self.accountBalance,
             "userId": self.userId

@@ -37,6 +37,7 @@ def upgrade():
 
     op.create_table('accounts',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('status', sa.String(), nullable=False),
     sa.Column('accountName', sa.String(length=40), nullable=False),
     sa.Column('accountBalance', sa.Float()),
     sa.Column('userId', sa.Integer(), nullable=False),

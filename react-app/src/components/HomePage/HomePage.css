@@ -18,10 +18,28 @@
   width: 150px;
 } */
 
+.home-welcome__empty-space {
+  width: 100px; /* or any suitable width */
+  height: 50px;
+}
+
 .home__box--accounts img,
 .home__box--transactions img,
 .home__box--sms img {
   height: auto;
   max-width: 100%;
   width: 150px;
+}
+
+.home-welcome__container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.home-welcome__text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
