@@ -19,25 +19,23 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <Switch>
-
-          <Route exact path='/' >
-            <HomePage />
-          </Route>
-
-          <Route path='/accounts'>
-            <AccountsPage />
-          </Route>
-
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-
-        </Switch>
+        <>
+          <div className="app__main-content">
+            <Switch>
+              {/* Routes */}
+              <Route path='/accounts'>
+                <AccountsPage />
+              </Route>
+              <Route path="/login" >
+                <LoginFormPage />
+              </Route>
+              <Route path="/signup">
+                <SignupFormPage />
+              </Route>
+            </Switch>
+          </div>
+          <HomePage className="app__homepage"/>
+        </>
       )}
     </>
   );

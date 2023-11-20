@@ -1,5 +1,3 @@
-/* Attempting to adopt BEM to normalize naming style*/
-
 .home__container {
   display: flex;
   justify-content: center;
@@ -8,15 +6,22 @@
 }
 
 .home__box {
-  flex: 1;
-  max-width: calc(33.333% - 20px);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.home__box img {
-  max-width: 100%;
+/* .home__box img {
   height: auto;
+  max-width: 100%;
+  width: 150px;
+} */
+
+.home__box--accounts img,
+.home__box--transactions img,
+.home__box--sms img {
+  height: auto;
+  max-width: 100%;
+  width: 150px;
 }

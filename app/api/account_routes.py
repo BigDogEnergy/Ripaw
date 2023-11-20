@@ -11,10 +11,11 @@ account_routes = Blueprint('accounts', __name__)
 @account_routes.route('')
 @login_required
 def get_accounts():
-    accounts = Account.query.filter_by(userId=current_user.id).all()
+    accounts = Account.query.filter_by(userId=current_user.id, status='Open').all()
     return jsonify({'accounts': [account.to_dict() for account in accounts]}), 200
 
-# Retrieve details for a specific account
+
+# Retrieve details for a specific account  
 @account_routes.route('/<int:id>', methods=['GET'])
 @login_required
 def single_account(id):
@@ -25,7 +26,7 @@ def single_account(id):
         return jsonify({'error': 'Account not found'}), 404
 
 # Create an account for the signed in user
-@account_routes.route('/', methods=['POST'])
+@account_routes.route('', methods=['POST'])
 @login_required
 def create_account():
     form = NewAccountForm()
@@ -46,19 +47,26 @@ def create_account():
 @login_required
 def update_account(id):
     targetAccount = Account.query.get(id)
-    if targetAccount and targetAccount.userId == current_user.id:
-        form = NewAccountForm()
-        form['csrf_token'].data = request.cookies['csrf_token']
-        if form.validate_on_submit():
-            targetAccount.accountName = form.accountName.data
-            db.session.commit()
-            return jsonify(targetAccount.to_dict()), 200
-        else:
-            return jsonify({'error': 'Invalid form data', 'form_errors': form.errors}), 400
-    else:
-        return jsonify({'error': 'Account not found or not owned by current user'}), 404
+    if targetAccount is None:
+        return jsonify({'error': 'Account not found'}), 404
 
-# Delete an account
+    if targetAccount.userId != current_user.id:
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    form = NewAccountForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        targetAccount.accountName = form.accountName.data
+        if form.status.data:
+            targetAccount.status = form.status.data
+        db.session.commit()
+        return jsonify(targetAccount.to_dict()), 200
+    else:
+        return jsonify({'error': 'Invalid form data', 'form_errors': form.errors}), 400
+
+
+
+# Delete an account (ADMIN Only)
 @account_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_account(id):

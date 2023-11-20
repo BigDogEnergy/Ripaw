@@ -131,7 +131,7 @@ const initialState = {
     accounts: {}
 }
 
-// Reduer
+// Reducer
 
 export default function reducer(state = initialState, action) {
 

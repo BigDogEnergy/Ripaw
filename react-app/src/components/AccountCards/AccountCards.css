@@ -4,14 +4,13 @@
 }
 
 .account-card__container {
-    border: 1px solid #ddd;
+    border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
     margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     transition: box-shadow 0.3s ease;
-    width: 500px;
-    align-content: center;
+    max-width: 100%;
 }
 
 .account-card-container:hover {
