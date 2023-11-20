@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAccounts } from "../../store/accounts";
 import './AccountsPage.css'
 import AccountDetails from "../AccountCards";
+import AccountOptionsModal from "../AccountOptions";
 
 function AccountsPage() {
     const dispatch = useDispatch();
@@ -28,9 +29,14 @@ function AccountsPage() {
     };
 
     return (
-        <div className='account-cards-container'>
-            {accountsList}
-        </div>
+        <>
+            <div className='account-card__container'>
+                {accountsList}
+            </div>
+            <div>
+                <AccountOptionsModal />
+            </div>
+        </>
     )
 }
 

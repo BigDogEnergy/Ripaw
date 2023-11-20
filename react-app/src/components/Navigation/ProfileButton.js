@@ -4,7 +4,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { faWallet } from '@fortawesome/free-solid-svg-icons'; 
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -45,7 +45,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button type="button" onClick={openMenu}>
-        <FontAwesomeIcon icon={faWallet} size="3x"/>
+        <FontAwesomeIcon icon={showMenu ? faArrowUp : faArrowDown} />
       </button>
 
       <ul className={ulClassName} ref={ulRef}>

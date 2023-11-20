@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './AccountCards.css';
+import './SingleAccountCard.css';
 
-function AccountDetails({ account }) {
+function SingleAccount({ account }) {
     return (
         <Link className="account-card__link-container" to={`/accounts/${account.id}/tranasctions`}>
             <div className='account-card__container'>
@@ -21,4 +21,4 @@ function AccountDetails({ account }) {
     );
 };
 
-export default AccountDetails;
+export default SingleAccount;
