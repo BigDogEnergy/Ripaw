@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import { updateAccount } from "../../store/accounts";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./EditAccountForm.css";
+import "./CloseAccountForm.css";
 
-function EditAccountForm( {reloadAccounts} ) {
+function CloseAccountForm({ reloadAccounts }) {
   const dispatch = useDispatch();
   const accounts = useSelector((state) => state.accounts.accounts)
   const [ chosenId, setChosenId ] = useState(accounts.length > 0 ? accounts[0].id : "");
-  const [ accountName, setAccountName ] = useState("");
   const [ errors, setErrors ] = useState([]);
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log('this is our accounts data', accounts)
+    // console.log('this is our accounts data', accounts)
 
     const targetAccount = accounts.find(account => account.id === parseInt(chosenId));
     if (!targetAccount) {
@@ -23,23 +22,22 @@ function EditAccountForm( {reloadAccounts} ) {
       return;
     };
 
+    const newStatus = { status: "Closed" }
 
-    const newName = { accountName: accountName }
-
-    const data = await dispatch(updateAccount(newName, chosenId));
+    const data = await dispatch(updateAccount(newStatus, chosenId));
 
     if (data && data.error) {
       console.log('this is error Data', data)
       setErrors([data.error]);
     } else {
-        reloadAccounts()
+        reloadAccounts();
         closeModal()
     }
   };
 
   return (
     <>
-      <h1>Update Account Name</h1>
+      <h1>Select an Account to close:</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -58,19 +56,10 @@ function EditAccountForm( {reloadAccounts} ) {
             ))}
           </select>
         </label>
-        <label>
-          New Name
-          <input
-            type="text"
-            value={accountName}
-            onChange={(e) => setAccountName(e.target.value)}
-            required
-          />
-        </label>
         <button type="submit">Submit</button>
       </form>
     </>
   );
 }
 
-export default EditAccountForm;
+export default CloseAccountForm;

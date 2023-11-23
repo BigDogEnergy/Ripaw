@@ -24,11 +24,11 @@ const fetchAccountById = account => {
     };
 };
 
-const addNewAccount = account => {
-    console.log('addNewAccount action creator', account)
+const addNewAccount = accountName => {
+    console.log('addNewAccount action creator', accountName)
     return {
         type: ADD_ACCOUNT,
-        payload: account
+        payload: accountName
     };
 };
 

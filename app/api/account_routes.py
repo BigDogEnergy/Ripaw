@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import Account, Transaction,  db
-from ..forms import NewAccountForm, TransactionForm, UpdateTransactionForm
+from ..forms import NewAccountForm, TransactionForm, UpdateTransactionForm, UpdateAccountForm
 from decimal import Decimal
 from sqlalchemy import or_, and_
 
@@ -29,11 +29,17 @@ def single_account(id):
 @account_routes.route('', methods=['POST'])
 @login_required
 def create_account():
-    form = NewAccountForm()
+
+    if request.is_json:
+        data = request.get_json()
+        form = NewAccountForm(data=data)
+    else:
+        form = NewAccountForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         account = Account(
-            accountName=form.accountName.data,
+            accountName=data['accountName'],
             userId=current_user.id
         )
         db.session.add(account)
@@ -53,12 +59,20 @@ def update_account(id):
     if targetAccount.userId != current_user.id:
         return jsonify({'error': 'Unauthorized'}), 403
 
-    form = NewAccountForm()
+    if targetAccount.status != 'Open':
+        return jsonify({'error': 'Account is not open'}), 400
+
+    data = request.get_json()
+    form = UpdateAccountForm(data=data)
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
-        targetAccount.accountName = form.accountName.data
-        if form.status.data:
-            targetAccount.status = form.status.data
+        if 'accountName' in data:
+            targetAccount.accountName = data['accountName']
+
+        if 'status' in data:
+            targetAccount.status = data['status']
+
         db.session.commit()
         return jsonify(targetAccount.to_dict()), 200
     else:
