@@ -4,6 +4,4 @@ from wtforms.validators import DataRequired
 
 
 class NewAccountForm(FlaskForm):
-    accountName= StringField(
-        'name', validators=[DataRequired()])
-    status = StringField('Status')
+    accountName= StringField('name', validators=[DataRequired()])

@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
 import AccountForm from "../AccountForm";
 import EditAccountForm from "../EditAccountForm"
+import CloseAccountForm from "../CloseAccountForm"
 
-function AccountOptionsModal() {
+function AccountOptions({reloadAccounts}) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -43,17 +44,17 @@ function AccountOptionsModal() {
             <OpenModalButton 
             buttonText="Open new Account"
             onItemClick={closeMenu}
-            modalComponent={<AccountForm />}
+            modalComponent={<AccountForm reloadAccounts={reloadAccounts} />}
             />
             <OpenModalButton 
             buttonText="Edit an Account"
             onItemClick={closeMenu}
-            modalComponent={<EditAccountForm />}
+            modalComponent={<EditAccountForm reloadAccounts={reloadAccounts} />}
             />
             <OpenModalButton 
             buttonText="Close an Account"
             onItemClick={closeMenu}
-            modalComponent={<AccountForm />}
+            modalComponent={<CloseAccountForm reloadAccounts={reloadAccounts} />}
             />
           </>
         )}
@@ -62,4 +63,4 @@ function AccountOptionsModal() {
   );
 }
 
-export default AccountOptionsModal;
+export default AccountOptions;

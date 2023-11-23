@@ -1,19 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAccounts } from "../../store/accounts";
 import './AccountsPage.css'
 import AccountDetails from "../AccountCards";
-import AccountOptionsModal from "../AccountOptions";
+import AccountOptions from "../AccountOptions";
 
 function AccountsPage() {
     const dispatch = useDispatch();
     const accounts = useSelector(state => state.accounts.accounts)
 
-    console.log(accounts)
+    //Field-Selector States
+    const [ isLoaded, setIsLoaded ] = useState(false);
+    const [ reloadNeeded, setReloadNeeded ] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchAllAccounts());
-    }, [dispatch]);
+        Promise.all([dispatch(fetchAllAccounts())])
+        .then(() => {
+            setIsLoaded(true);
+            setReloadNeeded(false);}
+        )
+        .catch(error => {
+            console.log(error)
+            setIsLoaded(false);
+        });
+        
+    }, [dispatch, reloadNeeded]);
+
+    if(!isLoaded) {
+        return <div>Loading...</div>
+    }
 
     let accountsList;
     if (accounts.length > 0) {
@@ -28,13 +43,17 @@ function AccountsPage() {
         )
     };
 
+    const reloadAccounts = () => {
+        setReloadNeeded(true);
+    };
+
     return (
         <>
             <div className='account-card__container'>
                 {accountsList}
             </div>
             <div>
-                <AccountOptionsModal />
+                <AccountOptions reloadAccounts={reloadAccounts}/>
             </div>
         </>
     )
