@@ -17,7 +17,7 @@ function AccountForm( {reloadAccounts} ) {
     const data = await dispatch(createAccount(newAcct));
     if (data && data.error) {
       console.log('this is error Data', data)
-      setErrors([data.error]);
+      setErrors(data);
     } else {
         reloadAccounts()
         closeModal()

@@ -54,6 +54,7 @@ def upgrade():
     sa.Column('senderId', sa.Integer(), nullable=False),
     sa.Column('receiverId', sa.Integer(), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=False),
+    sa.Column('completedAt', sa.DateTime()),
     sa.Column('amount', sa.Float(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
     sa.Column('message', sa.String(200)),

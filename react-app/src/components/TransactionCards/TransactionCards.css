@@ -1,11 +1,9 @@
-.account-card__link-container {
+.transaction-card__link-container {
     text-decoration: none;
     color: black;
 }
 
-.account-card__container {
-    display: flex;
-    flex-direction: column;
+.transaction-card__container {
     border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
@@ -15,28 +13,20 @@
     max-width: 100%;
 }
 
-.account-card-container:hover {
+/* .transaction-card-container:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+} */
 
-.account-card__details {
+.transaction-card__details {
     display: flex;
     flex-direction: column;
 }
 
-.account-card__details-name {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.account-card__top {
+.transaction-card__top {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.account-transaction__list {
-    display: flex;
-    flex-direction: column;
-}
+
 

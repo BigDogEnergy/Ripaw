@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage"
 import AccountsPage from "./components/AccountsPage"
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import TransactionsPage from "./components/TransactionsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,9 @@ function App() {
         <>
           <div className="app__main-content">
             <Switch>
+              <Route exact path='/accounts/transactions'>
+                <TransactionsPage />
+              </Route>
               <Route path='/accounts'>
                 <AccountsPage />
               </Route>
