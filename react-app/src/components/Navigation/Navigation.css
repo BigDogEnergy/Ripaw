@@ -1,7 +1,10 @@
 .navbar__container {
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 0 20px;
+  flex-direction: row;
+  background-color: #CCE0FF;
+  color: white;
+  padding: 10px 20px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar {
@@ -28,6 +31,23 @@
   height: 100%;
   width: 100px;
   box-sizing: border-box;
+}
+
+.navbar__button button {
+  cursor: pointer;
+  background-color: aliceblue;
+  border-radius: 15%;
+}
+
+.navbar__button button:hover {
+  background-color: #f0f8ff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.navbar__button button:active {
+  background-color: #e0f0ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(2px);
 }
 
 .profile-dropdown {

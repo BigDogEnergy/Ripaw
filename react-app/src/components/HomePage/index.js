@@ -23,18 +23,15 @@ function HomePage() {
                         <h2>Transactions</h2>
                         <img src={transactions} alt='Transactions' />
                     </Link>
-                    <div className="home__box--sms">
+                    {/* <div className="home__box--sms">
                         <h2>SMS</h2>
                         <img src={messaging} alt='Messaging' />
-                    </div>
+                    </div> */}
                 </div>
             </>
         ) : (
             <>
                 <div className='home-welcome__container'>
-                    <div className="home-welcome__empty-space">
-                        
-                    </div>
                     <div className='home-welcome__text'>
                     Welcome, please sign in.
                     </div>

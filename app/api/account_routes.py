@@ -176,15 +176,22 @@ def create_transaction():
             receiver_account.accountBalance += amount
             status = 'Completed'
             completedAt = datetime.now()
-
-        transaction = Transaction(
-            senderId=sender_account.id,
-            receiverId=receiver_account.id,
-            amount=form.amount.data,
-            message=form.message.data if 'message' in form.data and form.message.data else None,
-            status=status,
-            completedAt=completedAt
-        )
+            transaction = Transaction(
+                senderId=sender_account.id,
+                receiverId=receiver_account.id,
+                amount=form.amount.data,
+                message=form.message.data if 'message' in form.data and form.message.data else None,
+                status=status,
+                completedAt=completedAt
+            )
+        else:
+            transaction = Transaction(
+                senderId=sender_account.id,
+                receiverId=receiver_account.id,
+                amount=form.amount.data,
+                message=form.message.data if 'message' in form.data and form.message.data else None,
+                status=status,
+            )
 
         db.session.add(transaction)
         db.session.commit()
@@ -202,13 +209,14 @@ def update_transaction(id):
     transaction = Transaction.query.get(id)
     if transaction is None:
         return jsonify({'error': 'Transaction not found'}), 404
-    if transaction.senderId != current_user.id:
+    
+    sender_account = Account.query.get(transaction.senderId)
+    if sender_account.userId != current_user.id:
         return jsonify({'error': 'Unauthorized'}), 403
     if transaction.status != 'Pending':
         return jsonify({'error': 'Only pending transactions can be updated'}), 400
     
     #Account Error Handling / Validation
-    sender_account = Account.query.get(transaction.senderId)
     receiver_account = Account.query.get(transaction.receiverId)    
     if not sender_account or not receiver_account:
         return jsonify({'error': 'Invalid sender or receiver account'}), 404
@@ -241,7 +249,7 @@ def update_transaction(id):
     else:
         return jsonify({'error': 'Invalid transaction data', 'error': form.errors}), 400
 
-# Delete a PENDING Transaction (Admin Only)
+# Delete a Transaction (Admin Only)
 @account_routes.route('/transactions/<int:id>', methods=['DELETE'])
 @login_required
 def delete_transaction(id):

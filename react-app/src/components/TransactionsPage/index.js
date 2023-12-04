@@ -10,11 +10,25 @@ function TransactionsPage() {
 
     const dispatch = useDispatch()
     const accounts = useSelector(state => state.accounts.accounts);
-    const transactions = useSelector(state => state.transactions.transactions)
+    const transactions = useSelector(state => state.transactions.transactions);
+    const userId = useSelector(state => state.session.user.id)
+
+    const [ deposits, setDeposits ] = useState([]);
+    const [ withdrawals, setWithdrawals ] = useState([]);
     const [ isLoaded, setIsLoaded ] = useState(false);
     const [ selectedAccountId, setSelectedAccountId ] = useState(null);
     const [ selectedStatus, setSelectedStatus ] = useState(null);
     const [ filteredTransactions, setFilteredTransactions ] = useState([]);
+    const [ transType, setTransType ] = useState(null);
+
+    function getAccountName(accountId, accounts, userId) {
+        const account = accounts.find(acc => acc.id === accountId);
+        if (!account || account.userId !== userId) {
+            return 'External Account';
+        }
+        return account.accountName;
+    };
+    
 
     useEffect(() => {
         Promise.all([dispatch(fetchAllTransactions()), dispatch(fetchAllAccounts())])
@@ -28,19 +42,31 @@ function TransactionsPage() {
 
     useEffect(() => {
         let filtered = transactions;
-
-        //Filter based on select account
+        
         if (selectedAccountId) {
-            filtered = filtered.filter(transaction => transaction.senderId === selectedAccountId || transaction.receiverId === selectedAccountId);
+            filtered = filtered.filter(transaction => 
+                transaction.senderId === selectedAccountId || transaction.receiverId === selectedAccountId
+            );
+    
+            if (transType === 'Withdrawal') {
+                filtered = filtered.filter(transaction => transaction.senderId === selectedAccountId);
+            } else if (transType === 'Deposit') {
+                filtered = filtered.filter(transaction => transaction.receiverId === selectedAccountId);
+            }
+        } else {
+            setTransType(null);
         }
-
-        //Filter based on selected status
+        
         if (selectedStatus) {
             filtered = filtered.filter(transaction => transaction.status === selectedStatus);
         }
-
+        
+        if (filtered.length > 0) {
+            filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+        
         setFilteredTransactions(filtered);
-    }, [selectedAccountId, selectedStatus, transactions]);
+    }, [selectedAccountId, selectedStatus, transactions, transType]);
 
     if(!isLoaded) {
         return <div>Loading...</div>
@@ -48,26 +74,38 @@ function TransactionsPage() {
 
     const handleAccountChange = (e) => {
         const accountId = parseInt(e.target.value, 10);
-        if (!isNaN(accountId)) {
-            setSelectedAccountId(accountId);
-        } else {
-            setSelectedAccountId(null);
-        }
+        setSelectedAccountId(accountId ? parseInt(accountId, 10) : null);
     };
     
     const handleStatusChange = (e) => {
-        setSelectedStatus(e.target.value);
+        setSelectedStatus(e.target.value || null);
     };
+
+    const handleTypeChange =(e) => {
+        setTransType(e.target.value);
+    }
+
+
 
     return (
         <>
             <div className="transaction-filter__dropdowns">
+                <div className="transaction-filter__title">
+                    Filters:         
+                </div>
                 <select onChange={handleAccountChange} defaultValue="">
                     <option value="">All Accounts</option>
                     {accounts.map(account => (
                         <option key={account.id} value={account.id}>{account.accountName}</option>
                     ))}
                 </select>
+                {selectedAccountId && (
+                    <select onChange={handleTypeChange} defaultValue="">
+                        <option value="">All Types</option>
+                        <option value="Withdrawal">Withdrawal</option>
+                        <option value="Deposit">Deposit</option>
+                    </select>
+                )}
                 <select onChange={handleStatusChange} defaultValue="">
                     <option value="">All Statuses</option>
                     <option value="Pending">Pending</option>
@@ -76,14 +114,25 @@ function TransactionsPage() {
                     <option value="Cancelled">Cancelled</option>
                 </select>
             </div>
+            <div>
+                {filteredTransactions.length} transaction{filteredTransactions.length === 1 ? '' : 's'}:
+            </div>
+
             <div className='transaction-card__container'>
-                {filteredTransactions.length > 0 ? (
-                    filteredTransactions.map(transaction => (
-                        <TransactionCards key={transaction.id} transaction={transaction} />
-                    ))
-                ) : (
-                    <div className="no-transactions__text">No transactions for this account</div>
-                )}
+            {filteredTransactions.length > 0 ? (
+                filteredTransactions.map(transaction => (
+                    <TransactionCards
+                        key={transaction.id}
+                        transaction={transaction}
+                        getAccountName={getAccountName}
+                        accounts={accounts}
+                        userId={userId}
+                    />
+                ))
+            ) : (
+                <div className="no-transactions__text">No transactions for this account</div>
+            )}
+
             </div>
             <div className="transaction-card__options">
                 <TransactionOptions />

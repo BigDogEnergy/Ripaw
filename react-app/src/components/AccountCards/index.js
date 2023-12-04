@@ -8,6 +8,9 @@ function AccountCards({ account }) {
 
     const dispatch = useDispatch();
     const transactions = useSelector(state => state.transactions.accountTransactions[account.id] || []);
+    const limitedTransactions = transactions.slice(0, 5);
+    const accounts = useSelector(state => state.accounts.accounts);
+    const userId = useSelector(state => state.session.user.id);
     const [ hidden, setHidden ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(false);
 
@@ -21,6 +24,15 @@ function AccountCards({ account }) {
                 });
         }
     };
+
+    function getAccountName(accountId, accounts, userId) {
+        const account = accounts.find(acc => acc.id === accountId);
+        if (!account || account.userId !== userId) {
+            return 'External Account';
+        }
+        return account.accountName;
+    };
+    
 
 
     return (
@@ -42,9 +54,18 @@ function AccountCards({ account }) {
                                 <div>Loading...</div>
                             ) : (
                                 <div className='account-transaction__list'>
-                                    {transactions.map(transaction => (
-                                        <TransactionCards key={transaction.id} transaction={transaction} />
+                                    {limitedTransactions.map(transaction => (
+                                        <TransactionCards 
+                                        key={transaction.id} 
+                                        transaction={transaction} 
+                                        getAccountName={getAccountName}
+                                        accounts={accounts}
+                                        userId={userId}
+                                        />
                                     ))}
+                                    {transactions.length > 5 && (
+                                        <a href="/accounts/transactions">View all transactions</a>
+                                    )}
                                 </div>
                                 )}
                             </>
