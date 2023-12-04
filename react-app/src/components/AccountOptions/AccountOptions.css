@@ -1,24 +1,21 @@
 .account-page .account-options__button {
-    background-color: #008080; /* Teal background */
-    color: white; /* White text */
+    background-color: #008080;
+    color: white; 
     padding: 10px 20px;
     border: none;
-    border-radius: 0; /* Square edges */
+    border-radius: 0;
     cursor: pointer;
     font-size: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
-    margin-bottom: 20px; /* Space between button and account cards */
+    margin-bottom: 20px; 
 }
-
 
 .account-page .account-options__button:active {
-    transform: scale(0.95); /* Shrink on click */
-    background-color: #006666; /* Darker teal on click */
+    transform: scale(0.95); 
+    background-color: #006666; 
 }
 
-
-/* Styles for the dropdown menu */
 .account-page .account-dropdown {
     list-style-type: none;
     padding: 0;
@@ -26,9 +23,9 @@
     position: absolute;
     background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 0; /* Square edges */
+    border-radius: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: none; /* Hidden by default */
+    display: none;
 }
 
 .account-page .account-dropdown li {
@@ -45,7 +42,6 @@
     display: none;
 }
 
-/* Button within the dropdown */
 .account-page .account-dropdown button {
     width: 100%;
     text-align: center;
@@ -53,7 +49,7 @@
     border: none;
     padding: 0;
     margin: 0;
-    color: #008080; /* Teal text */
+    color: #008080;
     transition: background-color 0.3s ease;
 }
 
@@ -61,7 +57,6 @@
     background-color: #f2f2f2; 
 }
 
-/* Close account button style */
 .account-page .account-dropdown .close-account-button {
     color: red; 
 }
