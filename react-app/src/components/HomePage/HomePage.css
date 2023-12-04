@@ -1,9 +1,13 @@
 .home__container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  background-color: #CCE0FF;
+  background: linear-gradient(to top, #CCE0FF, aliceblue);
 }
 
 .home__box {
@@ -31,4 +35,34 @@
 .home-welcome__text {
   display: flex;
   text-align: center;
+}
+
+.link-tile {
+  text-align: center; 
+}
+
+
+.link-tile a {
+  text-decoration: none; 
+  color: black;
+  display: inline-block; 
+}
+
+
+.link-tile img {
+  border-radius: 50%; 
+  width: 150px;
+  height: 150px; 
+  object-fit: cover;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); 
+  margin-top: 10px;
+}
+
+.link-tile a:hover {
+  text-decoration: none;
+  color: black; 
+}
+
+.link-tile a:hover img {
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }

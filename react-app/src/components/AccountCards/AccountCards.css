@@ -6,33 +6,56 @@
 .account-card__container {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
-    border-radius: 8px;
-    padding: 10px;
+    justify-content:center;
+    border-radius: 0; /* Square corners */
     margin: 10px;
+    margin-right: 0px;
+    width: 85%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     max-width: 100%;
+    border: none;
+    background-color: white;
+
 }
 
 .account-card-container:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
 }
 
 .account-card__details {
     display: flex;
     flex-direction: column;
+    padding: 0; 
 }
 
-.account-card__details-name {
-    font-size: 1.2em;
+.account-card__name {
+    font-size: 1em;
     font-weight: bold;
+    color: white; /* White text */
+    background: linear-gradient(to right, teal, white); /* Gradient background */
+    margin: 0;
+    padding: 5px 0 5px 5px;
+    width: 100%;
 }
+
+.account-card__balance {
+    color: black;
+    padding: 5px 0 5px 5px;
+}
+
+/* Add this class in your React component for negative balances */
+.account-card__balance--negative {
+    color: red; /* Red color for negative balance */
+}
+
 
 .account-card__top {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+    margin-right:0px;
 }
 
 .account-transaction__list {
@@ -40,3 +63,7 @@
     flex-direction: column;
 }
 
+.account-card__link-container {
+    text-decoration: none;
+    color: black;
+}

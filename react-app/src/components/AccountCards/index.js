@@ -44,7 +44,7 @@ function AccountCards({ account }) {
                             {account.accountName}
                         </div>
 
-                        <div className='account-card__balance'>
+                        <div className={`account-card__balance ${account.accountBalance < 0 ? 'account-card__balance--negative' : ''}`}>
                             {account.accountBalance}
                         </div>
 

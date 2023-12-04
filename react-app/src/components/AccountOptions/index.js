@@ -3,6 +3,7 @@ import OpenModalButton from "../OpenModalButton";
 import AccountForm from "../AccountForm";
 import EditAccountForm from "../EditAccountForm"
 import CloseAccountForm from "../CloseAccountForm"
+import './AccountOptions.css';
 
 function AccountOptions({reloadAccounts}) {
   const [showMenu, setShowMenu] = useState(false);
@@ -29,7 +30,7 @@ function AccountOptions({reloadAccounts}) {
   }, [showMenu]);
 
 
-  const ulClassName = "account-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "account-dropdown" + (showMenu ? "" : "-hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (

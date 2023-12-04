@@ -46,14 +46,14 @@ function AccountsPage() {
     };
 
     return (
-        <>
-            <div className='account-card__container'>
+        <div className="account-page">
+            
                 {accountsList}
-            </div>
+            
             <div className='account-card__options'>
                 <AccountOptions reloadAccounts={reloadAccounts}/>
             </div>
-        </>
+        </div>
     )
 }
 
