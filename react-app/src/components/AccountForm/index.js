@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { createAccount } from "../../store/accounts";
+import { createAccount, fetchAllAccounts } from "../../store/accounts";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./AccountForm.css";
 
-function AccountForm( {reloadAccounts} ) {
+function AccountForm() {
   const dispatch = useDispatch();
   const [ accountName, setAccountName ] = useState("");
   const [ errors, setErrors ] = useState([]);
@@ -19,30 +19,32 @@ function AccountForm( {reloadAccounts} ) {
       console.log('this is error Data', data)
       setErrors(data);
     } else {
-        reloadAccounts()
-        closeModal()
+        dispatch(fetchAllAccounts()).then(() => {
+          closeModal()
+        })
     }
   };
 
   return (
     <>
-      <h1>Create New Account</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
+      <div className="account-form__title">Please name your new account</div>
+      <form className="account-form" onSubmit={handleSubmit}>
+        <ul className="account-form__error-list">
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <li className="account-form__error-item" key={idx}>{error}</li>
           ))}
         </ul>
         <label>
           Account Name
           <input
+            className="account-form__input"
             type="text"
             value={accountName}
             onChange={(e) => setAccountName(e.target.value)}
             required
           />
         </label>
-        <button type="submit">Submit</button>
+        <button className="account-form__button" type="submit">Submit</button>
       </form>
     </>
   );

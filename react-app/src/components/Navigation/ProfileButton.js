@@ -53,16 +53,18 @@ function ProfileButton({ user }) {
         <ul className={ulClassName} ref={ulRef}>
           {user ? (
             <>
-              <div>{user.username}</div>
-              <div>{user.email}</div>
-              <div>
-                <button onClick={handleLogout}>Log Out</button>
+              <div className="profile-dropdown__container">
+                <div className="profile-dropdown__username">{user.username}</div>
+                <div className="profile-dropdown__email">{user.email}</div>
+                <div className="profile-dropdown__logout">
+                  <button onClick={handleLogout}>Log Out</button>
+                </div>
               </div>
             </>
           ) : (
             <>
-             <div className='dropdown-content'>
-
+             <div className='dropdown-content__container'>
+              <div className='dropdown-content__buttons'>
               <OpenModalButton
                 buttonText="Log In"
                 onItemClick={closeMenu}
@@ -74,6 +76,9 @@ function ProfileButton({ user }) {
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
+              </div>
+
+              
             </div>
 
             </>

@@ -26,4 +26,7 @@
     background-color: #ffe0e0;
 }
 
-
+.transaction-card__options {
+    display: flex;
+    justify-content: center;
+}

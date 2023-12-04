@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { updateAccount } from "../../store/accounts";
+import { fetchAllAccounts, updateAccount } from "../../store/accounts";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./CloseAccountForm.css";
 
-function CloseAccountForm({ reloadAccounts }) {
+function CloseAccountForm() {
   const dispatch = useDispatch();
   const accounts = useSelector((state) => state.accounts.accounts)
   const [ chosenId, setChosenId ] = useState(accounts.length > 0 ? accounts[0].id : "");
@@ -30,21 +30,25 @@ function CloseAccountForm({ reloadAccounts }) {
       console.log('this is error Data', data)
       setErrors([data.error]);
     } else {
-        reloadAccounts();
+      dispatch(fetchAllAccounts()).then(() => {
         closeModal()
+      })
     }
   };
 
   return (
     <>
-      <h1>Select an Account to close:</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      <div className="account-form__title">Select an Account to close:</div>
+      <form className="account-form" onSubmit={handleSubmit}>
+        <ul className="account-form__error-list">
+         {errors.map((error, idx) => (
+            <li className="account-form__error-item" key={idx}>{error}</li>
+          ))}
         </ul>
         <label>
           Account
           <select
+            className="account-form__input"
             value={chosenId}
             onChange={(e) => setChosenId(e.target.value)}
             required
@@ -56,7 +60,7 @@ function CloseAccountForm({ reloadAccounts }) {
             ))}
           </select>
         </label>
-        <button type="submit">Submit</button>
+        <button className="account-form__button" type="submit">Submit</button>
       </form>
     </>
   );
