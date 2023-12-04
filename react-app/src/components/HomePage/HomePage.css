@@ -10,26 +10,11 @@
   background: linear-gradient(to top, #CCE0FF, aliceblue);
 }
 
-.home__box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.home__box--accounts img,
-.home__box--transactions img,
-.home__box--sms img {
-  height: auto;
-  max-width: 100%;
-  width: 150px;
-}
-
 .home-welcome__container {
   display: flex;
   justify-content: center;
   margin-top: 150px;
-
+  height: 150px;
 }
 
 .home-welcome__text {
@@ -51,8 +36,8 @@
 
 .link-tile img {
   border-radius: 50%; 
-  width: 150px;
-  height: 150px; 
+  width: 50px;
+  height: 50px; 
   object-fit: cover;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); 
   margin-top: 10px;

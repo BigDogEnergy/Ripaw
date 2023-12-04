@@ -12,9 +12,6 @@ function TransactionsPage() {
     const accounts = useSelector(state => state.accounts.accounts);
     const transactions = useSelector(state => state.transactions.transactions);
     const userId = useSelector(state => state.session.user.id)
-
-    const [ deposits, setDeposits ] = useState([]);
-    const [ withdrawals, setWithdrawals ] = useState([]);
     const [ isLoaded, setIsLoaded ] = useState(false);
     const [ selectedAccountId, setSelectedAccountId ] = useState(null);
     const [ selectedStatus, setSelectedStatus ] = useState(null);
@@ -50,23 +47,26 @@ function TransactionsPage() {
     
             if (transType === 'Withdrawal') {
                 filtered = filtered.filter(transaction => transaction.senderId === selectedAccountId);
-            } else if (transType === 'Deposit') {
+            } else {
                 filtered = filtered.filter(transaction => transaction.receiverId === selectedAccountId);
             }
         } else {
+            setSelectedAccountId(null);
             setTransType(null);
         }
         
         if (selectedStatus) {
             filtered = filtered.filter(transaction => transaction.status === selectedStatus);
+        } else {
+            setSelectedStatus(null);
         }
         
         if (filtered.length > 0) {
-            filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            filtered.sort((a, b) => b.id - a.id)
         }
         
         setFilteredTransactions(filtered);
-    }, [selectedAccountId, selectedStatus, transactions, transType]);
+    }, [accounts, selectedAccountId, selectedStatus, transactions, transType]);
 
     if(!isLoaded) {
         return <div>Loading...</div>
@@ -82,13 +82,14 @@ function TransactionsPage() {
     };
 
     const handleTypeChange =(e) => {
-        setTransType(e.target.value);
+        setTransType(e.target.value || null);
     }
 
 
 
     return (
         <>
+        <div className="transaction-page__main">
             <div className="transaction-filter__dropdowns">
                 <div className="transaction-filter__title">
                     Filters:         
@@ -118,7 +119,7 @@ function TransactionsPage() {
                 {filteredTransactions.length} transaction{filteredTransactions.length === 1 ? '' : 's'}:
             </div>
 
-            <div className='transaction-card__container'>
+            <div className='transaction-card__filtered_container'>
             {filteredTransactions.length > 0 ? (
                 filteredTransactions.map(transaction => (
                     <TransactionCards
@@ -137,6 +138,8 @@ function TransactionsPage() {
             <div className="transaction-card__options">
                 <TransactionOptions />
             </div>
+        </div>
+            
         </>
     )
 };

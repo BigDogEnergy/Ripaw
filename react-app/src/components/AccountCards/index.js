@@ -8,7 +8,8 @@ function AccountCards({ account }) {
 
     const dispatch = useDispatch();
     const transactions = useSelector(state => state.transactions.accountTransactions[account.id] || []);
-    const limitedTransactions = transactions.slice(0, 5);
+    const sortedTransactions = transactions.sort((a, b) => b.id - a.id);
+    const limitedTransactions = sortedTransactions.slice(0, 5);
     const accounts = useSelector(state => state.accounts.accounts);
     const userId = useSelector(state => state.session.user.id);
     const [ hidden, setHidden ] = useState(true);
@@ -36,22 +37,25 @@ function AccountCards({ account }) {
 
 
     return (
-            <div className='account-card__container' onClick={toggleDisplay}>
-                <div className='account-card__details'>
-                    <div className='account-card__top'>
+        <div className='account-card__container' onClick={toggleDisplay}>
+            <div className='account-card__details'>
+                <div className='account-card__top'>
 
-                        <div className='account-card__name'>
-                            {account.accountName}
-                        </div>
+                    <div className='account-card__name'>
+                        #{account.id} - {account.accountName}
+                    </div>
 
-                        <div className={`account-card__balance ${account.accountBalance < 0 ? 'account-card__balance--negative' : ''}`}>
-                            {account.accountBalance}
-                        </div>
+                    <div className={`account-card__balance ${account.accountBalance < 0 ? 'account-card__balance--negative' : ''}`}>
+                        ${account.accountBalance}
+                    </div>
 
-                        {!hidden && (
-                            <>
-                            {isLoading ? (
-                                <div>Loading...</div>
+                    {!hidden && (
+                        <>
+                        {isLoading ? (
+                            <div>Loading...</div>
+                        ) : (
+                            transactions.length === 0 ? (
+                                <div className='account-transaction__empty'>No transaction history available</div>
                             ) : (
                                 <div className='account-transaction__list'>
                                     {limitedTransactions.map(transaction => (
@@ -67,13 +71,13 @@ function AccountCards({ account }) {
                                         <a href="/accounts/transactions">View all transactions</a>
                                     )}
                                 </div>
-                                )}
-                            </>
-                           
+                            )
                         )}
-                    </div>
+                        </>
+                    )}
                 </div>
             </div>
+        </div>
     );
 };
 
