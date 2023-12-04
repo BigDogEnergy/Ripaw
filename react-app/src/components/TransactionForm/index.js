@@ -18,8 +18,6 @@ function TransactionForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(receiverId, 'receiverId')
-
     const transaction = {
         amount: parseFloat(amount),
         senderId: parseInt(senderId),
@@ -30,9 +28,8 @@ function TransactionForm() {
     
     const data = await dispatch(transactionRequest(transaction));
 
-    if (data && data.error) {
-      console.log('this is error Data', data)
-      setErrors([data.error]);
+    if (data) {
+      setErrors([data.error.error]);
     } else {
         dispatch(fetchAllTransactions()).then(() => {
         closeModal()

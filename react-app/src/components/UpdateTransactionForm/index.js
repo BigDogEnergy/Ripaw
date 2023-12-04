@@ -42,14 +42,17 @@ function UpdateTransactionForm() {
 
   return (
     <>
-      <h1>Update a Pending Transaction:</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      <div className="transaction-form__title">Update a Pending Transaction:</div>
+      <form className="account-form" onSubmit={handleSubmit}>
+        <ul className="account-form__error-list">
+        {errors.map((error, idx) => (
+            <li className="account-form__error-item" key={idx}>{error}</li>
+          ))}
         </ul>
         <label>
           Select Transaction
           <select 
+            className="account-form__input"
             value={selectedTransactionId} 
             onChange={(e) => setSelectedTransactionId(e.target.value)} 
             required
@@ -65,6 +68,7 @@ function UpdateTransactionForm() {
         <label>
           Message
           <input
+            className="account-form__input"
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -72,13 +76,17 @@ function UpdateTransactionForm() {
         </label>
         <label>
           Status
-          <select value={status} onChange={(e) => setStatus(e.target.value)} required>
+          <select 
+            className="account-form__input"
+            value={status} 
+            onChange={(e) => 
+            setStatus(e.target.value)} required>
             <option value="Processing">Processing</option>
             <option value="Pending">Pending</option>
             <option value="Cancelled">Cancelled</option>
           </select>
         </label>
-        <button type="submit">Submit</button>
+        <button className="account-form__button" type="submit">Submit</button>
       </form>
     </>
   );
