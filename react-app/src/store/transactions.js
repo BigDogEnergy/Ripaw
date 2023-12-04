@@ -113,7 +113,7 @@ export const transactionRequest = (transaction) => async dispatch => {
 
         if (response.ok) {
             const data = await response.json();
-            dispatch(addNewTransaction(data.data));
+            dispatch(addNewTransaction(transaction));
             return data
         } else {
             const errorData = await response.json()

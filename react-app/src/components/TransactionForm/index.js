@@ -28,7 +28,7 @@ function TransactionForm() {
     
     const data = await dispatch(transactionRequest(transaction));
 
-    if (data) {
+    if (data && data.error) {
       setErrors([data.error.error]);
     } else {
         dispatch(fetchAllTransactions()).then(() => {

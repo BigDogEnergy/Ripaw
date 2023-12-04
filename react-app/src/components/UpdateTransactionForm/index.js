@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateTransactionRequest } from "../../store/transactions";
+import { fetchAllTransactions, updateTransactionRequest } from "../../store/transactions";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./UpdateTransactionForm.css";
@@ -33,10 +33,11 @@ function UpdateTransactionForm() {
     const data = await dispatch(updateTransactionRequest(selectedTransactionId, updates));
 
     if (data && data.error) {
-      console.log('this is error Data', data)
-      setErrors(data);
+      setErrors(data.error.error);
     } else {
+      dispatch(fetchAllTransactions()).then(() =>{
         closeModal()
+      })
     }
   };
 
