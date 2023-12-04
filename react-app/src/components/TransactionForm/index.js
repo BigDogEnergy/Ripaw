@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { transactionRequest } from "../../store/transactions";
+import { fetchAllTransactions, transactionRequest } from "../../store/transactions";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./TransactionForm.css";
@@ -18,9 +18,11 @@ function TransactionForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(receiverId, 'receiverId')
+
     const transaction = {
         amount: parseFloat(amount),
-        senderId: senderId,
+        senderId: parseInt(senderId),
         receiverId: parseInt(receiverId),
         message: message,
         status: status
@@ -33,6 +35,7 @@ function TransactionForm() {
       setErrors([data.error]);
     } else {
         closeModal()
+        dispatch(fetchAllTransactions())
     }
   };
 
@@ -53,7 +56,7 @@ function TransactionForm() {
           />
         </label>
         <label>
-          Sender Account
+          Outbound Account
           <select value={senderId} onChange={(e) => setSenderId(e.target.value)} required>
             {accounts.map(account => (
               <option key={account.id} value={account.id}>{account.accountName}</option>
@@ -61,7 +64,7 @@ function TransactionForm() {
           </select>
         </label>
         <label>
-          Receiver Account ID
+          Receiver Account
           <input
             type="number"
             value={receiverId}
@@ -76,6 +79,17 @@ function TransactionForm() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
+        </label>
+        <label>
+          Status
+          <select 
+          value={status} 
+          onChange={(e) => setStatus(e.target.value)}>
+            <option value="Processing">Immediate Processing</option>
+            <option value="Pending">Prepare without Processing</option>
+          </select>
+            
+          
         </label>
         <button type="submit">Submit</button>
       </form>

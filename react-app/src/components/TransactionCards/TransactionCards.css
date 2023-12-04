@@ -10,23 +10,20 @@
     margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     transition: box-shadow 0.3s ease;
-    max-width: 100%;
+    max-width: auto;
 }
-
-/* .transaction-card-container:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-} */
 
 .transaction-card__details {
     display: flex;
     flex-direction: column;
 }
 
-.transaction-card__top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.transaction-card__container--deposit {
+    background-color: #e0f0ff; 
 }
 
+.transaction-card__container--withdrawal {
+    background-color: #ffe0e0;
+}
 
 

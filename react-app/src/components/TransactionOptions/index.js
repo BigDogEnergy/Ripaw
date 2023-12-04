@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import TransactionForm from "../TransactionForm";
 import UpdateTransactionForm from "../UpdateTransactionForm";
+import DeleteTransactionForm from "../DeleteTransactionForm";
 
 function TransactionOptions() {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const userType = useSelector( state => state.session.user.type);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -50,6 +53,13 @@ function TransactionOptions() {
             onItemClick={closeMenu}
             modalComponent={<UpdateTransactionForm />}
             />
+            {userType === 'Admin' && (
+              <OpenModalButton
+              buttonText="Delete a Transaction"
+              onItemClick={closeMenu}
+              modalComponent={<DeleteTransactionForm />}
+              />
+            )}
           </>
         )}
       </ul>

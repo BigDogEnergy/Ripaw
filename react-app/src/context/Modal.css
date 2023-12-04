@@ -19,6 +19,10 @@
 }
 
 #modal-content {
+  display: flex;
   position: absolute;
+  flex-direction: column;
   background-color:white;
+  align-items: center;
+  justify-content: center;
 }

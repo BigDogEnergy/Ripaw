@@ -5,7 +5,6 @@ const ONE_TRANSACTION = 'transactions/one_transactions'
 const ACCOUNT_TRANSACTIONS = 'transactions/account_transactions'
 const NEW_TRANSACTION = 'transactions/new_transactions'
 const EDIT_TRANSACTION = 'transactions/edit_transaction'
-const CANCEL_TRANSACTION = 'transactions/cancel_transaction'
 const DELETE_TRANSACTION = 'transactions/delete_transaction'
 
 // Action Creators
@@ -18,13 +17,13 @@ const fetchTransactions = transactions => {
     };
 };
 
-const fetchTransactionById = transaction => {
-    console.log('fetchTransactionById action creator', transaction);
-    return {
-        type: ONE_TRANSACTION,
-        payload: transaction
-    };
-};
+// const fetchTransactionById = transaction => {
+//     console.log('fetchTransactionById action creator', transaction);
+//     return {
+//         type: ONE_TRANSACTION,
+//         payload: transaction
+//     };
+// };
 
 const fetchAccountTransactions = ({ accountId, transactions}) => {
     console.log('fetchAccountTransactions action creator', transactions);
@@ -57,19 +56,19 @@ const updateTransaction = ({transactionId, updates}) => {
     };
 };
 
-const cancelPendingTransaction = transaction => {
-    console.log('cancelPendingTransaction action creator', transaction);
-    return {
-        type: CANCEL_TRANSACTION,
-        payload: transaction
-    };
-};
+// const cancelPendingTransaction = transaction => {
+//     console.log('cancelPendingTransaction action creator', transaction);
+//     return {
+//         type: CANCEL_TRANSACTION,
+//         payload: transaction
+//     };
+// };
 
-const deleteTransaction = transaction => {
-    console.log('deleteTransaction action creator', transaction);
+const deleteTransaction = transactionId => {
+    console.log('deleteTransaction action creator', transactionId);
     return {
         type: DELETE_TRANSACTION,
-        payload: transaction
+        payload: transactionId
     };
 };
 
@@ -103,7 +102,7 @@ export const fetchTransactionsByAccountId = (accountId) => async dispatch => {
 
 export const transactionRequest = (transaction) => async dispatch => {
     try {
-        console.log("passed in transaction for transcationRequest",transaction)
+        console.log("passed in transaction for transcationRequest", transaction)
         const response = await fetch(`/api/accounts/transactions`, {
             method: 'POST',
             headers: {
@@ -152,6 +151,25 @@ export const updateTransactionRequest = (transactionId, updates) => async dispat
     }
 };
 
+export const deleteTransactionRequest = (transactionId) => async dispatch => {
+    try {
+        const response = await fetch(`/api/accounts/transactions/${transactionId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            const data = await response.json()
+            console.log('deleteTransactionRequest id', transactionId)
+            dispatch(deleteTransaction(transactionId))
+            return data
+        } else {
+            const errorData = await response.json()
+            return { error: errorData }
+        }
+    } catch(error) {
+        console.log('deleteTransactionRequest error', error)
+    }
+}
 
 // Initial State
 
