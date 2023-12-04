@@ -4,24 +4,21 @@ from sqlalchemy.sql import text
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    demo = User(
-        username='Demo', 
-        email='demo@aa.io', 
-        password='password',
-        type='Admin')
     
-    beau = User(
-        username='Beau',
-        email='beau@aa.io',
-        password='password')
-    
-    david = User(
-        username='David',
-        email='david@aa.io',
-        password='password'
-    )
+    users = [
+        User(username='Demo', email='demo@aa.io', password='password', type='Admin'),
+        User(username='Beau', email='beau@aa.io', password='password'),
+        User(username='David', email='david@aa.io', password='password'),
+        User(username='Amber', email='amber@aa.io', password='password'),
+        User(username='User5', email='user5@example.com', password='password'),
+        User(username='User6', email='user6@example.com', password='password'),
+        User(username='User7', email='user7@example.com', password='password'),
+        User(username='User8', email='user8@example.com', password='password'),
+        User(username='User9', email='user9@example.com', password='password'),
+        User(username='User10', email='user10@example.com', password='password'),
+    ]
 
-    db.session.add_all([demo, beau, david])
+    db.session.add_all(users)
     db.session.commit()
 
 
