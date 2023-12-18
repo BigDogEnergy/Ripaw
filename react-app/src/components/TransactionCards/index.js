@@ -60,7 +60,7 @@ function TransactionCards({ transaction, getAccountName, accounts, userId }) {
                             </div>
                             
                             <div className='transaction-card__date'>
-                                Transaction Date: {transaction.createdAt}
+                                Transaction Date: {transaction.created_at}
                             </div>
                         </div>
                         )}

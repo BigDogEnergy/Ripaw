@@ -247,7 +247,7 @@ def update_transaction(id):
         db.session.commit()
         return jsonify({'message': 'Transaction updated successfully', 'data': transaction.to_dict()}), 200
     else:
-        return jsonify({'error': 'Invalid transaction data', 'error': form.errors}), 400
+        return jsonify({'error': 'Invalid transaction data'}), 400
 
 # Delete a Transaction (Admin Only)
 @account_routes.route('/transactions/<int:id>', methods=['DELETE'])

@@ -38,7 +38,7 @@ def seed_transactions():
                                       receiverId=receiver_id, 
                                       amount=amount,
                                       status=status,
-                                      createdAt=created_at,
+                                      created_at=created_at,
                                       completedAt=completed_at,
                                       message=message)
         else:

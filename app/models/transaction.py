@@ -10,7 +10,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     senderId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     receiverId = db.Column(db.Integer, nullable=False)
-    createdAt = db.Column(db.DateTime, default=datetime.now())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     completedAt = db.Column(db.DateTime, default=None)
     amount = db.Column(db.Numeric(scale=2), nullable=False)
     message = db.Column(db.String(200))
@@ -25,8 +25,8 @@ class Transaction(db.Model):
             "id": self.id,
             "senderId": self.senderId,
             "receiverId": self.receiverId,
-            "createdAt": self.createdAt,
-            "completedAt": self.completedAt,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "completedAt": self.completedAt.isoformat() if self.completedAt else None,
             "amount": self.amount,
             "message": self.message,
             "status": self.status

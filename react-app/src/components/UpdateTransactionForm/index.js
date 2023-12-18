@@ -32,6 +32,7 @@ function UpdateTransactionForm() {
 
     const data = await dispatch(updateTransactionRequest(selectedTransactionId, updates));
 
+    //Fix this later. Error objects are potentially inconsistent
     if (data && data.error) {
       setErrors(data.error.error);
     } else {
