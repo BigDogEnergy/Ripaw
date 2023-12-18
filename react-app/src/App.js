@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// import { io } from 'socket.io-client';
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
@@ -8,13 +9,38 @@ import AccountsPage from "./components/AccountsPage"
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import TransactionsPage from "./components/TransactionsPage";
+import MessagingPage from "./components/MessagingPage";
 
 function App() {
   const dispatch = useDispatch();
+  // const currentUser = useSelector(state => state.session.user);
+  // const [socket, setSocket] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
+
+    // if (currentUser) {
+    //   // Initialize Socket.IO client only when loaded and user is available
+    //   const newSocket = io('http://localhost:5000');
+    //   setSocket(newSocket);
+
+    //   newSocket.on('connect', () => {
+    //     console.log('Connected to server');
+    //     newSocket.emit('message', { 
+    //       receiver_id: 2,
+    //       sender_id: currentUser.id,
+    //       content: 'Message from User 2 to currentUser!', 
+    //     });
+    //   });
+
+    //   return () => newSocket.disconnect();
+    // }
   }, [dispatch]);
+
+
+
+
 
   return (
     <>
@@ -35,9 +61,12 @@ function App() {
               <Route path="/signup">
                 <SignupFormPage />
               </Route>
+              <Route path="/messages">
+                <MessagingPage />
+              </Route>
             </Switch>
           </div>
-          <HomePage />
+          <HomePage/>
         </>
       )}
     </>
