@@ -36,7 +36,7 @@ def delete_message(message_id):
     if not message:
         return jsonify({'error': 'Message not found'}), 404
     
-    if not message.sender_id == current_user.id or not message.receiver_id == current_user.id:
+    if message.sender_id == current_user.id or message.receiver_id == current_user.id:
         db.session.delete(message)
         db.session.commit()
         return jsonify({'message': 'Message deleted'}), 200
