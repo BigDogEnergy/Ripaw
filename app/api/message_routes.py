@@ -28,14 +28,18 @@ def get_conversation(user_id, sender_id):
         return jsonify({'error': 'No conversation found'}), 404
     
 # # NOTE - DELETE
-@message_routes.route('/<int:message_id>')
+@message_routes.route('/<int:message_id>', methods=['DELETE'])
 @login_required
 def delete_message(message_id):
     message = Message.query.get(int(message_id))
-    if message:
-        if message.sender_id == current_user.id or message.receiver_id == current_user.id:
-            db.session.delete(message)
-            db.session.commit()
-            return jsonify({'message': 'Message deleted'}), 200
-        else:
-            return jsonify({'error': 'Unauthorized'}), 403
+
+    if not message:
+        return jsonify({'error': 'Message not found'}), 404
+    
+    if message.sender_id == current_user.id or message.receiver_id == current_user.id:
+        db.session.delete(message)
+        db.session.commit()
+        return jsonify({'message': 'Message deleted'}), 200
+    
+    else:
+        return jsonify({'error': 'Unauthorized'}), 403

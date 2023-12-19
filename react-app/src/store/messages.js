@@ -28,13 +28,30 @@ export const fetchConversation = (userId, senderId) => async dispatch => {
     try {
         const response = await fetch(`/api/messages/${userId}/${senderId}`);
         if (!response.ok) {
-            throw new Error({'error': 'fetchConversation thunk response error'});
+            console.log({errorMessage: 'fetchConversation thunk response error'});
         }
         const messages = await response.json();
         dispatch(setMessages({ conversationId: senderId, messages }));
     } catch (error) {
         console.error({ errorMessage: error });
     };
+};
+
+
+export const deleteMessageThunk = (conversationId, messageId) => async dispatch => {
+    try {
+        const response = await fetch(`/api/messages/${messageId}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            console.log({errorMessage: 'deleteMessage thunk response error'});
+        }
+        else {
+            dispatch(removeMessage({ conversationId, messageId }));
+        }
+    } catch (error) {
+        console.error({ errorMessage: error });
+    }
 };
 
 
