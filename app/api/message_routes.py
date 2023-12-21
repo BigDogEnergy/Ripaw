@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from sqlalchemy import or_
 from flask_login import login_required, current_user
 from app.models import Message, db
 
@@ -8,8 +9,14 @@ message_routes = Blueprint('messages', __name__)
 @message_routes.route('/<int:user_id>')
 @login_required
 def get_messages(user_id):
-    if current_user.id==user_id:
-        messages = Message.query.filter_by(receiver_id=user_id).all()
+    if current_user.id == user_id:
+        messages = Message.query.filter(
+            or_(
+                Message.receiver_id == user_id,
+                Message.sender_id == user_id
+            )
+        ).all()
+
         if messages:
             return jsonify([message.to_dict() for message in messages]), 200
         else:
@@ -18,14 +25,21 @@ def get_messages(user_id):
         return jsonify({'error': 'Unauthorized'})
 
 # NOTE - FETCH messages received from a specific user
-@message_routes.route('/<int:user_id>/<int:sender_id>')
+@message_routes.route('/<int:user_id>/<int:target_id>')
 @login_required
-def get_conversation(user_id, sender_id):
-    messages = Message.query.filter_by(receiver_id=user_id, sender_id=sender_id).all()
+def get_conversation(user_id, target_id):
+    messages = Message.query.filter(
+        or_(
+            (Message.receiver_id == user_id) & (Message.sender_id == target_id),
+            (Message.receiver_id == target_id) & (Message.sender_id == user_id)
+        )
+    ).all()
+
     if messages:
         return jsonify([message.to_dict() for message in messages]), 200
     else:
         return jsonify({'error': 'No conversation found'}), 404
+
     
 # # NOTE - DELETE
 @message_routes.route('/<int:message_id>', methods=['DELETE'])

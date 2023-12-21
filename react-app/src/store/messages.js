@@ -24,19 +24,21 @@ const removeMessage = (conversationId, messageId) => ({
 
 // Thunks
 
-export const fetchConversation = (userId, senderId) => async dispatch => {
+export const fetchConversation = (userId, targetId) => async dispatch => {
     try {
-        const response = await fetch(`/api/messages/${userId}/${senderId}`);
+        const response = await fetch(`/api/messages/${userId}/${targetId}`);
         if (!response.ok) {
-            console.log({errorMessage: 'fetchConversation thunk response error'});
+            console.log({errorMessage: 'fetchConversation thunk response error', response});
+            return;
+        } else {
+            const messages = await response.json();
+            dispatch(setMessages( targetId, messages ));
         }
-        const messages = await response.json();
-        dispatch(setMessages({ conversationId: senderId, messages }));
+        
     } catch (error) {
         console.error({ errorMessage: error });
     };
 };
-
 
 export const deleteMessageThunk = (conversationId, messageId) => async dispatch => {
     try {
@@ -58,7 +60,7 @@ export const deleteMessageThunk = (conversationId, messageId) => async dispatch 
 // Initial State
 
 const initialState = {
-    chatData: {},
+    chats: {},
 }
 
 // Reducer
@@ -70,20 +72,20 @@ export default function reducer( state = initialState, action) {
     switch(action.type) {
         case SET_MESSAGES:
             const { conversationId, messages } = action.payload;
-            newState.chatData[conversationId] = { messages: [...messages] };
+            newState.chats[conversationId] = {  messages: Array.isArray(messages) ? [...messages] : []  };
             return newState;
         case ADD_MESSAGE:
-            const { conversationId: newId, message } = action.payload;
-            const existingMessages = newState.chatData[newId]?.messages || [];
-            newState.chatData[newId] = { messages: [...existingMessages, message] };
+            const { conversationId: targetId, message } = action.payload;
+            const existingMessages = newState.chats[targetId]?.messages || [];
+            newState.chats[targetId] = { messages: [...existingMessages, message] };
             return newState;
         case REMOVE_MESSAGE:
             const { conversationId: convoId, messageId } = action.payload;
-            if (newState.chatData[convoId]) {
-                newState.chatData[convoId].messages = newState.chatData[convoId].messages.filter(msg => msg.id !== messageId);
+            if (newState.chats[convoId]) {
+                newState.chats[convoId].messages = newState.chats[convoId].messages.filter(msg => msg.id !== messageId);
             }
             return newState;
-            
-            
+        default:
+            return newState;
     };
 };

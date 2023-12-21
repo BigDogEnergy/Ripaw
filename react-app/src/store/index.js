@@ -3,11 +3,15 @@ import thunk from 'redux-thunk';
 import session from './session'
 import accounts from './accounts'
 import transactions from './transactions'
+import messages from './messages'
+import users from './users'
 
 const rootReducer = combineReducers({
   accounts,
   transactions,
   session,
+  messages,
+  users
 });
 
 
