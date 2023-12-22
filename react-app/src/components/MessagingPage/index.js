@@ -34,6 +34,9 @@ export default function MessagingPage() {
         });
     };
     
+    const handleInputChange = (e) => {
+        setContent(e.target.value);
+    };
 
     if (!currentUser) {
         history.push('/')
@@ -69,7 +72,7 @@ export default function MessagingPage() {
             <div className='messenger-main__container'>
                 
                 <div className='messenger-userlist__container'>
-                    {!usersLoading && <UserTiles />}
+                    {!usersLoading && <UserTiles setTargetUser={setTargetUser} handleConversationSelect={handleConversationSelect} />}
                 </div>
 
                 <div className='messenger-convo__container'>
@@ -77,7 +80,14 @@ export default function MessagingPage() {
                         Message Content Placeholder
                     </div>
                     <div className='messenger-input__container'>
-                        Text input Container Placeholder
+                        <input 
+                            type='text' 
+                            className='messenger-input__text'
+                            value={content} 
+                            onChange={handleInputChange}
+                            placeholder="Type a message..."
+                        />
+                        <button className='messenger-input__button' onClick={sendMessage}>Send</button>
                     </div>
                 </div>
             </div>
