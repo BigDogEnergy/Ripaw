@@ -16,6 +16,19 @@
     width: 20%;
 }
 
+.messenger-input__container {
+    display: flex;
+    flex-direction: row;
+}
+
+.messenger-input__text {
+    width: 90%;
+}
+
+.messenger-input__button {
+    width: 10%;
+}
+
 .messenger-content__tile {
     display: flex;
     height: 90%;

@@ -2,13 +2,19 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import './MessagingUserTile.css'
 
-function UserTiles() {
+function UserTiles( {setTargetUser, handleConversationSelect} ) {
+    
     const users = useSelector(state => state.users.availableUsers);
+
+    const handleClick = (targetId) => {
+        setTargetUser(targetId);
+        handleConversationSelect(targetId);
+    };
 
     return (
         <div className="user-tile__container">
             {users.map(user => (
-                <div key={user.id} className="user-tile__main">
+                <div key={user.id} className="user-tile__main" onClick={() => handleClick(user.id)}>
                     <div className="user-info__container">
                         <div className="user-info__username">
                             {user.username}
@@ -20,7 +26,6 @@ function UserTiles() {
                         )}
                         {/* Placeholder data above */}
                     </div>
-                    {/* TO DO: Add an onClick handler to start a conversation with this user */}
                 </div>
             ))}
         </div>
