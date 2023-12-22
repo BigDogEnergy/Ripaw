@@ -1,0 +1,12 @@
+.user-info__container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    border-right: 1px solid #d1d1d6; 
+    padding: 10px;
+}
+
+.user-tile__main {
+    border: 1px solid black;
+    cursor: pointer;
+}

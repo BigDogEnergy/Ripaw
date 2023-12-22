@@ -47,7 +47,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <>
-          <div className="app__main-content">
+          <div className="app-main__content">
             <Switch>
               <Route exact path='/accounts/transactions'>
                 <TransactionsPage />
