@@ -1,10 +1,10 @@
-.app__main-content{
+.app-main__content{
     display: flex;
     flex-direction: column;
-    max-width: 50%;
+    max-width: 60%;
     justify-content: center;
-    margin-left: 25%;
-    /* min-height: 100vh; */
+    margin-left: 20%;
+    padding-top: 20px;
 }
 
 body {

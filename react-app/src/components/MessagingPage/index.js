@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { fetchConversation } from "../../store/messages";
 import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
+import './MessagingPage.css'
 
 export default function MessagingPage() {
 
@@ -38,7 +39,7 @@ export default function MessagingPage() {
         history.push('/')
         return null;
     }
-    else if (currentUser) {
+    else {
 
         const sendMessage = () => {
             if (socket) {
@@ -59,13 +60,19 @@ export default function MessagingPage() {
             };
         };
 
+        if (usersLoading) {
+            return <div>Loading...</div>;
+        }
+
         return (
             <>
             <div className='messenger-main__container'>
-                <div className='messenger-main__body'>
-                    <div className='messenger-userlist__container'>
-                        <UserTiles />
-                    </div>
+                
+                <div className='messenger-userlist__container'>
+                    {!usersLoading && <UserTiles />}
+                </div>
+
+                <div className='messenger-convo__container'>
                     <div className='messenger-content__tile'>
                         Message Content Placeholder
                     </div>
@@ -73,7 +80,6 @@ export default function MessagingPage() {
                         Text input Container Placeholder
                     </div>
                 </div>
-                
             </div>
                 {/* These are test buttons
                 <button onClick={sendMessage}>Send Test Message</button>
@@ -85,10 +91,6 @@ export default function MessagingPage() {
 
 
 
-    } else {
-        return null
-    }
-    
-    
+    } 
 
 }
