@@ -1,7 +1,7 @@
 // Action Types
 
 const SET_MESSAGES = 'messages/set_messages';
-const ADD_MESSAGE = 'messages/add_message';
+// const ADD_MESSAGE = 'messages/add_message';
 const REMOVE_MESSAGE = 'messages/remove_message';
 
 // Action Creators
@@ -11,10 +11,10 @@ const setMessages = (conversationId, messages) => ({
     payload: { conversationId, messages }
 });
 
-const addMessage = (conversationId, message) => ({
-    type: ADD_MESSAGE,
-    payload: { conversationId, message }
-});
+// const addMessage = (conversationId, message) => ({
+//     type: ADD_MESSAGE,
+//     payload: { conversationId, message }
+// });
 
 const removeMessage = (conversationId, messageId) => ({
     type: REMOVE_MESSAGE,
@@ -23,6 +23,14 @@ const removeMessage = (conversationId, messageId) => ({
 
 
 // Thunks
+
+// export const incomingMessage = (conversationId, message) => async dispatch => {
+//     try {
+//         dispatch(addMessage(conversationId, message));
+//     } catch(error) { 
+//         console.log(error)
+//     }
+// }
 
 export const fetchConversation = (userId, targetId) => async dispatch => {
     try {
@@ -33,6 +41,7 @@ export const fetchConversation = (userId, targetId) => async dispatch => {
         } else {
             const messages = await response.json();
             dispatch(setMessages( targetId, messages ));
+            return messages;
         }
         
     } catch (error) {
@@ -74,11 +83,11 @@ export default function reducer( state = initialState, action) {
             const { conversationId, messages } = action.payload;
             newState.chats[conversationId] = {  messages: Array.isArray(messages) ? [...messages] : []  };
             return newState;
-        case ADD_MESSAGE:
-            const { conversationId: targetId, message } = action.payload;
-            const existingMessages = newState.chats[targetId]?.messages || [];
-            newState.chats[targetId] = { messages: [...existingMessages, message] };
-            return newState;
+        // case ADD_MESSAGE:
+        //     const { conversationId: targetId, message } = action.payload;
+        //     const existingMessages = newState.chats[targetId]?.messages || [];
+        //     newState.chats[targetId] = { messages: [...existingMessages, message] };
+        //     return newState;
         case REMOVE_MESSAGE:
             const { conversationId: convoId, messageId } = action.payload;
             if (newState.chats[convoId]) {

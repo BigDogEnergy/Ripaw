@@ -20,22 +20,6 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
 
-    // if (currentUser) {
-    //   // Initialize Socket.IO client only when loaded and user is available
-    //   const newSocket = io('http://localhost:5000');
-    //   setSocket(newSocket);
-
-    //   newSocket.on('connect', () => {
-    //     console.log('Connected to server');
-    //     newSocket.emit('message', { 
-    //       receiver_id: 2,
-    //       sender_id: currentUser.id,
-    //       content: 'Message from User 2 to currentUser!', 
-    //     });
-    //   });
-
-    //   return () => newSocket.disconnect();
-    // }
   }, [dispatch]);
 
 

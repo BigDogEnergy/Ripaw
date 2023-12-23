@@ -27,7 +27,8 @@ def handle_message(data):
             db.session.add(new_message)
             db.session.commit()
             print(f"Inbound Message - Room {data['receiver_id']} - Content: " + data['content'])
-            emit('new_message', data['content'], room=data['receiver_id'])
+            emit('new_message', new_message.to_dict(), room=data['receiver_id'])
+            emit('new_message', new_message.to_dict(), room=data['sender_id'])
         else:
             print("Invalid message data received")
 

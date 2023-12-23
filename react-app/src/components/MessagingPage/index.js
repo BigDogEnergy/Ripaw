@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { fetchConversation } from "../../store/messages";
 import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
+import MessageContentTiles from "../MessagingContentTile";
 import './MessagingPage.css'
 
 export default function MessagingPage() {
@@ -12,24 +13,48 @@ export default function MessagingPage() {
     const socket = useSocket();
     const history = useHistory();
     const dispatch = useDispatch();
-    const conversations = useSelector(state => state.messages.chatData);
+    const conversations = useSelector(state => state.messages.chats);
     const currentUser = useSelector(state => state.session.user.id);
     const [ activeConversation, setActiveConversation ] = useState(null);
     const [ targetUser, setTargetUser ] = useState('');
     const [ content, setContent ] = useState('');
     const [ usersLoading, setUsersLoading ] = useState(true);
-    // const [ conversationsLoading, setConversationsLoading ] = useState(true);
+    const [ convoLoading, setConvoLoading ] = useState(true);
 
     useEffect(() => {
         dispatch(fetchAllUsers()).then(() => {
             setUsersLoading(false);
         });
+
+        const newMessageHandler = async (message) => {
+            console.log("Received message:", message);
+        
+            // Check if the message belongs to the current user's selected conversation
+            if ((message.receiver_id === targetUser || message.sender_id === targetUser) &&
+            (message.receiver_id === currentUser || message.sender_id === currentUser)) {
+                try {
+                    setConvoLoading(true);
+                    await dispatch(fetchConversation(currentUser, targetUser));
+                    setConvoLoading(false);
+                } catch (error) {
+                    console.error('Error fetching conversation', {errorMessage: error} );
+                    setConvoLoading(false);
+                }
+            }
+        };
+        
+
+        socket.on('new_message', newMessageHandler);
+
+        return () => {
+            socket.off('new_message', newMessageHandler);
+        };
     
-    }, [dispatch]);
+    }, [dispatch, currentUser, targetUser, socket]);
     
 
     const handleConversationSelect = (targetUser) => {
-        dispatch(fetchConversation(currentUser, targetUser)).then( () => {
+        dispatch(fetchConversation(currentUser, targetUser)).then(() => {
             setActiveConversation(targetUser);
         });
     };
@@ -46,56 +71,55 @@ export default function MessagingPage() {
 
         const sendMessage = () => {
             if (socket) {
-                console.log('sendMessage Triggered')
+
                 socket.emit('message', { 
-                    receiver_id: targetUser.id,
+                    receiver_id: targetUser,
                     sender_id: currentUser, 
                     content: content, 
                 });
+                setContent('');        
             } else {
                 console.log('Socket not connected');
             }
         };
 
-        const convoFetch = () => {
-            if (currentUser && targetUser) {
-                dispatch(fetchConversation(currentUser, targetUser));
-            };
-        };
+        // This line will get the messages for the active conversation
+        // or return an empty array if there are no messages or if no conversation is selected
+        const currentMessages = activeConversation ? conversations[activeConversation]?.messages.slice(-5) || [] : [];
 
         if (usersLoading) {
             return <div>Loading...</div>;
-        }
+        };
 
         return (
             <>
-            <div className='messenger-main__container'>
-                
-                <div className='messenger-userlist__container'>
-                    {!usersLoading && <UserTiles setTargetUser={setTargetUser} handleConversationSelect={handleConversationSelect} />}
-                </div>
-
-                <div className='messenger-convo__container'>
-                    <div className='messenger-content__tile'>
-                        Message Content Placeholder
+                <div className='messenger-main__container'>
+                    
+                    <div className='messenger-userlist__container'>
+                        {!usersLoading && <UserTiles 
+                            setTargetUser={setTargetUser} 
+                            handleConversationSelect={handleConversationSelect} 
+                        />}
                     </div>
-                    <div className='messenger-input__container'>
-                        <input 
-                            type='text' 
-                            className='messenger-input__text'
-                            value={content} 
-                            onChange={handleInputChange}
-                            placeholder="Type a message..."
-                        />
-                        <button className='messenger-input__button' onClick={sendMessage}>Send</button>
+
+                    <div className='messenger-convo__container'>
+                        <div className='messenger-content__tile'>
+                            <MessageContentTiles 
+                                messages={currentMessages}
+                            />
+                        </div>
+                        <div className='messenger-input__container'>
+                            <input 
+                                type='text' 
+                                className='messenger-input__text'
+                                value={content} 
+                                onChange={handleInputChange}
+                                placeholder="Type a message..."
+                            />
+                            <button className='messenger-input__button' onClick={sendMessage}>Send</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-                {/* These are test buttons
-                <button onClick={sendMessage}>Send Test Message</button>
-                <button onClick={convoFetchTest}>Convo Fetch Button (assign targets)</button>
-                <button onClick={userFetchTest}>User Fetch Button</button> */}
-
             </>
         )
 
