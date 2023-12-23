@@ -14,19 +14,22 @@
 .messenger-userlist__container {
     display: flex;
     width: 20%;
+    justify-content: center;
 }
 
 .messenger-input__container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .messenger-input__text {
-    width: 90%;
+    width: 80%;
 }
 
 .messenger-input__button {
     width: 10%;
+    margin-left: 5px;
 }
 
 .messenger-content__tile {
