@@ -17,20 +17,36 @@ def handle_join_room(data):
 
 @socketio.on('message')
 def handle_message(data):
-    # if current_user.is_authenticated:
-        if 'content' in data and 'sender_id' in data and 'receiver_id' in data: 
-            new_message = Message(
-                content=data['content'], 
-                sender_id=data['sender_id'],
-                receiver_id=data['receiver_id'],
-                )
-            db.session.add(new_message)
-            db.session.commit()
-            print(f"Inbound Message - Room {data['receiver_id']} - Content: " + data['content'])
-            emit('new_message', new_message.to_dict(), room=data['receiver_id'])
-            emit('new_message', new_message.to_dict(), room=data['sender_id'])
-        else:
-            print("Invalid message data received")
+    if 'content' in data and 'sender_id' in data and 'receiver_id' in data: 
+        new_message = Message(
+            content=data['content'], 
+            sender_id=data['sender_id'],
+            receiver_id=data['receiver_id'],
+            )
+        db.session.add(new_message)
+        db.session.commit()
+        emit('new_message', new_message.to_dict(), room=data['receiver_id'])
+        emit('new_message', new_message.to_dict(), room=data['sender_id'])
+        print(f"New Message - Content: " + data['content'])
+    else:
+        print("Invalid message data received")
+
+@socketio.on('remove_message')
+def update_text(data):
+    message_id = data['id']
+    new_content = 'MESSAGE REMOVED'    
+    message = Message.query.get(data['id'])
+    if message:
+        message.content = new_content
+        db.session.commit()
+        updated_data = {'id': message_id, 'content': new_content}
+        emit('message_updated', updated_data, room=message.receiver_id)
+        emit('message_updated', updated_data, room=message.sender_id)
+        print(f"Message Update - Message with id {message_id} updated")
+
+    else:
+        print(f"Updated Failed - Message with id {message_id} not found")
+
 
 @socketio.on('disconnect')
 def on_disconnect():

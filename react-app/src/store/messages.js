@@ -3,6 +3,7 @@
 const SET_MESSAGES = 'messages/set_messages';
 // const ADD_MESSAGE = 'messages/add_message';
 const REMOVE_MESSAGE = 'messages/remove_message';
+const EDIT_MESSAGE = 'messages/edit_message'
 
 // Action Creators
 
@@ -20,6 +21,10 @@ const removeMessage = (conversationId, messageId) => ({
     type: REMOVE_MESSAGE,
     payload: { conversationId, messageId }
 });
+
+const editMessage = (messageId) => ({
+
+})
 
 
 // Thunks
@@ -49,7 +54,7 @@ export const fetchConversation = (userId, targetId) => async dispatch => {
     };
 };
 
-export const deleteMessageThunk = (conversationId, messageId) => async dispatch => {
+export const deleteMessageThunk = (messageId) => async dispatch => {
     try {
         const response = await fetch(`/api/messages/${messageId}`, {
             method: 'DELETE',
@@ -58,7 +63,7 @@ export const deleteMessageThunk = (conversationId, messageId) => async dispatch 
             console.log({errorMessage: 'deleteMessage thunk response error'});
         }
         else {
-            dispatch(removeMessage({ conversationId, messageId }));
+            dispatch(removeMessage(messageId));
         }
     } catch (error) {
         console.error({ errorMessage: error });

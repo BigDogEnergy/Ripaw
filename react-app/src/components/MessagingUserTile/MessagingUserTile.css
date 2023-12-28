@@ -9,4 +9,5 @@
 .user-tile__main {
     border: 1px solid black;
     cursor: pointer;
+    border-radius: 10px;
 }
