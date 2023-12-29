@@ -22,9 +22,10 @@ const removeMessage = (conversationId, messageId) => ({
     payload: { conversationId, messageId }
 });
 
-const editMessage = (messageId) => ({
-
-})
+const editMessage = (conversationId, messageId, newContent) => ({
+    type: EDIT_MESSAGE,
+    payload: { conversationId, messageId, newContent }
+});
 
 
 // Thunks
@@ -70,6 +71,27 @@ export const deleteMessageThunk = (messageId) => async dispatch => {
     }
 };
 
+export const editMessageThunk = (messageId, newContent) => async dispatch => {
+    try {
+        const response = await fetch(`/api/messages/${messageId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({content: newContent})
+        });
+        if (!response.ok) {
+            console.log({errorMessage: 'editMessage thunk response error'});
+        }
+        else {
+            dispatch(editMessage(messageId, newContent));
+        }
+    }
+    catch (error) {
+        console.error({ errorMessage: error });
+    }
+}
+
 
 // Initial State
 
@@ -79,27 +101,35 @@ const initialState = {
 
 // Reducer
 
-export default function reducer( state = initialState, action) {
+export default function reducer(state = initialState, action) {
+    let newState = { ...state };
 
-    let newState = { ...state};
-
-    switch(action.type) {
-        case SET_MESSAGES:
+    switch (action.type) {
+        case SET_MESSAGES: {
             const { conversationId, messages } = action.payload;
-            newState.chats[conversationId] = {  messages: Array.isArray(messages) ? [...messages] : []  };
+            newState.chats[conversationId] = { messages: Array.isArray(messages) ? [...messages] : [] };
             return newState;
-        // case ADD_MESSAGE:
-        //     const { conversationId: targetId, message } = action.payload;
-        //     const existingMessages = newState.chats[targetId]?.messages || [];
-        //     newState.chats[targetId] = { messages: [...existingMessages, message] };
-        //     return newState;
-        case REMOVE_MESSAGE:
-            const { conversationId: convoId, messageId } = action.payload;
-            if (newState.chats[convoId]) {
-                newState.chats[convoId].messages = newState.chats[convoId].messages.filter(msg => msg.id !== messageId);
+        }
+        case EDIT_MESSAGE: {
+            const { conversationId, messageId, newContent } = action.payload;
+            if (newState.chats[conversationId]) {
+                newState.chats[conversationId].messages = newState.chats[conversationId].messages.map(message => {
+                    if (message.id === messageId) {
+                        return { ...message, content: newContent };
+                    }
+                    return message;
+                });
             }
             return newState;
+        }        
+        case REMOVE_MESSAGE: {
+            const { conversationId, messageId } = action.payload;
+            if (newState.chats[conversationId]) {
+                newState.chats[conversationId].messages = newState.chats[conversationId].messages.filter(msg => msg.id !== messageId);
+            }
+            return newState;
+        }
         default:
             return newState;
-    };
-};
+    }
+}

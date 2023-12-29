@@ -2,7 +2,7 @@ import { useSocket } from "../../context/SocketProvider"
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { fetchConversation } from "../../store/messages";
+import { editMessageThunk, fetchConversation } from "../../store/messages";
 import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
@@ -27,9 +27,8 @@ export default function MessagingPage() {
         });
 
         const newMessageHandler = async (message) => {
-            console.log("Received message:", message);
+            // console.log("Received message:", message);
         
-            // Check if the message belongs to the current user's selected conversation
             if ((message.receiver_id === targetUser || message.sender_id === targetUser) &&
             (message.receiver_id === currentUser || message.sender_id === currentUser)) {
                 try {
@@ -42,12 +41,28 @@ export default function MessagingPage() {
                 }
             }
         };
+
+        const editMessageHandler = async (message) => {
+            console.log('we are editing:', message)
+            if (message.sender_id === currentUser) {
+                try {
+                    setConvoLoading(true);
+                    await dispatch(editMessageThunk(message.id, message.content))
+                    setConvoLoading(false);
+                } catch (error) {
+                    console.error('Error Updating conversation', {errorMessage: error} );
+                    setConvoLoading(false);
+                }
+            }
+        }
         
 
         socket.on('new_message', newMessageHandler);
+        socket.on('edit_message', editMessageHandler);
 
         return () => {
             socket.off('new_message', newMessageHandler);
+            socket.off('edit_message', editMessageHandler);
         };
     
     }, [dispatch, currentUser, targetUser, socket]);
@@ -83,6 +98,7 @@ export default function MessagingPage() {
             }
         };
 
+        // This is a PLACEHOLDER for presentation. Update later.
         // This line will get the messages for the active conversation
         // or return an empty array if there are no messages or if no conversation is selected
         const currentMessages = activeConversation ? conversations[activeConversation]?.messages.slice(-5) || [] : [];
