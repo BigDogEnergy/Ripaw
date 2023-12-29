@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from sqlalchemy import or_
 from flask_login import login_required, current_user
 from app.models import Message, db
@@ -40,8 +40,31 @@ def get_conversation(user_id, target_id):
     else:
         return jsonify({'error': 'No conversation found'}), 404
 
+# NOTE - EDIT a messaged owned by the user
+@message_routes.route('/<int:message_id>', methods=['PUT'])
+@login_required
+def edit_message(message_id):
+    message = Message.query.get(int(message_id))
+
+    if not message:
+        return jsonify({'error': 'Message not found'}), 404
+
+    if message.sender_id == current_user.id:
+        data = request.get_json()
+        new_content = data.get('content')
+
+        if new_content is None:
+            return jsonify({'error': 'No content provided'}), 400
+
+        message.content = new_content
+        db.session.commit()
+        return jsonify({'message': 'Message updated', 'content': new_content}), 200
     
-# # NOTE - DELETE
+    else:
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    
+# NOTE - DELETE
 @message_routes.route('/<int:message_id>', methods=['DELETE'])
 @login_required
 def delete_message(message_id):
