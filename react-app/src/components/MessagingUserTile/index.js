@@ -6,9 +6,9 @@ function UserTiles( {setTargetUser, handleConversationSelect} ) {
     
     const users = useSelector(state => state.users.availableUsers);
 
-    const handleClick = (targetId) => {
-        setTargetUser(targetId);
-        handleConversationSelect(targetId);
+    const handleClick = (userId) => {
+        setTargetUser(userId);
+        handleConversationSelect(userId);
     };
 
     return (
@@ -24,7 +24,6 @@ function UserTiles( {setTargetUser, handleConversationSelect} ) {
                                 {user.type}
                             </div>
                         )}
-                        {/* Placeholder data above */}
                     </div>
                 </div>
             ))}

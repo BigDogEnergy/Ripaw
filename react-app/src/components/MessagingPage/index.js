@@ -2,7 +2,7 @@ import { useSocket } from "../../context/SocketProvider"
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { editMessageThunk, fetchConversation } from "../../store/messages";
+import { fetchConversation, deleteMessageThunk } from "../../store/messages";
 import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
@@ -18,8 +18,9 @@ export default function MessagingPage() {
     const [ activeConversation, setActiveConversation ] = useState(null);
     const [ targetUser, setTargetUser ] = useState('');
     const [ content, setContent ] = useState('');
-    const [ usersLoading, setUsersLoading ] = useState(true);
-    const [ convoLoading, setConvoLoading ] = useState(true);
+    const [ usersLoading, setUsersLoading ] = useState(false);
+    const [ convoLoading, setConvoLoading ] = useState(false);
+    const [ errorMessage, setErrorMessage ] = useState(null);
 
     useEffect(() => {
         dispatch(fetchAllUsers()).then(() => {
@@ -27,46 +28,46 @@ export default function MessagingPage() {
         });
 
         const newMessageHandler = async (message) => {
-            // console.log("Received message:", message);
         
             if ((message.receiver_id === targetUser || message.sender_id === targetUser) &&
             (message.receiver_id === currentUser || message.sender_id === currentUser)) {
                 try {
-                    setConvoLoading(true);
                     await dispatch(fetchConversation(currentUser, targetUser));
                     setConvoLoading(false);
                 } catch (error) {
-                    console.error('Error fetching conversation', {errorMessage: error} );
+                    setErrorMessage(error)
+                    console.log(errorMessage);
                     setConvoLoading(false);
                 }
             }
         };
 
-        const editMessageHandler = async (message) => {
-            console.log('we are editing:', message)
-            if (message.sender_id === currentUser) {
+
+        const deleteMessageHandler = async (message) => {
+            if (message.sender_id === currentUser || message.receiver_id === currentUser ) {
                 try {
-                    setConvoLoading(true);
-                    await dispatch(editMessageThunk(message.id, message.content))
+                    await dispatch(deleteMessageThunk(message.id))
                     setConvoLoading(false);
                 } catch (error) {
-                    console.error('Error Updating conversation', {errorMessage: error} );
+                    setErrorMessage(error)
+                    console.log(errorMessage)
                     setConvoLoading(false);
                 }
             }
-        }
-        
+
+        };
 
         socket.on('new_message', newMessageHandler);
-        socket.on('edit_message', editMessageHandler);
+        socket.on('delete_message', deleteMessageHandler);
 
         return () => {
             socket.off('new_message', newMessageHandler);
-            socket.off('edit_message', editMessageHandler);
+            socket.off('delete_message', deleteMessageHandler);
         };
     
-    }, [dispatch, currentUser, targetUser, socket]);
+    }, [dispatch, currentUser, targetUser, socket, errorMessage]);
     
+    // User Action Handlers
 
     const handleConversationSelect = (targetUser) => {
         dispatch(fetchConversation(currentUser, targetUser)).then(() => {
@@ -92,9 +93,23 @@ export default function MessagingPage() {
                     sender_id: currentUser, 
                     content: content, 
                 });
-                setContent('');        
+                setContent('');   
+                
+                
             } else {
-                console.log('Socket not connected');
+                setErrorMessage('Socket not connected')
+                console.log(errorMessage);
+            }
+        };
+
+        const deleteMessage = (messageId) => {
+            if (socket) {
+                socket.emit('delete_message', {
+                    id: messageId
+                });
+            } else {
+                setErrorMessage('Socket not connected')
+                console.log(errorMessage);
             }
         };
 
@@ -102,7 +117,6 @@ export default function MessagingPage() {
         // This line will get the messages for the active conversation
         // or return an empty array if there are no messages or if no conversation is selected
         const currentMessages = activeConversation ? conversations[activeConversation]?.messages.slice(-5) || [] : [];
-
         if (usersLoading) {
             return <div>Loading...</div>;
         };
@@ -119,10 +133,11 @@ export default function MessagingPage() {
                     </div>
 
                     <div className='messenger-convo__container'>
+
                         <div className='messenger-content__tile'>
-                            <MessageContentTiles 
-                                messages={currentMessages}
-                            />
+                            {!convoLoading && <MessageContentTiles 
+                            messages={currentMessages} 
+                            />}
                         </div>
                         <div className='messenger-input__container'>
                             <input 
