@@ -52,21 +52,21 @@ def handle_message(data):
 #             print(f"Updated Failed - Message with id {message.id} not found")
 
 @socketio.on('delete_message')
-def delete_message(data):
+def deletion_request(data):
+    print("Attempting Delete")
     if 'id' in data:
         message_id = data['id']
         message = Message.query.get(message_id)
 
         if message:
-            if message.sender_id == current_user.id:
-                db.session.delete(message)
-                db.session.commit()
+            emit('delete_message', message.to_dict(), room=message.receiver_id)
+            emit('delete_message', message.to_dict(), room=message.sender_id)
+            db.session.delete(message)
+            db.session.commit()
 
-                emit('message_deleted', {'id': message_id}, room=message.receiver_id)
-                emit('message_deleted', {'id': message_id}, room=message.sender_id)
-                print(f"Delete Message - Message with id {message.id} deleted")
-            else:
-                print(f"Delete Failed - Unauthorized user for message id {message.id}")
+            print(f"Delete Message - Message with id {message_id} deleted")
+        # else:
+        #     print(f"Delete Failed - Unauthorized user for message id {message.id}")
         else:
             print(f"Delete Failed - Message with id {message_id} not found")
     else:

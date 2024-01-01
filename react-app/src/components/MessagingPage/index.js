@@ -23,6 +23,8 @@ export default function MessagingPage() {
     const [ errorMessage, setErrorMessage ] = useState(null);
 
     useEffect(() => {
+        
+        
         dispatch(fetchAllUsers()).then(() => {
             setUsersLoading(false);
         });
@@ -32,20 +34,22 @@ export default function MessagingPage() {
             if ((message.receiver_id === targetUser || message.sender_id === targetUser) &&
             (message.receiver_id === currentUser || message.sender_id === currentUser)) {
                 try {
+                    setConvoLoading(true);
                     await dispatch(fetchConversation(currentUser, targetUser));
                     setConvoLoading(false);
                 } catch (error) {
                     setErrorMessage(error)
                     console.log(errorMessage);
-                    setConvoLoading(false);
                 }
             }
         };
 
 
         const deleteMessageHandler = async (message) => {
-            if (message.sender_id === currentUser || message.receiver_id === currentUser ) {
+            if (currentUser) {
                 try {
+                    console.log('deleteMessageHandler', message.id)
+                    setConvoLoading(true);
                     await dispatch(deleteMessageThunk(message.id))
                     setConvoLoading(false);
                 } catch (error) {
@@ -65,7 +69,7 @@ export default function MessagingPage() {
             socket.off('delete_message', deleteMessageHandler);
         };
     
-    }, [dispatch, currentUser, targetUser, socket, errorMessage]);
+    }, [dispatch, currentUser, targetUser, socket, conversations, convoLoading]);
     
     // User Action Handlers
 
@@ -87,7 +91,7 @@ export default function MessagingPage() {
 
         const sendMessage = () => {
             if (socket) {
-
+                console.log('Socket Message')
                 socket.emit('message', { 
                     receiver_id: targetUser,
                     sender_id: currentUser, 
@@ -107,6 +111,7 @@ export default function MessagingPage() {
                 socket.emit('delete_message', {
                     id: messageId
                 });
+                console.log('delete_message', messageId)
             } else {
                 setErrorMessage('Socket not connected')
                 console.log(errorMessage);
@@ -148,6 +153,7 @@ export default function MessagingPage() {
                                 placeholder="Type a message..."
                             />
                             <button className='messenger-input__button' onClick={sendMessage}>Send</button>
+                            <button className='messenger-input__button' onClick={() => deleteMessage({id: 506})}>...</button>
                         </div>
                     </div>
                 </div>

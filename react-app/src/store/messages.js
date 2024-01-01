@@ -17,9 +17,9 @@ const setMessages = (conversationId, messages) => ({
 //     payload: { conversationId, message }
 // });
 
-const removeMessage = (conversationId, messageId) => ({
+const removeMessage = (messageId) => ({
     type: REMOVE_MESSAGE,
-    payload: { conversationId, messageId }
+    payload: messageId
 });
 
 // const editMessage = (conversationId, messageId, newContent) => ({
@@ -40,6 +40,7 @@ const removeMessage = (conversationId, messageId) => ({
 
 export const fetchConversation = (userId, targetId) => async dispatch => {
     try {
+        console.log('fetchingConversation for userId', userId, 'and targetId', targetId)
         const response = await fetch(`/api/messages/${userId}/${targetId}`);
         if (!response.ok) {
             console.log({errorMessage: 'fetchConversation thunk response error', response});
@@ -60,11 +61,11 @@ export const deleteMessageThunk = (messageId) => async dispatch => {
         const response = await fetch(`/api/messages/${messageId}`, {
             method: 'DELETE',
         });
+        dispatch(removeMessage(messageId));
         if (!response.ok) {
             console.log({errorMessage: 'deleteMessage thunk response error'});
-        }
-        else {
-            dispatch(removeMessage(messageId));
+            console.log('Response status:', response.status);
+            console.log('Response payload:', await response.json());
         }
     } catch (error) {
         console.error({ errorMessage: error });
@@ -123,12 +124,16 @@ export default function reducer(state = initialState, action) {
         //     return newState;
         // }        
         case REMOVE_MESSAGE: {
-            const { conversationId, messageId } = action.payload;
-            if (newState.chats[conversationId]) {
-                newState.chats[conversationId].messages = newState.chats[conversationId].messages.filter(msg => msg.id !== messageId);
-            }
-            return newState;
+            const messageId = action.payload;
+            const updatedChats = { ...newState.chats };
+            
+            Object.keys(updatedChats).forEach(conversationId => {
+                updatedChats[conversationId].messages = updatedChats[conversationId].messages.filter(msg => msg.id !== messageId);
+            });
+        
+            return { ...newState, chats: updatedChats };
         }
+        
         default:
             return newState;
     }

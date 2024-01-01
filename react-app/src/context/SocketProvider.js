@@ -23,6 +23,8 @@ export const SocketProvider = ({ children, currentUser }) => {
             }
         });
 
+        
+
         newSocket.on('disconnect', () => {
             console.log('SocketProvider Disconnected');
             // Global Disconnect logic Here

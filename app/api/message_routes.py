@@ -68,7 +68,7 @@ def edit_message(message_id):
 @message_routes.route('/<int:message_id>', methods=['DELETE'])
 @login_required
 def delete_message(message_id):
-    message = Message.query.get(int(message_id))
+    message = Message.query.get(message_id)
 
     if not message:
         return jsonify({'error': 'Message not found'}), 404
