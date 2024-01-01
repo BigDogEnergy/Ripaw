@@ -27,26 +27,50 @@ def handle_message(data):
         db.session.commit()
         emit('new_message', new_message.to_dict(), room=data['receiver_id'])
         emit('new_message', new_message.to_dict(), room=data['sender_id'])
-        print(f"New Message - Content: " + data['content'])
+        print(f"Message - Content: " + data['content'])
     else:
-        print("Invalid message data received")
+        print("Message Error - Invalid message data received")
 
-@socketio.on('remove_message')
-def update_text(data):
-    message_id = data['id']
-    new_content = 'MESSAGE REMOVED'    
-    message = Message.query.get(data['id'])
-    if message:
-        message.content = new_content
-        db.session.commit()
-        updated_data = {'id': message_id, 'content': new_content}
-        emit('message_updated', updated_data, room=message.receiver_id)
-        emit('message_updated', updated_data, room=message.sender_id)
-        print(f"Message Update - Message with id {message_id} updated")
+# @socketio.on('edit_message')
+# def edit_text(data):
+#     if 'content' in data and 'id' in data: 
+#         message_id = data['id']
+#         new_content = data['content']
+#         message = Message.query.get(data['id'])
+#         if message:
+#             message.content = new_content
+#             db.session.commit()
+#             updated_data = {
+#                 'id': message.id, 
+#                 'content': new_content
+#             }
+#             emit('message_updated', updated_data, room=message.receiver_id)
+#             emit('message_updated', updated_data, room=message.sender_id)
+#             print(f"Edit Message - Message with id {message.id} updated")
 
+#         else:
+#             print(f"Updated Failed - Message with id {message.id} not found")
+
+@socketio.on('delete_message')
+def delete_message(data):
+    if 'id' in data:
+        message_id = data['id']
+        message = Message.query.get(message_id)
+
+        if message:
+            if message.sender_id == current_user.id:
+                db.session.delete(message)
+                db.session.commit()
+
+                emit('message_deleted', {'id': message_id}, room=message.receiver_id)
+                emit('message_deleted', {'id': message_id}, room=message.sender_id)
+                print(f"Delete Message - Message with id {message.id} deleted")
+            else:
+                print(f"Delete Failed - Unauthorized user for message id {message.id}")
+        else:
+            print(f"Delete Failed - Message with id {message_id} not found")
     else:
-        print(f"Updated Failed - Message with id {message_id} not found")
-
+        print("Delete Message Error - No message ID provided")
 
 @socketio.on('disconnect')
 def on_disconnect():

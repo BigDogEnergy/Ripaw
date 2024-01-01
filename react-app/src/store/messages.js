@@ -3,7 +3,7 @@
 const SET_MESSAGES = 'messages/set_messages';
 // const ADD_MESSAGE = 'messages/add_message';
 const REMOVE_MESSAGE = 'messages/remove_message';
-const EDIT_MESSAGE = 'messages/edit_message'
+// const EDIT_MESSAGE = 'messages/edit_message'
 
 // Action Creators
 
@@ -22,10 +22,10 @@ const removeMessage = (conversationId, messageId) => ({
     payload: { conversationId, messageId }
 });
 
-const editMessage = (conversationId, messageId, newContent) => ({
-    type: EDIT_MESSAGE,
-    payload: { conversationId, messageId, newContent }
-});
+// const editMessage = (conversationId, messageId, newContent) => ({
+//     type: EDIT_MESSAGE,
+//     payload: { conversationId, messageId, newContent }
+// });
 
 
 // Thunks
@@ -47,7 +47,7 @@ export const fetchConversation = (userId, targetId) => async dispatch => {
         } else {
             const messages = await response.json();
             dispatch(setMessages( targetId, messages ));
-            return messages;
+            return;
         }
         
     } catch (error) {
@@ -71,26 +71,26 @@ export const deleteMessageThunk = (messageId) => async dispatch => {
     }
 };
 
-export const editMessageThunk = (messageId, newContent) => async dispatch => {
-    try {
-        const response = await fetch(`/api/messages/${messageId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({content: newContent})
-        });
-        if (!response.ok) {
-            console.log({errorMessage: 'editMessage thunk response error'});
-        }
-        else {
-            dispatch(editMessage(messageId, newContent));
-        }
-    }
-    catch (error) {
-        console.error({ errorMessage: error });
-    }
-}
+// export const editMessageThunk = (messageId, newContent) => async dispatch => {
+//     try {
+//         const response = await fetch(`/api/messages/${messageId}`, {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({content: newContent})
+//         });
+//         if (!response.ok) {
+//             console.log({errorMessage: 'editMessage thunk response error'});
+//         }
+//         else {
+//             dispatch(editMessage(messageId, newContent));
+//         }
+//     }
+//     catch (error) {
+//         console.error({ errorMessage: error });
+//     }
+// }
 
 
 // Initial State
@@ -110,18 +110,18 @@ export default function reducer(state = initialState, action) {
             newState.chats[conversationId] = { messages: Array.isArray(messages) ? [...messages] : [] };
             return newState;
         }
-        case EDIT_MESSAGE: {
-            const { conversationId, messageId, newContent } = action.payload;
-            if (newState.chats[conversationId]) {
-                newState.chats[conversationId].messages = newState.chats[conversationId].messages.map(message => {
-                    if (message.id === messageId) {
-                        return { ...message, content: newContent };
-                    }
-                    return message;
-                });
-            }
-            return newState;
-        }        
+        // case EDIT_MESSAGE: {
+        //     const { conversationId, messageId, newContent } = action.payload;
+        //     if (newState.chats[conversationId]) {
+        //         newState.chats[conversationId].messages = newState.chats[conversationId].messages.map(message => {
+        //             if (message.id === messageId) {
+        //                 return { ...message, content: newContent };
+        //             }
+        //             return message;
+        //         });
+        //     }
+        //     return newState;
+        // }        
         case REMOVE_MESSAGE: {
             const { conversationId, messageId } = action.payload;
             if (newState.chats[conversationId]) {
