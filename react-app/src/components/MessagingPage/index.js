@@ -6,6 +6,7 @@ import { fetchConversation, deleteMessageThunk } from "../../store/messages";
 import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
+import { Modal } from "../../context/Modal";
 import './MessagingPage.css'
 
 export default function MessagingPage() {
@@ -21,6 +22,8 @@ export default function MessagingPage() {
     const [ usersLoading, setUsersLoading ] = useState(false);
     const [ convoLoading, setConvoLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState(null);
+    const [ showDropdown, setShowDropdown ] = useState(false);
+
 
     useEffect(() => {
         
@@ -126,6 +129,10 @@ export default function MessagingPage() {
             return <div>Loading...</div>;
         };
 
+
+        const lastMessageId = currentMessages.length > 0 ? currentMessages[currentMessages.length - 1].id : null;
+
+
         return (
             <>
                 <div className='messenger-main__container'>
@@ -153,7 +160,7 @@ export default function MessagingPage() {
                                 placeholder="Type a message..."
                             />
                             <button className='messenger-input__button' onClick={sendMessage}>Send</button>
-                            <button className='messenger-input__button' onClick={() => deleteMessage({id: 506})}>...</button>
+                            <button className='messenger-delete__button' onClick={() => deleteMessage(lastMessageId)}>Delete Last Message</button>
                         </div>
                     </div>
                 </div>
