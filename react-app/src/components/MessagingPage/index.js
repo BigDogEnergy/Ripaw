@@ -6,7 +6,9 @@ import { fetchConversation, deleteMessageThunk } from "../../store/messages";
 import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
+import MessageOptionsDropdownMenu from "../MessageOptionsDropdown";
 import { Modal } from "../../context/Modal";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import './MessagingPage.css'
 
 export default function MessagingPage() {
@@ -24,6 +26,38 @@ export default function MessagingPage() {
     const [ errorMessage, setErrorMessage ] = useState(null);
     const [ showDropdown, setShowDropdown ] = useState(false);
 
+    // Socket commands
+    // TO DO:
+    // These need to be moved into the socket provider so we can encapsulate things better.
+
+    const sendMessage = () => {
+        if (socket) {
+            console.log('Socket Message')
+            socket.emit('message', { 
+                receiver_id: targetUser,
+                sender_id: currentUser, 
+                content: content, 
+            });
+            setContent('');   
+            
+            
+        } else {
+            setErrorMessage('Socket not connected')
+            console.log(errorMessage);
+        }
+    };
+
+    const deleteMessage = (messageId) => {
+        if (socket) {
+            socket.emit('delete_message', {
+                id: messageId
+            });
+            console.log('delete_message', messageId)
+        } else {
+            setErrorMessage('Socket not connected')
+            console.log(errorMessage);
+        }
+    };
 
     useEffect(() => {
         
@@ -86,51 +120,31 @@ export default function MessagingPage() {
         setContent(e.target.value);
     };
 
+    const toggleDropdown = () => {
+        setShowDropdown(prev => !prev);
+    };
+
+
     if (!currentUser) {
         history.push('/')
         return null;
     }
     else {
 
-        const sendMessage = () => {
-            if (socket) {
-                console.log('Socket Message')
-                socket.emit('message', { 
-                    receiver_id: targetUser,
-                    sender_id: currentUser, 
-                    content: content, 
-                });
-                setContent('');   
-                
-                
-            } else {
-                setErrorMessage('Socket not connected')
-                console.log(errorMessage);
-            }
-        };
-
-        const deleteMessage = (messageId) => {
-            if (socket) {
-                socket.emit('delete_message', {
-                    id: messageId
-                });
-                console.log('delete_message', messageId)
-            } else {
-                setErrorMessage('Socket not connected')
-                console.log(errorMessage);
-            }
-        };
-
-        // This is a PLACEHOLDER for presentation. Update later.
-        // This line will get the messages for the active conversation
-        // or return an empty array if there are no messages or if no conversation is selected
-        const currentMessages = activeConversation ? conversations[activeConversation]?.messages.slice(-5) || [] : [];
         if (usersLoading) {
             return <div>Loading...</div>;
         };
 
+        // This is a PLACEHOLDER for presentation. Update later.
+        // This will get the messages for the active conversation
+        // or return an empty array if there are no messages or if no conversation is selected
+        const currentMessages = activeConversation ? conversations[activeConversation]?.messages || [] : [];
 
-        const lastMessageId = currentMessages.length > 0 ? currentMessages[currentMessages.length - 1].id : null;
+        // FOR DELETE
+        const sentMessages = currentMessages.filter(message => message.sender_id === currentUser);
+        const lastMessageId = sentMessages.length > 0 
+            ? sentMessages[sentMessages.length - 1].id 
+            : null;
 
 
         return (
@@ -145,13 +159,24 @@ export default function MessagingPage() {
                     </div>
 
                     <div className='messenger-convo__container'>
-
                         <div className='messenger-content__tile'>
                             {!convoLoading && <MessageContentTiles 
-                            messages={currentMessages} 
+                                messages={currentMessages}
                             />}
                         </div>
+                            
                         <div className='messenger-input__container'>
+                            <button
+                             className='messenger-options__button'
+                             onClick={toggleDropdown} 
+                             aria-label="Open options"
+                             >
+                                <i className="fas fa-plus"></i>
+                            </button>
+                                {showDropdown && <MessageOptionsDropdownMenu 
+                                    deleteMessage={deleteMessage}
+                                    lastMessageId={lastMessageId} 
+                                />}
                             <input 
                                 type='text' 
                                 className='messenger-input__text'
@@ -159,8 +184,13 @@ export default function MessagingPage() {
                                 onChange={handleInputChange}
                                 placeholder="Type a message..."
                             />
-                            <button className='messenger-input__button' onClick={sendMessage}>Send</button>
-                            <button className='messenger-delete__button' onClick={() => deleteMessage(lastMessageId)}>Delete Last Message</button>
+                            <button 
+                                className='messenger-input__button' 
+                                onClick={sendMessage} 
+                                aria-label="Send message button"
+                                disabled={!content}>
+                                <i className="fas fa-arrow-up"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

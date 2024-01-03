@@ -8,6 +8,7 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = ({ children, currentUser }) => {
+    
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
@@ -22,8 +23,6 @@ export const SocketProvider = ({ children, currentUser }) => {
                 newSocket.emit('join_room', { user_id: currentUser.id });
             }
         });
-
-        
 
         newSocket.on('disconnect', () => {
             console.log('SocketProvider Disconnected');
