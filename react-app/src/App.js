@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 // import { io } from 'socket.io-client';
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
