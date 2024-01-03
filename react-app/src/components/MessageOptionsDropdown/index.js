@@ -1,9 +1,14 @@
+import './MessageOptionsDropdown.css';
+import React from 'react';
 
+function MessageOptionsDropdownMenu ({deleteMessage, lastMessageId}) {
 
-const MessageOptionsDropdownMenu = () => (
-    <div className='dropdown-menu'>
-      <button onClick={() => {/* handle first action */}}>Option 1</button>
-      <button onClick={() => {/* handle second action */}}>Option 2</button>
+  return (
+    <div className='messenger-options__dropdown'>
+      <button onClick={() => {deleteMessage(lastMessageId)}}>Undo Message</button>
     </div>
   );
-  
+
+}
+
+export default MessageOptionsDropdownMenu;

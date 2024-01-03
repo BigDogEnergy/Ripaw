@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    padding-bottom: 100px;
 }
 
 .messenger-convo__container {
@@ -17,6 +18,17 @@
     justify-content: center;
 }
 
+.messenger-options__container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.messenger-options__button {
+    border: none;
+    border-radius: 25%;
+    margin-left: 15px;
+}
+
 .messenger-input__container {
     display: flex;
     flex-direction: row;
@@ -25,6 +37,7 @@
 
 .messenger-input__text {
     width: 80%;
+    margin-left: 20px;
 }
 
 .messenger-input__button {
