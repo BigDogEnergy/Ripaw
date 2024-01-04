@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import './MessagingUserTile.css'
+import './MessagingUserTile.css';
 
-function UserTiles( {setTargetUser, handleConversationSelect} ) {
+function UserTiles({ setTargetUser, handleConversationSelect }) {
     
     const users = useSelector(state => state.users.availableUsers);
+    const currentUser = useSelector(state => state.session.user.id);
 
     const handleClick = (userId) => {
         setTargetUser(userId);
@@ -13,12 +14,12 @@ function UserTiles( {setTargetUser, handleConversationSelect} ) {
 
     return (
         <div className="user-tile__container">
-            {users.map(user => (
+            {users.filter(user => user.id !== currentUser).map(user => (
                 <div key={user.id} className="user-tile__main" onClick={() => handleClick(user.id)}>
                     <div className="user-info__container">
                         <div className="user-info__username">
                             {user.username}
-                            </div>
+                        </div>
                         {user.type === 'Admin' && (
                             <div className="user-info__type">
                                 {user.type}
