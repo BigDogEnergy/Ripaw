@@ -12,7 +12,7 @@ export const SocketProvider = ({ children, currentUser }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5000', { 
+        const newSocket = io('ripbawbanking.onrender.com', { 
         });
         setSocket(newSocket);
 
