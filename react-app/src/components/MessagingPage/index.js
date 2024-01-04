@@ -7,8 +7,6 @@ import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
 import MessageOptionsDropdownMenu from "../MessageOptionsDropdown";
-import { Modal } from "../../context/Modal";
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import './MessagingPage.css'
 
 export default function MessagingPage() {
