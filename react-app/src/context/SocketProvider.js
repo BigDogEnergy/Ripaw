@@ -16,9 +16,9 @@ export const SocketProvider = ({ children, currentUser }) => {
         // });
         // setSocket(newSocket);
 
-        // const newSocket = io('ripbawbanking.onrender.com', { 
-        // });
-        // setSocket(newSocket);
+        const newSocket = io('ripbawbanking.onrender.com', { 
+        });
+        setSocket(newSocket);
 
         newSocket.on('connect', () => {
             console.log('SocketProvider Connected');
