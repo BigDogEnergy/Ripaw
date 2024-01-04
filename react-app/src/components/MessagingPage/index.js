@@ -150,6 +150,9 @@ export default function MessagingPage() {
                 <div className='messenger-main__container'>
                     
                     <div className='messenger-userlist__container'>
+                        <div className='messenger-userlist__title'> 
+                        Friends:
+                        </div>
                         {!usersLoading && <UserTiles 
                             setTargetUser={setTargetUser} 
                             handleConversationSelect={handleConversationSelect} 
@@ -162,34 +165,36 @@ export default function MessagingPage() {
                                 messages={currentMessages}
                             />}
                         </div>
-                            
-                        <div className='messenger-input__container'>
-                            <button
-                             className='messenger-options__button'
-                             onClick={toggleDropdown} 
-                             aria-label="Open options"
-                             >
-                                <i className="fas fa-plus"></i>
-                            </button>
-                                {showDropdown && <MessageOptionsDropdownMenu 
-                                    deleteMessage={deleteMessage}
-                                    lastMessageId={lastMessageId} 
-                                />}
-                            <input 
-                                type='text' 
-                                className='messenger-input__text'
-                                value={content} 
-                                onChange={handleInputChange}
-                                placeholder="Type a message..."
-                            />
-                            <button 
-                                className='messenger-input__button' 
-                                onClick={sendMessage} 
-                                aria-label="Send message button"
-                                disabled={!content}>
-                                <i className="fas fa-arrow-up"></i>
-                            </button>
-                        </div>
+                        
+                        {activeConversation && (
+                            <div className='messenger-input__container'>
+                                <button
+                                className='messenger-options__button'
+                                onClick={toggleDropdown} 
+                                aria-label="Open options"
+                                >
+                                    <i className="fas fa-plus"></i>
+                                </button>
+                                    {showDropdown && <MessageOptionsDropdownMenu 
+                                        deleteMessage={deleteMessage}
+                                        lastMessageId={lastMessageId} 
+                                    />}
+                                <input 
+                                    type='text' 
+                                    className='messenger-input__text'
+                                    value={content} 
+                                    onChange={handleInputChange}
+                                    placeholder="Type a message..."
+                                />
+                                <button 
+                                    className='messenger-input__button' 
+                                    onClick={sendMessage} 
+                                    aria-label="Send message button"
+                                    disabled={!content}>
+                                    <i className="fas fa-arrow-up"></i>
+                                </button>
+                            </div>
+                         )}
                     </div>
                 </div>
             </>

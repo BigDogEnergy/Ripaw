@@ -12,9 +12,13 @@ export const SocketProvider = ({ children, currentUser }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const newSocket = io('ripbawbanking.onrender.com', { 
+        const newSocket = io('localhost:5000', { 
         });
         setSocket(newSocket);
+
+        // const newSocket = io('ripbawbanking.onrender.com', { 
+        // });
+        // setSocket(newSocket);
 
         newSocket.on('connect', () => {
             console.log('SocketProvider Connected');

@@ -8,14 +8,13 @@
 .messenger-convo__container {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
-    width: 80%;
+    width: 87.5%;
 }
 
 .messenger-userlist__container {
     display: flex;
-    width: 20%;
-    justify-content: center;
+    flex-direction: column;
+    width: 12.5%;
 }
 
 .messenger-options__container {
@@ -31,8 +30,7 @@
 
 .messenger-input__container {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    height: 25px;
 }
 
 .messenger-input__text {
