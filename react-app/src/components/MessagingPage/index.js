@@ -30,7 +30,7 @@ export default function MessagingPage() {
 
     const sendMessage = () => {
         if (socket) {
-            console.log('Socket Message')
+            // console.log('Socket Message', targetUser, currentUser, content)
             socket.emit('message', { 
                 receiver_id: targetUser,
                 sender_id: currentUser, 
@@ -104,7 +104,7 @@ export default function MessagingPage() {
             socket.off('delete_message', deleteMessageHandler);
         };
     
-    }, [dispatch, currentUser, targetUser, socket, conversations, convoLoading]);
+    }, [dispatch, currentUser, targetUser, socket, conversations, convoLoading, errorMessage]);
     
     // User Action Handlers
 
