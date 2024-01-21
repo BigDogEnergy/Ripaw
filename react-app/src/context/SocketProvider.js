@@ -12,8 +12,7 @@ export const SocketProvider = ({ children, currentUser }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const env = process.env.REACT_APP_FLASK_ENV
-        const server = env === 'development' ? 'http://localhost:5000' : 'https://ripbawbanking.onrender.com';
+        const server = process.env.REACT_APP_BASE_URL;
 
         const newSocket = io(server, {
             // Options can be added here if any are needed in the future
