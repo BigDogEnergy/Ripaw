@@ -27,9 +27,9 @@ Future implementation: Charting data using Canvas
 
 1. Clone this respository
 
-2. Create a **.env** file based on the example.
+2. Create **.env** files based on the development examples.
 
-3. Get into your pipenv shell
+3. Get into your shell
 
 4. Install dependencies
 ```bash
@@ -42,7 +42,7 @@ cd react-app
 npm install
 ```
 
-6. Run the start.sh Script to Start the Application by navigating back to the root directory and running the script:
+6. Run the start.sh Script to Start the Application by navigating back to the root directory and using:
 ```bash
 npm run start-fullstack
 ```
