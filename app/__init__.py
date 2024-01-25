@@ -15,7 +15,6 @@ from .config import Config
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 socketio = SocketIO(app, cors_allowed_origins=["http://localhost:3000", "https://ripbawbanking.onrender.com"])
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "https://ripbawbanking.onrender.com"]}})
 
 from .socket import events
 
@@ -44,8 +43,9 @@ db.init_app(app)
 Migrate(app, db)
 
 # Application Security
-CORS(app)
-
+CORS(app, resources={r"/api/*": 
+                     {"origins": ["http://localhost:3000", "https://ripbawbanking.onrender.com"]}
+                     });
 
 @app.before_request
 def https_redirect():
