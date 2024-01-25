@@ -3,7 +3,7 @@
 Ripaw is a Flask - React fullstack clone of many different parts of common banking apps. It was built to act as a way for me to practice engaging with data and presenting it in more meaningful ways to a customer. The longterm learning intention is to develop the skills required to show a potential future employer that I can interact with and manipulate data in meaningful ways.
 
 ## Live Site
-- **See what I am working on!: ** [Ripaw](https://ripbawbanking.onrender.com/)
+- **See what I am working on: ** [Ripaw](https://ripbawbanking.onrender.com/)
 
 ## Technologies Used
 
@@ -50,6 +50,8 @@ or
 ```bash
 ./start.sh
 ```
+
+7. The application will now be running at [http://localhost:3000/](http://localhost:3000/).
 
 Update Needed:
 
