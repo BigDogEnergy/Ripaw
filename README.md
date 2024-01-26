@@ -57,11 +57,11 @@ or
 
 1. Clone this repository
 
-2. Create **.env** Files:
-Create **.env** files in the necessary locations based on the development example files.
+2. Create **.env** Files based on the development examples.
 
 3. Install Python Dependencies:
-Using Pipenv, install the Python dependencies. Open Command Prompt or PowerShell and run:
+Using Pipenv, install the Python dependencies.
+Open Command Prompt or PowerShell and run:
 
 ```
 pipenv install
