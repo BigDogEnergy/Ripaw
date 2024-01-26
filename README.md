@@ -23,7 +23,7 @@ Future implementation: Charting data using Canvas
 - SQLAlchemy
 - WebSockets: Integrated to manage real-time data exchange and updates from the frontend.
 
-## To Get Started
+## To Get Started (Bash / Zsh)
 
 1. Clone this respository
 
@@ -52,6 +52,53 @@ or
 ```
 
 7. The application will now be running at [http://localhost:3000/](http://localhost:3000/).
+
+## To Get Started (Windows)
+
+1. Clone this repository
+
+2. Create **.env** Files:
+Create **.env** files in the necessary locations based on the development example files.
+
+3. Install Python Dependencies:
+Using Pipenv, install the Python dependencies. Open Command Prompt or PowerShell and run:
+
+```
+pipenv install
+```
+
+4. Install Node.js Dependencies (for the React frontend):
+Navigate to the react-app directory and install Node.js dependencies:
+
+```
+cd react-app
+npm install
+```
+
+5. Start the Backend and Frontend Servers:
+You will need to start the Flask server and the React development server separately.
+
+5a. Start the Flask Server:
+First, ensure that your database is set up as required. Then, within your Pipenv shell, run:
+
+```
+pipenv shell
+flask run
+```
+
+This will start the Flask server.
+
+5b. Start the React Development Server:
+Open a new Command Prompt or PowerShell window, navigate to the react-app directory, and run:
+
+```
+npm start
+This will start the React development server.
+```
+
+6. Access the Application:
+The application will now be running at [http://localhost:3000/](http://localhost:3000/).
+
 
 Update Needed:
 
