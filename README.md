@@ -42,13 +42,15 @@ cd react-app
 npm install
 ```
 
-6. Run the start.sh Script to Start the Application by navigating back to the root directory and using:
+6. Start the backend:
 ```bash
-npm run start-fullstack
+flask run
 ```
-or
+
+7. Start the frontend:
 ```bash
-./start.sh
+cd react-app
+npm start
 ```
 
 7. The application will now be running at [http://localhost:3000/](http://localhost:3000/).
