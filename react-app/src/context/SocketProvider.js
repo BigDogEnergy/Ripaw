@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 const SocketContext = createContext();
@@ -15,7 +15,6 @@ export const SocketProvider = ({ children, currentUser }) => {
         const server = process.env.REACT_APP_BASE_URL;
 
         const newSocket = io(server, {
-            // Options can be added here if any are needed in the future
         });
         setSocket(newSocket);
 
@@ -33,12 +32,34 @@ export const SocketProvider = ({ children, currentUser }) => {
         });
 
         return () => {
+            newSocket.off('connect');
+            newSocket.off('disconnect');
             newSocket.disconnect();
         };
     }, [currentUser]);
 
+    // send Message 
+    const sendMessage = useCallback(({ receiver_id, sender_id, content }) => {
+        if (socket.connected) {
+            socket.emit('message', { 
+                receiver_id, 
+                sender_id, 
+                content 
+            });
+        }
+    }, [socket]);
+
+    // delete Message
+    const deleteMessage = useCallback((id) => {
+        if (socket.connected) {
+            socket.emit('delete_message', { id });
+        }
+    }, [socket]);
+
+    const value = { socket, sendMessage, deleteMessage }
+
     return (
-        <SocketContext.Provider value={socket}>
+        <SocketContext.Provider value={value}>
             {children}
         </SocketContext.Provider>
     );

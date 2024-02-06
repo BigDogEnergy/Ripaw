@@ -7,11 +7,11 @@ import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
 import MessageOptionsDropdownMenu from "../MessageOptionsDropdown";
+
 import './MessagingPage.css'
 
 export default function MessagingPage() {
 
-    const socket = useSocket();
     const history = useHistory();
     const dispatch = useDispatch();
     const conversations = useSelector(state => state.messages.chats);
@@ -23,49 +23,30 @@ export default function MessagingPage() {
     const [ convoLoading, setConvoLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState(null);
     const [ showDropdown, setShowDropdown ] = useState(false);
+    const { sendMessage, deleteMessage, socket } = useSocket();
 
-    // Socket commands
-    // TO DO:
-    // These need to be moved into the socket provider so we can encapsulate things better.
+        // This is a PLACEHOLDER for presentation. Update later.
+        // or return an empty array if there are no messages or if no conversation is selected
+        const currentMessages = activeConversation ? conversations[activeConversation]?.messages || [] : [];
 
-    const sendMessage = () => {
-        if (socket) {
-            // console.log('Socket Message', targetUser, currentUser, content)
-            socket.emit('message', { 
-                receiver_id: targetUser,
-                sender_id: currentUser, 
-                content: content, 
-            });
-            setContent('');   
-            
-            
-        } else {
-            setErrorMessage('Socket not connected')
-            console.log(errorMessage);
-        }
-    };
+        // Identifying last message for Delete
+        const sentMessages = currentMessages.filter(message => message.sender_id === currentUser);
+        const lastMessageId = sentMessages.length > 0 
+            ? sentMessages[sentMessages.length - 1].id 
+            : null;
 
-    const deleteMessage = (messageId) => {
-        if (socket) {
-            socket.emit('delete_message', {
-                id: messageId
-            });
-            console.log('delete_message', messageId)
-        } else {
-            setErrorMessage('Socket not connected')
-            console.log(errorMessage);
-        }
-    };
 
+    //Fix this: We only want to grab friends. Need some more code to create that.
     useEffect(() => {
-        
-        
         dispatch(fetchAllUsers()).then(() => {
             setUsersLoading(false);
         });
+    }, [currentUser])
+
+    // ********** Messenger-related useEffect ********** //
+    useEffect(() => {
 
         const newMessageHandler = async (message) => {
-        
             if ((message.receiver_id === targetUser || message.sender_id === targetUser) &&
             (message.receiver_id === currentUser || message.sender_id === currentUser)) {
                 try {
@@ -83,7 +64,6 @@ export default function MessagingPage() {
         const deleteMessageHandler = async (message) => {
             if (currentUser) {
                 try {
-                    console.log('deleteMessageHandler', message.id)
                     setConvoLoading(true);
                     await dispatch(deleteMessageThunk(message.id))
                     setConvoLoading(false);
@@ -106,8 +86,10 @@ export default function MessagingPage() {
     
     }, [dispatch, currentUser, targetUser, socket, conversations, convoLoading, errorMessage]);
     
-    // User Action Handlers
 
+
+    
+    // ********** User Action Handlers ********** //
     const handleConversationSelect = (targetUser) => {
         dispatch(fetchConversation(currentUser, targetUser)).then(() => {
             setActiveConversation(targetUser);
@@ -122,6 +104,16 @@ export default function MessagingPage() {
         setShowDropdown(prev => !prev);
     };
 
+    const handleNewMessage = () => {
+        sendMessage({
+            receiver_id: targetUser,
+            sender_id: currentUser,
+            content: content
+        });
+        setContent('');
+    };
+    
+
 
     if (!currentUser) {
         history.push('/')
@@ -132,18 +124,6 @@ export default function MessagingPage() {
         if (usersLoading) {
             return <div>Loading...</div>;
         };
-
-        // This is a PLACEHOLDER for presentation. Update later.
-        // This will get the messages for the active conversation
-        // or return an empty array if there are no messages or if no conversation is selected
-        const currentMessages = activeConversation ? conversations[activeConversation]?.messages || [] : [];
-
-        // FOR DELETE
-        const sentMessages = currentMessages.filter(message => message.sender_id === currentUser);
-        const lastMessageId = sentMessages.length > 0 
-            ? sentMessages[sentMessages.length - 1].id 
-            : null;
-
 
         return (
             <>
@@ -161,7 +141,8 @@ export default function MessagingPage() {
 
                     <div className='messenger-convo__container'>
                         <div className='messenger-content__tile'>
-                            {!convoLoading && <MessageContentTiles 
+                            {!convoLoading && activeConversation && 
+                            <MessageContentTiles 
                                 messages={currentMessages}
                             />}
                         </div>
@@ -188,7 +169,7 @@ export default function MessagingPage() {
                                 />
                                 <button 
                                     className='messenger-input__button' 
-                                    onClick={sendMessage} 
+                                    onClick={handleNewMessage} 
                                     aria-label="Send message button"
                                     disabled={!content}>
                                     <i className="fas fa-arrow-up"></i>
