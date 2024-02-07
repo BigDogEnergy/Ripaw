@@ -36,7 +36,7 @@ Future implementation: Charting data using Canvas
 pipenv install -r requirements.txt
 ```
 
-5. Install Node.js Dependencies (for the React frontend):
+5. Install Node.js Dependencies:
 ```bash
 cd react-app
 npm install
@@ -44,12 +44,14 @@ npm install
 
 6. Start the backend:
 ```bash
+flask db upgrade
+flask seed all
 flask run
 ```
 
 7. Start the frontend:
+First: cd react-app
 ```bash
-cd react-app
 npm start
 ```
 
