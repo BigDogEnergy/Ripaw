@@ -50,8 +50,8 @@ flask run
 ```
 
 7. Start the frontend:
-First: cd react-app
 ```bash
+cd react-app
 npm start
 ```
 
