@@ -1,14 +1,13 @@
 .messenger-main__container {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    padding-bottom: 100px;
 }
 
 .messenger-convo__container {
     display: flex;
     flex-direction: column;
     width: 87.5%;
+    max-height: 900px;
 }
 
 .messenger-userlist__container {
@@ -43,9 +42,11 @@
     margin-left: 5px;
 }
 
-.messenger-content__tile {
+.messenger-content__greeting {
     display: flex;
-    height: 90%;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
 }
 
 .error-message__text {
