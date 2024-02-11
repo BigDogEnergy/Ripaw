@@ -4,18 +4,46 @@ import './TransactionCards.css';
 function TransactionCards({ transaction, getAccountName, accounts, userId }) {
 
     const [ showDetails, setShowDetails ] = useState(false);
-    
-    
-    // const accountName = getAccountName(transaction.senderId, accounts, userId);
     const isCompleted = transaction.status !== 'Pending' && transaction.status !== 'Processing' && transaction.status !== 'Cancelled';
+    const isWithdrawal = transaction.senderId === userId;
+    const transactionType = isWithdrawal ? 'Withdrawal' : 'Deposit';
+    const cardClass = `transaction-card__container ${isWithdrawal ? 'transaction-card__container--withdrawal' : 'transaction-card__container--deposit'}`;
+
+    //HELPER FUNCTIONS
+    function splitDateTime(dateTimeString) {
+
+        if (!dateTimeString) {
+            return { date: 'Incomplete', time: 'Incomplete' };
+        }
+        const [date, fullTime] = dateTimeString.split('T');
+        const time = fullTime.split('.')[0]
+        return { date, time };
+    }
+
+    function convertToAMPM(timeString) {
+        const [hour, minute] = timeString.split(':');
+        let amOrPm = 'AM';
+        let adjustedHour = parseInt(hour, 10);
+
+        if (adjustedHour >= 12) {
+            amOrPm = 'PM';
+            if (adjustedHour > 12) {
+                adjustedHour -= 12;
+            }
+        }
+
+        return `${adjustedHour}:${minute} ${amOrPm}`;
+    };
 
     const toggleDetails = () => {
         setShowDetails(prevShowDetails => !prevShowDetails);
     };
 
-    const isWithdrawal = transaction.senderId === userId;
-    const transactionType = isWithdrawal ? 'Withdrawal' : 'Deposit';
-    const cardClass = `transaction-card__container ${isWithdrawal ? 'transaction-card__container--withdrawal' : 'transaction-card__container--deposit'}`;
+    const { date, time } = splitDateTime(transaction.completed_at)
+    const { date: createdDate, time: createdTime } = splitDateTime(transaction.created_at)
+    const formattedTime = convertToAMPM(time)
+
+
 
     return (
             <div className={cardClass} onClick={toggleDetails}>
@@ -35,8 +63,8 @@ function TransactionCards({ transaction, getAccountName, accounts, userId }) {
                         </div>
 
                         {isCompleted && (
-                        <div className='transaction-card__completedAt'>
-                            Transaction Completion Date: {transaction.completedAt}
+                        <div className='transaction-card__completed_at'>
+                            Processing Date: {date}, {formattedTime}
                         </div>
                     )}
 
@@ -60,7 +88,7 @@ function TransactionCards({ transaction, getAccountName, accounts, userId }) {
                             </div>
                             
                             <div className='transaction-card__date'>
-                                Transaction Date: {transaction.created_at}
+                                Processing Started: {createdDate}, {createdTime}
                             </div>
                         </div>
                         )}

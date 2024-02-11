@@ -12,18 +12,19 @@ function Navigation({ isLoaded }){
 
 	return (
 		<>
-		<div className='navbar__container'>
 			<div className='navbar'>
-				<Link to="/" className='navbar__logo-div'>
+				
+				<Link to="/" className='navbar-logo__container'>
 					<img src={logo} alt='navbar__logo' />
 				</Link>
+
 				{isLoaded && (
 					<div className='navbar__button'>
 						<ProfileButton user={sessionUser} />
 					</div>
 				)}
+				
 			</div>
-		</div>
 		</>
 	);
 }

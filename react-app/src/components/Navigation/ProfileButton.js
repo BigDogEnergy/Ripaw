@@ -8,8 +8,6 @@ import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from "react-router-dom";
 
-
-
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -53,10 +51,12 @@ function ProfileButton({ user }) {
         <ul className={ulClassName} ref={ulRef}>
           {user ? (
             <>
-              <div className="profile-dropdown__container">
-                <div className="profile-dropdown__username">{user.username}</div>
-                <div className="profile-dropdown__email">{user.email}</div>
-                <div className="profile-dropdown__logout">
+              <div className="dropdown-content__container">
+                <div className="dropdown-content__text">
+                  Welcome! {user.email}
+                </div>
+                
+                <div className="dropdown-content__logout">
                   <button onClick={handleLogout}>Log Out</button>
                 </div>
               </div>
@@ -64,7 +64,6 @@ function ProfileButton({ user }) {
           ) : (
             <>
              <div className='dropdown-content__container'>
-              <div className='dropdown-content__buttons'>
               <OpenModalButton
                 buttonText="Log In"
                 onItemClick={closeMenu}
@@ -76,9 +75,6 @@ function ProfileButton({ user }) {
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-              </div>
-
-              
             </div>
 
             </>

@@ -13,11 +13,11 @@
   align-items: center;
 }
 
-.navbar__logo-div {
+.navbar-logo__container {
   height: 70px;
 }
 
-.navbar__logo-div img {
+.navbar-logo__container img {
   height: 70px;
   border-radius: 10px;
 }
@@ -52,13 +52,11 @@
 .profile-dropdown {
   display: flex;
   right: 0;
-  left: 0;
+  /* left: 0; */
   flex-direction: column;
   justify-content:center;
-  align-items: center;
   position: absolute;
   top: 100%;
-  z-index: 1000;
   border-radius: 5%;
   background-color: white;
   color: black;
@@ -73,11 +71,12 @@
   flex-direction: column;
   justify-content:center;
   align-items: center;
-  position: absolute;
+  background: white;
 }
 
-.profile-dropdown__container{
+.dropdown-content__text{
   display: flex;
-  flex-direction: column;
-  background: white;
+  align-items: center;
+  justify-content:center;
+
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { io } from 'socket.io-client';
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
@@ -13,8 +12,6 @@ import MessagingPage from "./components/MessagingPage";
 
 function App() {
   const dispatch = useDispatch();
-  // const currentUser = useSelector(state => state.session.user);
-  // const [socket, setSocket] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

@@ -18,6 +18,8 @@ function TransactionsPage() {
     const [ filteredTransactions, setFilteredTransactions ] = useState([]);
     const [ transType, setTransType ] = useState(null);
 
+    // HELPER FUNCTIONS
+
     function getAccountName(accountId, accounts, userId) {
         const account = accounts.find(acc => acc.id === accountId);
         if (!account || account.userId !== userId) {
@@ -25,7 +27,21 @@ function TransactionsPage() {
         }
         return account.accountName;
     };
+
+    const handleAccountChange = (e) => {
+        const accountId = parseInt(e.target.value, 10);
+        setSelectedAccountId(accountId ? parseInt(accountId, 10) : null);
+    };
     
+    const handleStatusChange = (e) => {
+        setSelectedStatus(e.target.value || null);
+    };
+
+    const handleTypeChange =(e) => {
+        setTransType(e.target.value || null);
+    };
+
+    // USE-EFFECTS
 
     useEffect(() => {
         Promise.all([dispatch(fetchAllTransactions()), dispatch(fetchAllAccounts())])
@@ -72,18 +88,7 @@ function TransactionsPage() {
         return <div>Loading...</div>
     }
 
-    const handleAccountChange = (e) => {
-        const accountId = parseInt(e.target.value, 10);
-        setSelectedAccountId(accountId ? parseInt(accountId, 10) : null);
-    };
     
-    const handleStatusChange = (e) => {
-        setSelectedStatus(e.target.value || null);
-    };
-
-    const handleTypeChange =(e) => {
-        setTransType(e.target.value || null);
-    }
 
 
 

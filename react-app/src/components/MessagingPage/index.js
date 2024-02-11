@@ -25,15 +25,15 @@ export default function MessagingPage() {
     const [ showDropdown, setShowDropdown ] = useState(false);
     const { sendMessage, deleteMessage, socket } = useSocket();
 
-        // This is a PLACEHOLDER for presentation. Update later.
-        // or return an empty array if there are no messages or if no conversation is selected
-        const currentMessages = activeConversation ? conversations[activeConversation]?.messages || [] : [];
+    // This is a PLACEHOLDER for presentation. Update later.
+    // or return an empty array if there are no messages or if no conversation is selected
+    const currentMessages = activeConversation ? conversations[activeConversation]?.messages || [] : [];
 
-        // Identifying last message for Delete
-        const sentMessages = currentMessages.filter(message => message.sender_id === currentUser);
-        const lastMessageId = sentMessages.length > 0 
-            ? sentMessages[sentMessages.length - 1].id 
-            : null;
+    // Identifying last message for Delete
+    const sentMessages = currentMessages.filter(message => message.sender_id === currentUser);
+    const lastMessageId = sentMessages.length > 0 
+        ? sentMessages[sentMessages.length - 1].id 
+        : null;
 
 
     //Fix this: We only want to grab friends. Need some more code to create that.
@@ -41,7 +41,10 @@ export default function MessagingPage() {
         dispatch(fetchAllUsers()).then(() => {
             setUsersLoading(false);
         });
-    }, [currentUser])
+    }, [currentUser, dispatch])
+
+
+
 
     // ********** Messenger-related useEffect ********** //
     useEffect(() => {
@@ -89,7 +92,7 @@ export default function MessagingPage() {
 
 
     
-    // ********** User Action Handlers ********** //
+    // ********** Helper Functions ********** //
     const handleConversationSelect = (targetUser) => {
         dispatch(fetchConversation(currentUser, targetUser)).then(() => {
             setActiveConversation(targetUser);
@@ -114,87 +117,87 @@ export default function MessagingPage() {
     };
     
 
+    // ********* User Verification && Loading Check ********* //
 
     if (!currentUser) {
         history.push('/')
         return null;
     }
-    else {
+    
+    if (usersLoading) {
+        return <div>Loading...</div>;
+    };
 
-        if (usersLoading) {
-            return <div>Loading...</div>;
-        };
 
-        return (
-            <>
-                <div className='messenger-main__container'>
-                    
-                    <div className='messenger-userlist__container'>
-                        <div className='messenger-userlist__title'> 
-                        Friends:
+    
+
+    return (
+        <>
+            <div className='messenger-main__container'>
+                
+                <div className='messenger-userlist__container'>
+                    <div className='messenger-userlist__title'> 
+                    Friends:
+                    </div>
+                    {!usersLoading && <UserTiles 
+                        setTargetUser={setTargetUser} 
+                        handleConversationSelect={handleConversationSelect} 
+                    />}
+                </div>
+
+                <div className='messenger-convo__container'>
+                        {!convoLoading && activeConversation ? (
+                            <MessageContentTiles 
+                                messages={currentMessages}
+                            />
+                        ) : (
+                            !convoLoading && !activeConversation && (
+                                <div className="messenger-content__greeting"> 
+                                    Welcome to Ripaw Messaging! We utilize websockets
+                                    to deliver messages as seamlessly as possible between users. In the future, 
+                                    I plan to implement other features (such as transactions) through the messaging.
+                                    Please select a friend from the list to the left to test features.
+                                </div>
+                            )
+                        )}
+
+                    {activeConversation && (
+                        <div className='messenger-input__container'>
+                            <button
+                            className='messenger-options__button'
+                            onClick={toggleDropdown} 
+                            aria-label="Open options"
+                            >
+                                <i className="fas fa-plus"></i>
+                            </button>
+                                {showDropdown && <MessageOptionsDropdownMenu 
+                                    deleteMessage={deleteMessage}
+                                    lastMessageId={lastMessageId} 
+                                />}
+                            <input 
+                                type='text' 
+                                className='messenger-input__text'
+                                value={content} 
+                                onChange={handleInputChange}
+                                placeholder="Type a message..."
+                            />
+                            <button 
+                                className='messenger-input__button' 
+                                onClick={handleNewMessage} 
+                                aria-label="Send message button"
+                                disabled={!content}>
+                                <i className="fas fa-arrow-up"></i>
+                            </button>
                         </div>
-                        {!usersLoading && <UserTiles 
-                            setTargetUser={setTargetUser} 
-                            handleConversationSelect={handleConversationSelect} 
-                        />}
-                    </div>
-
-                    <div className='messenger-convo__container'>
-                            {!convoLoading && activeConversation ? (
-                                <MessageContentTiles 
-                                    messages={currentMessages}
-                                />
-                            ) : (
-                                !convoLoading && !activeConversation && (
-                                    <div className="messenger-content__greeting"> 
-                                        Welcome to Ripaw Messaging! We utilize websockets
-                                        to deliver messages as seamlessly as possible between users. In the future, 
-                                        I plan to implement other features (such as transactions) through the messaging.
-                                        Please select a friend from the list to the left to test features.
-                                    </div>
-                                )
-                            )}
-
-                        {activeConversation && (
-                            <div className='messenger-input__container'>
-                                <button
-                                className='messenger-options__button'
-                                onClick={toggleDropdown} 
-                                aria-label="Open options"
-                                >
-                                    <i className="fas fa-plus"></i>
-                                </button>
-                                    {showDropdown && <MessageOptionsDropdownMenu 
-                                        deleteMessage={deleteMessage}
-                                        lastMessageId={lastMessageId} 
-                                    />}
-                                <input 
-                                    type='text' 
-                                    className='messenger-input__text'
-                                    value={content} 
-                                    onChange={handleInputChange}
-                                    placeholder="Type a message..."
-                                />
-                                <button 
-                                    className='messenger-input__button' 
-                                    onClick={handleNewMessage} 
-                                    aria-label="Send message button"
-                                    disabled={!content}>
-                                    <i className="fas fa-arrow-up"></i>
-                                </button>
-                            </div>
-                         )}
-
-                    </div>
+                        )}
 
                 </div>
 
-                
-            </>
-        )
+            </div>
+
+            
+        </>
+    )
 
 
-
-    } 
-
-}
+} 
