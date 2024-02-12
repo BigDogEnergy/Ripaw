@@ -6,21 +6,26 @@ import './TransactionCards.css';
 function TransactionCards({ transaction, userId, accounts }) {
 
     const [ showDetails, setShowDetails ] = useState(false);
+    
+    // TRANSACTION DETAILS
     const isCompleted = transaction.status !== 'Pending' && transaction.status !== 'Processing' && transaction.status !== 'Cancelled';
     const isWithdrawal = transaction.senderId === userId;
     const transactionType = isWithdrawal ? 'Withdrawal' : 'Deposit';
     const cardClass = `transaction-card__container ${isWithdrawal ? 'transaction-card__container--withdrawal' : 'transaction-card__container--deposit'}`;
+    
+    // DATE & TIME
+    const { date, time } = splitDateTime(transaction.completed_at)
+    const { date: createdDate, time: createdTime } = splitDateTime(transaction.created_at)
+    const formattedTime = convertToAMPM(time)
+    
+    // ACCOUNT NAME
+    const senderAccount = getAccountName(transaction.senderId, accounts, userId);
+    const receiverAccount = getAccountName(transaction.receiverId, accounts, userId);
 
     //HELPER FUNCTIONS
     const toggleDetails = () => {
         setShowDetails(prevShowDetails => !prevShowDetails);
     };
-
-    const { date, time } = splitDateTime(transaction.completed_at)
-    const { date: createdDate, time: createdTime } = splitDateTime(transaction.created_at)
-    const formattedTime = convertToAMPM(time)
-    const senderAccount = getAccountName(transaction.senderd, accounts, userId);
-    const receiverAccount = getAccountName(transaction.receiverId, accounts, userId)
 
     return (
             <div className={cardClass} onClick={toggleDetails}>

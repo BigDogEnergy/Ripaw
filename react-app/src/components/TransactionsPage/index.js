@@ -22,8 +22,8 @@ function TransactionsPage() {
     // HELPER FUNCTIONS
 
     const handleAccountChange = (e) => {
-        const accountId = parseInt(e.target.value, 10);
-        setSelectedAccountId(accountId ? parseInt(accountId, 10) : null);
+        const accountId = parseInt(e.target.value);
+        setSelectedAccountId(accountId ? parseInt(accountId) : null);
     };
     
     const handleStatusChange = (e) => {
@@ -40,7 +40,7 @@ function TransactionsPage() {
         Promise.all([dispatch(fetchAllTransactions()), dispatch(fetchAllAccounts())])
             .then(() => setIsLoaded(true))
             .catch(error => {
-                console.log(error);
+                console.error(error);
                 setIsLoaded(false);
             });
     }, [dispatch]);

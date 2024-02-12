@@ -19,7 +19,7 @@ function AccountsPage() {
             setReloadNeeded(false);}
         )
         .catch(error => {
-            console.log(error)
+            console.error(error)
             setIsLoaded(false);
         });
         

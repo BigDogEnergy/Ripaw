@@ -58,7 +58,7 @@ export default function MessagingPage() {
                     setConvoLoading(false);
                 } catch (error) {
                     setErrorMessage(error)
-                    console.log(errorMessage);
+                    console.error(errorMessage);
                 }
             }
         };
@@ -72,7 +72,7 @@ export default function MessagingPage() {
                     setConvoLoading(false);
                 } catch (error) {
                     setErrorMessage(error)
-                    console.log(errorMessage)
+                    console.error(errorMessage)
                     setConvoLoading(false);
                 }
             }

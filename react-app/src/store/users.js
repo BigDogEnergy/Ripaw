@@ -21,10 +21,10 @@ export const fetchAllUsers = () => async dispatch => {
             dispatch(fetchUsers(data.users));
             return data
         } else {
-            console.log('fetchAllUsers response error', response)
+            console.error('fetchAllUsers response error', response)
         }
     } catch (error) {
-        console.log('fetchAllUsers error,', error)
+        console.error('fetchAllUsers error,', error)
     };
 }
 

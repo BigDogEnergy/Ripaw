@@ -69,14 +69,13 @@ const deleteTransaction = transactionId => {
 export const fetchSingleTransaction = (transactionId) => async dispatch => {
     try {
         const response = await fetch(`/api/accounts/transactions/${transactionId}`);
-
         if (response.ok) {
             const data = await response.json();
             dispatch(fetchTransactionById(data));
         }
         
     } catch (error) {
-        console.log('fetchSingleTransaction Error,', error)
+        console.error('fetchSingleTransaction Error,', error)
     }
 }
 
@@ -89,7 +88,7 @@ export const fetchAllTransactions = () => async dispatch => {
             dispatch(fetchTransactions(data.transactions));
         }
     } catch (error) {
-        console.log('fetchAllTransactions Error,', error)
+        console.error('fetchAllTransactions Error,', error)
     };
 };
 
@@ -102,7 +101,7 @@ export const fetchTransactionsByAccountId = (accountId) => async dispatch => {
             dispatch(fetchAccountTransactions({accountId, transactions: data.transactions}));
         }
     } catch (error) {
-        console.log(`fetchTransactionsByAccountId Error,`, error);
+        console.error(`fetchTransactionsByAccountId Error,`, error);
     }
 };
 
@@ -125,7 +124,7 @@ export const transactionRequest = (transaction) => async dispatch => {
             return { error: errorData }
         }
     } catch(error) {
-        console.log(`transactionRequest error`, error);
+        console.error(`transactionRequest error`, error);
     }
 };
 
@@ -149,7 +148,7 @@ export const updateTransactionRequest = (transactionId, updates) => async dispat
         }
 
     } catch(error) {
-        console.log('updateTransactionRequest error', error)
+        console.error('updateTransactionRequest error', error)
     }
 };
 
@@ -168,7 +167,7 @@ export const deleteTransactionRequest = (transactionId) => async dispatch => {
             return { error: errorData }
         }
     } catch(error) {
-        console.log('deleteTransactionRequest error', error)
+        console.error('deleteTransactionRequest error', error)
     }
 }
 
