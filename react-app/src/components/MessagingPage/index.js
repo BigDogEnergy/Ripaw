@@ -143,20 +143,20 @@ export default function MessagingPage() {
                 </div>
 
                 <div className='messenger-convo__container'>
-                        {!convoLoading && activeConversation ? (
-                            <MessageContentTiles 
-                                messages={currentMessages}
-                            />
-                        ) : (
-                            !convoLoading && !activeConversation && (
-                                <div className="messenger-content__greeting"> 
-                                    Welcome to Ripaw Messaging! We utilize websockets
-                                    to deliver messages as seamlessly as possible between users. In the future, 
-                                    I plan to implement other features (such as transactions) through the messaging.
-                                    Please select a friend from the list to the left to test features.
-                                </div>
-                            )
-                        )}
+                    {!convoLoading && activeConversation ? (
+                        <MessageContentTiles 
+                            messages={currentMessages}
+                        />
+                    ) : (
+                        !convoLoading && !activeConversation && (
+                            <div className="messenger-content__greeting"> 
+                                Welcome to Ripaw Messaging! We utilize websockets
+                                to deliver messages as seamlessly as possible between users. In the future, 
+                                I plan to implement other features (such as transactions) through the messaging.
+                                Please select a friend from the list to the left to test features.
+                            </div>
+                        )
+                    )}
 
                     {activeConversation && (
                         <div className='messenger-input__container'>

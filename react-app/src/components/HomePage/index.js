@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
-import './HomePage.css';
+import './FooterIcons.css';
 import accountDetails from "../../images/accountDetails.png";
 import messaging from "../../images/messaging.png";
 import transactions from "../../images/transactions.png";
 import { useSelector } from "react-redux";
 
-function HomePage() {
+function FooterIcons() {
 
     const sessionUser = useSelector(state => state.session.user)
 
@@ -50,4 +50,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default FooterIcons;

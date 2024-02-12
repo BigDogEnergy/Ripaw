@@ -3,12 +3,13 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
-import HomePage from "./components/HomePage"
+import FooterIcons from "./components/HomePage"
 import AccountsPage from "./components/AccountsPage"
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
+import TransactionCardSingle from "./components/TransactionCardSingle"
 
 function App() {
   const dispatch = useDispatch();
@@ -19,10 +20,6 @@ function App() {
 
   }, [dispatch]);
 
-
-
-
-
   return (
     <>
       <Navigation isLoaded={isLoaded} />
@@ -30,24 +27,34 @@ function App() {
         <>
           <div className="app-main__content">
             <Switch>
+              
+              <Route exact path='/accounts/transactions/:transactionId'>
+                <TransactionCardSingle />
+              </Route>
+              
               <Route exact path='/accounts/transactions'>
                 <TransactionsPage />
               </Route>
+              
               <Route path='/accounts'>
                 <AccountsPage />
               </Route>
+              
               <Route path="/login" >
                 <LoginFormPage />
               </Route>
+              
               <Route path="/signup">
                 <SignupFormPage />
               </Route>
+              
               <Route path="/messages">
                 <MessagingPage />
               </Route>
+
             </Switch>
           </div>
-          <HomePage/>
+          <FooterIcons/>
         </>
       )}
     </>
