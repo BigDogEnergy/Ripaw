@@ -182,7 +182,7 @@ def create_transaction():
                 amount=form.amount.data,
                 message=form.message.data if 'message' in form.data and form.message.data else None,
                 status=status,
-                completedAt=completedAt
+                completed_at=completedAt
             )
         else:
             transaction = Transaction(
