@@ -27,8 +27,6 @@ function UpdateTransactionForm() {
 
     const updates = { status };
     if (message) updates.message = message;
-    
-    console.log('updates to transaction', updates)
 
     const data = await dispatch(updateTransactionRequest(selectedTransactionId, updates));
 

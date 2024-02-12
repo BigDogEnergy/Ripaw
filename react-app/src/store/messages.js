@@ -43,7 +43,7 @@ export const fetchConversation = (userId, targetId) => async dispatch => {
         console.log('fetchingConversation for userId', userId, 'and targetId', targetId)
         const response = await fetch(`/api/messages/${userId}/${targetId}`);
         if (!response.ok) {
-            console.log({errorMessage: 'fetchConversation thunk response error', response});
+            console.error({errorMessage: 'fetchConversation thunk response error', response});
             return;
         } else {
             const messages = await response.json();
@@ -63,36 +63,13 @@ export const deleteMessageThunk = (messageId) => async dispatch => {
         });
         dispatch(removeMessage(messageId));
         if (!response.ok) {
-            console.log({errorMessage: 'deleteMessage thunk response error'});
-            console.log('Response status:', response.status);
-            console.log('Response payload:', await response.json());
+            console.error({errorMessage: 'deleteMessage thunk response error'});
+
         }
     } catch (error) {
         console.error({ errorMessage: error });
     }
 };
-
-// export const editMessageThunk = (messageId, newContent) => async dispatch => {
-//     try {
-//         const response = await fetch(`/api/messages/${messageId}`, {
-//             method: 'PUT',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({content: newContent})
-//         });
-//         if (!response.ok) {
-//             console.log({errorMessage: 'editMessage thunk response error'});
-//         }
-//         else {
-//             dispatch(editMessage(messageId, newContent));
-//         }
-//     }
-//     catch (error) {
-//         console.error({ errorMessage: error });
-//     }
-// }
-
 
 // Initial State
 
@@ -110,19 +87,7 @@ export default function reducer(state = initialState, action) {
             const { conversationId, messages } = action.payload;
             newState.chats[conversationId] = { messages: Array.isArray(messages) ? [...messages] : [] };
             return newState;
-        }
-        // case EDIT_MESSAGE: {
-        //     const { conversationId, messageId, newContent } = action.payload;
-        //     if (newState.chats[conversationId]) {
-        //         newState.chats[conversationId].messages = newState.chats[conversationId].messages.map(message => {
-        //             if (message.id === messageId) {
-        //                 return { ...message, content: newContent };
-        //             }
-        //             return message;
-        //         });
-        //     }
-        //     return newState;
-        // }        
+        }    
         case REMOVE_MESSAGE: {
             const messageId = action.payload;
             const updatedChats = { ...newState.chats };

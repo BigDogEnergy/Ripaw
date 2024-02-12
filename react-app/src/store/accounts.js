@@ -9,7 +9,6 @@ const REMOVE_ACCOUNT = 'accounts/remove'
 // Action Creators
 
 const fetchAccounts = accounts => {
-    console.log('fetchAccounts action creator', accounts);
     return {
         type: ALL_ACCOUNTS,
         payload: accounts
@@ -17,7 +16,6 @@ const fetchAccounts = accounts => {
 };
 
 const fetchAccountById = account => {
-    console.log('fetchAccountById action creator', account);
     return {
         type: ONE_ACCOUNT,
         payload: account
@@ -25,7 +23,6 @@ const fetchAccountById = account => {
 };
 
 const addNewAccount = accountName => {
-    console.log('addNewAccount action creator', accountName)
     return {
         type: ADD_ACCOUNT,
         payload: accountName
@@ -33,7 +30,6 @@ const addNewAccount = accountName => {
 };
 
 const updateAccountDetails = account => {
-    console.log('UpdateAccountDetails action creator', account)
     return {
         type: EDIT_ACCOUNT,
         payload: account
@@ -41,7 +37,6 @@ const updateAccountDetails = account => {
 };
 
 const deleteAccountById = account => {
-    console.log('deleteAccountById action creator', account)
     return {
         type: REMOVE_ACCOUNT,
         payload: account
@@ -59,7 +54,7 @@ export const fetchAllAccounts = () => async dispatch => {
             dispatch(fetchAccounts(data.accounts));
         }
     } catch (error) {
-        console.log('fetchAllAccounts Error,', error)
+        console.error('fetchAllAccounts Error,', error)
     };
 };
 
@@ -72,12 +67,11 @@ export const fetchOneAccount = accountId => async dispatch => {
             dispatch(fetchAccountById(account))
         }
     } catch (error) {
-        console.log('fetchOneAccount error', error)
+        console.error('fetchOneAccount error', error)
     };
 };
 
 export const createAccount = accountName => async dispatch => {
-    console.log('createAccount thunk accountName', accountName)
     try {
         const response = await fetch(`/api/accounts`, {
             method: 'POST',
