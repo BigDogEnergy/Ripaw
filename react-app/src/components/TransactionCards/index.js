@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { splitDateTime, convertToAMPM } from '../../utils/dateUtils';
+import { getAccountName } from '../../utils/accountUtils';
 import './TransactionCards.css';
 
-function TransactionCards({ transaction, getAccountName, accounts, userId }) {
+function TransactionCards({ transaction, userId, accounts }) {
 
     const [ showDetails, setShowDetails ] = useState(false);
     const isCompleted = transaction.status !== 'Pending' && transaction.status !== 'Processing' && transaction.status !== 'Cancelled';
@@ -10,31 +12,6 @@ function TransactionCards({ transaction, getAccountName, accounts, userId }) {
     const cardClass = `transaction-card__container ${isWithdrawal ? 'transaction-card__container--withdrawal' : 'transaction-card__container--deposit'}`;
 
     //HELPER FUNCTIONS
-    function splitDateTime(dateTimeString) {
-
-        if (!dateTimeString) {
-            return { date: 'Incomplete', time: 'Incomplete' };
-        }
-        const [date, fullTime] = dateTimeString.split('T');
-        const time = fullTime.split('.')[0]
-        return { date, time };
-    }
-
-    function convertToAMPM(timeString) {
-        const [hour, minute] = timeString.split(':');
-        let amOrPm = 'AM';
-        let adjustedHour = parseInt(hour, 10);
-
-        if (adjustedHour >= 12) {
-            amOrPm = 'PM';
-            if (adjustedHour > 12) {
-                adjustedHour -= 12;
-            }
-        }
-
-        return `${adjustedHour}:${minute} ${amOrPm}`;
-    };
-
     const toggleDetails = () => {
         setShowDetails(prevShowDetails => !prevShowDetails);
     };
@@ -42,8 +19,8 @@ function TransactionCards({ transaction, getAccountName, accounts, userId }) {
     const { date, time } = splitDateTime(transaction.completed_at)
     const { date: createdDate, time: createdTime } = splitDateTime(transaction.created_at)
     const formattedTime = convertToAMPM(time)
-
-
+    const senderAccount = getAccountName(transaction.senderd, accounts, userId);
+    const receiverAccount = getAccountName(transaction.receiverId, accounts, userId)
 
     return (
             <div className={cardClass} onClick={toggleDetails}>
@@ -80,11 +57,11 @@ function TransactionCards({ transaction, getAccountName, accounts, userId }) {
                                 Memo: {transaction.message}
                             </div>
                             <div className='transaction-card__sender'>
-                                From #: {transaction.senderId}
+                                From: #{transaction.senderId}, {senderAccount}
                             </div>
         
                             <div className='transaction-card__receiver'>
-                                To #: {transaction.receiverId}
+                                To: #{transaction.receiverId}, {receiverAccount}
                             </div>
                             
                             <div className='transaction-card__date'>

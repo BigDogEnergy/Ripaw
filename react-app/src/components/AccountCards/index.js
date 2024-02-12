@@ -27,16 +27,6 @@ function AccountCards({ account }) {
         }
     };
 
-    function getAccountName(accountId, accounts, userId) {
-        const account = accounts.find(acc => acc.id === accountId);
-        if (!account || account.userId !== userId) {
-            return 'External Account';
-        }
-        return account.accountName;
-    };
-    
-
-
     return (
         <div className='account-card__container' onClick={toggleDisplay}>
             <div className='account-card__details'>
@@ -63,7 +53,6 @@ function AccountCards({ account }) {
                                         <TransactionCards 
                                         key={transaction.id} 
                                         transaction={transaction} 
-                                        getAccountName={getAccountName}
                                         accounts={accounts}
                                         userId={userId}
                                         />

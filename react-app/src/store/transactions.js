@@ -10,23 +10,20 @@ const DELETE_TRANSACTION = 'transactions/delete_transaction'
 // Action Creators
 
 const fetchTransactions = transactions => {
-    console.log('fetchTransactions action creator', transactions);
     return {
         type: ALL_TRANSACTIONS,
         payload: transactions
     };
 };
 
-const fetchTransactionById = transaction => {
-    console.log('fetchTransactionById action creator', transaction);
+const fetchTransactionById = transactionId => {
     return {
         type: ONE_TRANSACTION,
-        payload: transaction
+        payload: transactionId
     };
 };
 
 const fetchAccountTransactions = ({ accountId, transactions}) => {
-    console.log('fetchAccountTransactions action creator', transactions);
     return {
         type: ACCOUNT_TRANSACTIONS,
         payload: { 
@@ -37,7 +34,6 @@ const fetchAccountTransactions = ({ accountId, transactions}) => {
 };
 
 const addNewTransaction = transaction => {
-    console.log('addNewTransaction action creator', transaction);
     return {
         type: NEW_TRANSACTION,
         payload: transaction
@@ -45,7 +41,6 @@ const addNewTransaction = transaction => {
 };
 
 const updateTransaction = ({transactionId, updates}) => {
-    console.log('passed in updates for updateTransactionRequest', updates);
     return {
         type: EDIT_TRANSACTION,
         payload: {
@@ -56,7 +51,6 @@ const updateTransaction = ({transactionId, updates}) => {
 };
 
 // const cancelPendingTransaction = transaction => {
-//     console.log('cancelPendingTransaction action creator', transaction);
 //     return {
 //         type: CANCEL_TRANSACTION,
 //         payload: transaction
@@ -71,6 +65,20 @@ const deleteTransaction = transactionId => {
 };
 
 // Thunks
+
+export const fetchSingleTransaction = (transactionId) => async dispatch => {
+    try {
+        const response = await fetch(`/api/accounts/transactions/${transactionId}`);
+
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(fetchTransactionById(data));
+        }
+        
+    } catch (error) {
+        console.log('fetchSingleTransaction Error,', error)
+    }
+}
 
 export const fetchAllTransactions = () => async dispatch => {
     try {
@@ -183,7 +191,7 @@ export default function reducer( state = initialState, action) {
             newState.transactions = action.payload
             return newState
         case ONE_TRANSACTION:
-            newState.singleTransaction = action.payload
+            newState.singleTransaction = action.payload.data
             return newState
         case ACCOUNT_TRANSACTIONS:
             const { accountId, transactions } = action.payload
