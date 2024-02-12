@@ -1,7 +1,7 @@
 // Action Types
 
 const ALL_TRANSACTIONS = 'transactions/all_transactions'
-const ONE_TRANSACTION = 'transactions/one_transactions'
+const ONE_TRANSACTION = 'transactions/one_transaction'
 const ACCOUNT_TRANSACTIONS = 'transactions/account_transactions'
 const NEW_TRANSACTION = 'transactions/new_transactions'
 const EDIT_TRANSACTION = 'transactions/edit_transaction'
@@ -17,13 +17,13 @@ const fetchTransactions = transactions => {
     };
 };
 
-// const fetchTransactionById = transaction => {
-//     console.log('fetchTransactionById action creator', transaction);
-//     return {
-//         type: ONE_TRANSACTION,
-//         payload: transaction
-//     };
-// };
+const fetchTransactionById = transaction => {
+    console.log('fetchTransactionById action creator', transaction);
+    return {
+        type: ONE_TRANSACTION,
+        payload: transaction
+    };
+};
 
 const fetchAccountTransactions = ({ accountId, transactions}) => {
     console.log('fetchAccountTransactions action creator', transactions);
@@ -45,7 +45,6 @@ const addNewTransaction = transaction => {
 };
 
 const updateTransaction = ({transactionId, updates}) => {
-    console.log('updateTransaction action creator ID', transactionId);
     console.log('passed in updates for updateTransactionRequest', updates);
     return {
         type: EDIT_TRANSACTION,
@@ -65,7 +64,6 @@ const updateTransaction = ({transactionId, updates}) => {
 // };
 
 const deleteTransaction = transactionId => {
-    console.log('deleteTransaction action creator', transactionId);
     return {
         type: DELETE_TRANSACTION,
         payload: transactionId
@@ -102,7 +100,6 @@ export const fetchTransactionsByAccountId = (accountId) => async dispatch => {
 
 export const transactionRequest = (transaction) => async dispatch => {
     try {
-        console.log("passed in transaction for transcationRequest", transaction)
         const response = await fetch(`/api/accounts/transactions`, {
             method: 'POST',
             headers: {
@@ -126,8 +123,6 @@ export const transactionRequest = (transaction) => async dispatch => {
 
 export const updateTransactionRequest = (transactionId, updates) => async dispatch => {
     try {
-        console.log('passed in updates for updateTransactionRequest', updates)
-        console.log('passed in transactionId for update', transactionId)
         const response = await fetch(`/api/accounts/transactions/${transactionId}`, {
             method: 'PUT',
             headers: {
@@ -138,7 +133,6 @@ export const updateTransactionRequest = (transactionId, updates) => async dispat
 
         if (response.ok) {
             const data = await response.json();
-            console.log('updateTransactionRequest data', data)
             dispatch(updateTransaction({transactionId, updates}))
             return data
         } else {
@@ -159,7 +153,6 @@ export const deleteTransactionRequest = (transactionId) => async dispatch => {
 
         if (response.ok) {
             const data = await response.json()
-            console.log('deleteTransactionRequest id', transactionId)
             dispatch(deleteTransaction(transactionId))
             return data
         } else {

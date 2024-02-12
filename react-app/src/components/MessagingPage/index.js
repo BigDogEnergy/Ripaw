@@ -7,7 +7,7 @@ import { fetchAllUsers } from "../../store/users";
 import UserTiles from "../MessagingUserTile";
 import MessageContentTiles from "../MessagingContentTile";
 import MessageOptionsDropdownMenu from "../MessageOptionsDropdown";
-
+import Spinner from "../Spinner";
 import './MessagingPage.css'
 
 export default function MessagingPage() {
@@ -122,14 +122,11 @@ export default function MessagingPage() {
     if (!currentUser) {
         history.push('/')
         return null;
-    }
-    
-    if (usersLoading) {
-        return <div>Loading...</div>;
     };
-
-
     
+    if (usersLoading === false || convoLoading === false) {
+        <Spinner />
+    };
 
     return (
         <>

@@ -11,6 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(to top, #CCE0FF, aliceblue);
 }
 
 .navbar-logo__container {
@@ -52,7 +53,6 @@
 .profile-dropdown {
   display: flex;
   right: 0;
-  /* left: 0; */
   flex-direction: column;
   justify-content:center;
   position: absolute;
@@ -71,7 +71,6 @@
   flex-direction: column;
   justify-content:center;
   align-items: center;
-  background: white;
 }
 
 .dropdown-content__text{

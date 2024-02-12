@@ -4,6 +4,7 @@ import { fetchAllAccounts } from "../../store/accounts";
 import './AccountsPage.css'
 import AccountCards from "../AccountCards";
 import AccountOptions from "../AccountOptions";
+import Spinner from "../Spinner";
 
 function AccountsPage() {
     const dispatch = useDispatch();
@@ -24,9 +25,9 @@ function AccountsPage() {
         
     }, [dispatch, reloadNeeded]);
 
-    if(!isLoaded) {
-        return <div>Loading...</div>
-    }
+    if (isLoaded === false) {
+        <Spinner />
+    };
 
     let accountsList;
     if (accounts.length > 0) {

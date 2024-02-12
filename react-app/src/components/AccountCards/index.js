@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactionsByAccountId } from '../../store/transactions';
 import './AccountCards.css';
 import TransactionCards from '../TransactionCards';
+import Spinner from '../Spinner';
 
 function AccountCards({ account }) {
 
@@ -52,7 +53,7 @@ function AccountCards({ account }) {
                     {!hidden && (
                         <>
                         {isLoading ? (
-                            <div>Loading...</div>
+                            <Spinner />
                         ) : (
                             transactions.length === 0 ? (
                                 <div className='account-transaction__empty'>No transaction history available</div>

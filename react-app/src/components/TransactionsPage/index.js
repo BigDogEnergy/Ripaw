@@ -5,6 +5,7 @@ import { fetchAllAccounts } from "../../store/accounts";
 import './TransactionsPage.css'
 import TransactionCards from "../TransactionCards";
 import TransactionOptions from "../TransactionOptions";
+import Spinner from "../Spinner";
 
 function TransactionsPage() {
 
@@ -19,14 +20,6 @@ function TransactionsPage() {
     const [ transType, setTransType ] = useState(null);
 
     // HELPER FUNCTIONS
-
-    function getAccountName(accountId, accounts, userId) {
-        const account = accounts.find(acc => acc.id === accountId);
-        if (!account || account.userId !== userId) {
-            return 'External Account';
-        }
-        return account.accountName;
-    };
 
     const handleAccountChange = (e) => {
         const accountId = parseInt(e.target.value, 10);
@@ -63,8 +56,10 @@ function TransactionsPage() {
     
             if (transType === 'Withdrawal') {
                 filtered = filtered.filter(transaction => transaction.senderId === selectedAccountId);
-            } else {
+            } else if (transType === 'Deposit') {
                 filtered = filtered.filter(transaction => transaction.receiverId === selectedAccountId);
+            } else {
+                setTransType(null);
             }
         } else {
             setSelectedAccountId(null);
@@ -84,13 +79,11 @@ function TransactionsPage() {
         setFilteredTransactions(filtered);
     }, [accounts, selectedAccountId, selectedStatus, transactions, transType]);
 
-    if(!isLoaded) {
-        return <div>Loading...</div>
-    }
+    // LOAD CHECK
 
-    
-
-
+    if (isLoaded === false) {
+        return <Spinner />
+    };
 
     return (
         <>
@@ -130,7 +123,6 @@ function TransactionsPage() {
                     <TransactionCards
                         key={transaction.id}
                         transaction={transaction}
-                        getAccountName={getAccountName}
                         accounts={accounts}
                         userId={userId}
                     />
