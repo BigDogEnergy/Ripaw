@@ -4,55 +4,77 @@ import { useHistory, useParams } from 'react-router-dom';
 import './TransactionCardSingle.css';
 import { splitDateTime, convertToAMPM } from '../../utils/dateUtils';
 import { fetchSingleTransaction } from '../../store/transactions'
-import { getAccountName } from '../../utils/accountUtils';
+import { getAccountName, checkAccountOwner } from '../../utils/accountUtils';
 import { fetchAllAccounts } from '../../store/accounts';
 import Spinner from '../Spinner';
 
 function TransactionCardSingle() {
 
-    const { transactionId } = useParams();
     const [ isTransLoaded, setIsTransLoaded ] = useState(false);
     const [ isAccountLoaded, setIsAccountLoaded ] = useState(false);
+    const [ isAuthorized, setIsAuthorized ] = useState(false);
 
-    const dispatch = useDispatch()
-    const history = useHistory()
     const accounts = useSelector(state => state.accounts.accounts);
     const userId = useSelector(state => state.session.user.id);
 
-    // USE EFFECTS
-    useEffect(()=> {
-        if (!userId) {
-            history.push('/')
-        };
-    }, [userId, history]);
-
+    const { transactionId } = useParams();
+    const dispatch = useDispatch()
+    const history = useHistory()
+    
+    
+    // USE EFFECTS FOR OUR DATA
     useEffect(()=> {
         dispatch(fetchSingleTransaction(transactionId)) 
         .then(() => setIsTransLoaded(true))
             .catch(error => {
-                console.error(error);
-                setIsTransLoaded(false);
-            });
-    }, [dispatch, transactionId]);
+                console.error(error)
+                setIsTransLoaded(false)
+            })
+    }, [dispatch, transactionId])
 
     useEffect(() => {
         dispatch(fetchAllAccounts()) 
         .then(() => setIsAccountLoaded(true))
             .catch(error => {
-                console.error(error);
-                setIsAccountLoaded(false);
-            });
+                console.error(error)
+                setIsAccountLoaded(false)
+            })
     }, [dispatch])
 
+    useEffect(()=> {
+        if (!userId) {
+            history.push('/')
+        }
+    }, [userId, history])
 
-    const transaction = useSelector(state => state.transactions.singleTransaction);
+
+    // TRANSACTION + AUTHORIZATION RELATED 
+    const transaction = useSelector(state => state.transactions?.singleTransaction);
+    useEffect(() => {
+        if (isTransLoaded && isAccountLoaded && transaction) {
+            const senderAuthorized = checkAccountOwner(transaction.senderId, accounts, userId);
+            const receiverAuthorized = checkAccountOwner(transaction.receiverId, accounts, userId);
+            
+            // User is authorized if they are the sender or receiver
+            if (senderAuthorized || receiverAuthorized) {
+                setIsAuthorized(true);
+            } else {
+                console.error('Unauthorized access attempt to transaction');
+                setIsAuthorized(false); 
+            }
+        }
+    }, [transaction, accounts, userId, isTransLoaded, isAccountLoaded, history]);
 
     if (isTransLoaded === false || isAccountLoaded === false) {
-        <Spinner />
+        return <Spinner />
     };
 
     if (!transaction) {
         return <div>Transaction not found</div>;
+    };
+
+    if (!isAuthorized) {
+        return <div>Unauthorized Action</div>;
     }
 
     const isCompleted = transaction.status !== 'Pending' && transaction.status !== 'Processing' && transaction.status !== 'Cancelled';
