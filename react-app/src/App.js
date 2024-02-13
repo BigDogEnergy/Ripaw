@@ -10,7 +10,7 @@ import Navigation from "./components/Navigation";
 import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
 import TransactionCardSingle from "./components/TransactionCardSingle"
-import HomepageBoard from "./components/Homepage"
+import HomepageBoard from "/components/Homepage/index.js"
 
 function App() {
   const dispatch = useDispatch();
