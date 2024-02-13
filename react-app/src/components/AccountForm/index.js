@@ -12,11 +12,10 @@ function AccountForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log('handleSubmit accountForm accountName', accountName)
     const newAcct = { accountName: accountName }
     const data = await dispatch(createAccount(newAcct));
     if (data && data.error) {
-      console.log('this is error Data', data)
+      console.error('this is error Data', data)
       setErrors(data);
     } else {
         dispatch(fetchAllAccounts()).then(() => {

@@ -22,7 +22,7 @@ function DeleteTransactionForm() {
     const data = await dispatch(deleteTransactionRequest(selectedTransactionId));
 
     if (data && data.error) {
-      console.log('this is error Data', data)
+      console.error('this is error Data', data)
       setErrors([data.error]);
     } else {
         await dispatch(fetchAllTransactions())

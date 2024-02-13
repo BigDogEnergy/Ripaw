@@ -87,7 +87,7 @@ export const createAccount = accountName => async dispatch => {
             return newAccount
         };
     } catch (error) {
-        console.log('createAccount error', error)
+        console.error('createAccount error', error)
     };
 };
 
@@ -107,7 +107,7 @@ export const updateAccount = (accountName, accountId) => async dispatch => {
             return targetUpdate
         };
     } catch (error) {
-        console.log('updateAccount error', error)
+        console.error('updateAccount error', error)
     };
 };
 
@@ -123,7 +123,7 @@ export const deleteAccount = (accountId) => async dispatch => {
             return account
         }
     } catch (error) {
-        console.log('deleteAccount error', error)
+        console.error('deleteAccount error', error)
     }
 }
 // Initial State

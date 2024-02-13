@@ -48,7 +48,7 @@ function TransactionCardSingle() {
     }, [userId, history])
 
 
-    // TRANSACTION + AUTHORIZATION RELATED 
+    // TRANSACTION & AUTHORIZATION RELATED 
     const transaction = useSelector(state => state.transactions?.singleTransaction);
     useEffect(() => {
         if (isTransLoaded && isAccountLoaded && transaction) {
@@ -64,6 +64,8 @@ function TransactionCardSingle() {
             }
         }
     }, [transaction, accounts, userId, isTransLoaded, isAccountLoaded, history]);
+
+    // DATA-CONDITIONS & LOADING
 
     if (isTransLoaded === false || isAccountLoaded === false) {
         return <Spinner />
