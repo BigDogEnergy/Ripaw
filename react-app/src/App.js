@@ -10,7 +10,7 @@ import Navigation from "./components/Navigation";
 import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
 import TransactionCardSingle from "./components/TransactionCardSingle"
-import HomepageBoard from "/components/Homepage/index.js"
+import WelcomeMessage from "./components/WelcomeMessage"
 
 function App() {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ function App() {
               </Route>
           
               <Route path="/">
-                <HomepageBoard />
+                <WelcomeMessage />
               </Route>
 
             </Switch>
