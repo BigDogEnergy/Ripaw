@@ -13,8 +13,6 @@ function CloseAccountForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // console.log('this is our accounts data', accounts)
 
     const targetAccount = accounts.find(account => account.id === parseInt(chosenId));
     if (!targetAccount) {
@@ -27,7 +25,7 @@ function CloseAccountForm() {
     const data = await dispatch(updateAccount(newStatus, chosenId));
 
     if (data && data.error) {
-      console.log('this is error Data', data)
+      console.error('this is error Data', data)
       setErrors([data.error]);
     } else {
       dispatch(fetchAllAccounts()).then(() => {

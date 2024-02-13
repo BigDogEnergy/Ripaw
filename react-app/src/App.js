@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
-import FooterIcons from "./components/HomePage"
+import FooterIcons from "./components/FooterIcons"
 import AccountsPage from "./components/AccountsPage"
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
 import TransactionCardSingle from "./components/TransactionCardSingle"
+import HomepageBoard from "./components/Homepage"
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,10 @@ function App() {
               
               <Route path="/messages">
                 <MessagingPage />
+              </Route>
+          
+              <Route path="/">
+                <HomepageBoard />
               </Route>
 
             </Switch>
