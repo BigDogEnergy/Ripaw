@@ -6,24 +6,30 @@ import './TransactionsPage.css'
 import TransactionCards from "../TransactionCards";
 import TransactionOptions from "../TransactionOptions";
 import Spinner from "../Spinner";
+import { filterTransactions } from "../../utils/filterTransactions";
 
 function TransactionsPage() {
 
     const dispatch = useDispatch()
     const accounts = useSelector(state => state.accounts.accounts);
-    const transactions = useSelector(state => state.transactions.transactions);
+    const transactions = useSelector(state => state.transactions?.transactions || []);
     const userId = useSelector(state => state.session.user.id)
-    const [ isLoaded, setIsLoaded ] = useState(false);
+
+    const [ isFilterLoaded, setIsFilterLoaded ] = useState(false);
+    const [ isTransLoaded, setIsTransLoaded ] = useState(false);
+    const [ isAccountsLoaded, setIsAccountsLoaded ] = useState(false);
+    
     const [ selectedAccountId, setSelectedAccountId ] = useState(null);
     const [ selectedStatus, setSelectedStatus ] = useState(null);
-    const [ filteredTransactions, setFilteredTransactions ] = useState([]);
     const [ transType, setTransType ] = useState(null);
+
+    const [ filteredTransactions, setFilteredTransactions ] = useState([]);
+
 
     // HELPER FUNCTIONS
 
     const handleAccountChange = (e) => {
-        const accountId = parseInt(e.target.value);
-        setSelectedAccountId(accountId ? parseInt(accountId) : null);
+        setSelectedAccountId(e.target.value || null);
     };
     
     const handleStatusChange = (e) => {
@@ -37,51 +43,34 @@ function TransactionsPage() {
     // USE-EFFECTS
 
     useEffect(() => {
-        Promise.all([dispatch(fetchAllTransactions()), dispatch(fetchAllAccounts())])
-            .then(() => setIsLoaded(true))
+        dispatch(fetchAllTransactions())
+            .then(() => setIsTransLoaded(true))
             .catch(error => {
                 console.error(error);
-                setIsLoaded(false);
+                setIsTransLoaded(false);
             });
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(fetchAllAccounts())
+        .then(() => setIsAccountsLoaded(true))
+        .catch(error => {
+            console.error(error);
+            setIsAccountsLoaded(false);
+        });
     }, [dispatch]);
     
 
+    // FILTER TRANSACTIONS
+
     useEffect(() => {
-        let filtered = transactions;
-        
-        if (selectedAccountId) {
-            filtered = filtered.filter(transaction => 
-                transaction.senderId === selectedAccountId || transaction.receiverId === selectedAccountId
-            );
-    
-            if (transType === 'Withdrawal') {
-                filtered = filtered.filter(transaction => transaction.senderId === selectedAccountId);
-            } else if (transType === 'Deposit') {
-                filtered = filtered.filter(transaction => transaction.receiverId === selectedAccountId);
-            } else {
-                setTransType(null);
-            }
-        } else {
-            setSelectedAccountId(null);
-            setTransType(null);
-        }
-        
-        if (selectedStatus) {
-            filtered = filtered.filter(transaction => transaction.status === selectedStatus);
-        } else {
-            setSelectedStatus(null);
-        }
-        
-        if (filtered.length > 0) {
-            filtered.sort((a, b) => b.id - a.id)
-        }
-        
+        const transactionsArray = Array.isArray(transactions) ? transactions : Object.values(transactions);
+        const filtered = filterTransactions(transactionsArray, selectedAccountId, selectedStatus, transType, userId, accounts);
         setFilteredTransactions(filtered);
-    }, [accounts, selectedAccountId, selectedStatus, transactions, transType]);
+        setIsFilterLoaded(true);
+    }, [transactions, selectedAccountId, selectedStatus, transType, userId, accounts]);
 
-    // LOAD CHECK
-
-    if (isLoaded === false) {
+    if (isAccountsLoaded === false || isTransLoaded === false || isFilterLoaded === false) {
         return <Spinner />
     };
 
@@ -98,13 +87,13 @@ function TransactionsPage() {
                         <option key={account.id} value={account.id}>{account.accountName}</option>
                     ))}
                 </select>
-                {selectedAccountId && (
-                    <select onChange={handleTypeChange} defaultValue="">
-                        <option value="">All Types</option>
-                        <option value="Withdrawal">Withdrawal</option>
-                        <option value="Deposit">Deposit</option>
-                    </select>
-                )}
+                
+                <select onChange={handleTypeChange} defaultValue="">
+                    <option value="">All Types</option>
+                    <option value="Withdrawal">Withdrawal</option>
+                    <option value="Deposit">Deposit</option>
+                </select>
+                
                 <select onChange={handleStatusChange} defaultValue="">
                     <option value="">All Statuses</option>
                     <option value="Pending">Pending</option>

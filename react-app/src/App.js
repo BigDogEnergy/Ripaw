@@ -26,6 +26,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <>
+
           <div className="app-main__content">
             <Switch>
               
@@ -59,7 +60,9 @@ function App() {
 
             </Switch>
           </div>
+
           <FooterIcons/>
+          
         </>
       )}
     </>
