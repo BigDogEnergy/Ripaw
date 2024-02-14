@@ -93,21 +93,26 @@ def delete_account(id):
     else:
         return jsonify({'error': 'Account not found'}), 404
 
-# Get all Transactions associated with current Logged In User
+#Get all transactions for the current user
 @account_routes.route('/transactions')
 @login_required
 def get_transactions():
+    # Get all account IDs for the current user
+    user_accounts = Account.query.filter(Account.userId == current_user.id).all()
+    user_account_ids = [account.id for account in user_accounts]
+
+    # Get all transactions where the current user is either the sender or the receiver
     transactions = Transaction.query.filter(
-         or_(
-                Transaction.senderId == current_user.id,
-                Transaction.receiverId == current_user.id
-            )
+        or_(
+            Transaction.senderId.in_(user_account_ids),
+            Transaction.receiverId.in_(user_account_ids)
+        )
     ).all()
 
     if transactions:
         return jsonify({"transactions": [transaction.to_dict() for transaction in transactions]}), 200
     else:
-        return jsonify({'error': 'No transactions found'})
+        return jsonify({'error': 'No transactions found'}), 404
 
 #Get transactions for a specific account
 @account_routes.route('/<int:account_id>/transactions')
