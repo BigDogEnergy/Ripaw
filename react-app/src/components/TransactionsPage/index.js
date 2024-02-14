@@ -65,10 +65,10 @@ function TransactionsPage() {
 
     useEffect(() => {
         const transactionsArray = Array.isArray(transactions) ? transactions : Object.values(transactions);
-        const filtered = filterTransactions(transactionsArray, selectedAccountId, selectedStatus, transType, userId);
+        const filtered = filterTransactions(transactionsArray, selectedAccountId, selectedStatus, transType, userId, accounts);
         setFilteredTransactions(filtered);
         setIsFilterLoaded(true);
-    }, [transactions, selectedAccountId, selectedStatus, transType, userId]);
+    }, [transactions, selectedAccountId, selectedStatus, transType, userId, accounts]);
 
     if (isAccountsLoaded === false || isTransLoaded === false || isFilterLoaded === false) {
         return <Spinner />

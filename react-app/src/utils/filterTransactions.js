@@ -1,6 +1,8 @@
-export const filterTransactions = (transactions, selectedAccountId, selectedStatus, transType, userId) => {
+export const filterTransactions = (transactions, selectedAccountId, selectedStatus, transType, userId, accounts) => {
     
+
     let filtered = [...transactions];
+
     // Filter by Account ID if one is selected
     if (selectedAccountId) {
         filtered = filtered.filter(transaction => 
@@ -8,12 +10,12 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
         );
     };
 
-    // Filter by Status if one is selected
+    // // Filter by Status if one is selected
     if (selectedStatus) {
         filtered = filtered.filter(transaction => transaction.status === selectedStatus);
     };
 
-    // Filter by Transaction Type if one is selected
+    // // Filter by Transaction Type if one is selected
     if (transType) {
         if (transType === 'Withdrawal') {
             filtered = filtered.filter(transaction => transaction.senderId === userId);
