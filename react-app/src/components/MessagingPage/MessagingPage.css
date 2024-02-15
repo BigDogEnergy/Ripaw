@@ -1,6 +1,7 @@
 .messenger-main__container {
     display: flex;
     flex-direction: row;
+    width: 100%
 }
 
 .messenger-convo__container {

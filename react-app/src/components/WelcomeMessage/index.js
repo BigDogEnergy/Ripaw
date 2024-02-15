@@ -25,10 +25,15 @@ function WelcomeMessage() {
             <div className="homepage-message__list">
                 <div className="homepage-message__list-item">
                     <div className="homepage-message__list-item-title">
-                        Accounts: 
+                        Accounts 
                     </div>
                     <div className="homepage-message__list-item-body">
-                        A user is able to Open a new account, Edit an account's name, or Close an account.
+                        Users are able to:
+                        <ul>
+                            <li> Open a new account </li>
+                            <li> Edit an account's name </li>
+                            <li> Close an account</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -37,7 +42,17 @@ function WelcomeMessage() {
                         Transactions:
                     </div> 
                     <div className="homepage-message__list-item-body">
-                        A user is able to Create a transaction and Update, Delete, or Edit a pending transaction.
+                        Users are able to: 
+                        <ul>
+                            <li>Create a transaction request</li>
+                            <li>Update a transaction</li>
+                            <li>Cancel a pending transaction</li>
+                            <li>Edit a pending transaction</li>
+                        </ul>
+                        An Admin can:
+                        <ul>
+                            <li>Delete a transaction</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -46,7 +61,11 @@ function WelcomeMessage() {
                         Messaging: 
                     </div>
                     <div className="homepage-message__list-item-body">
-                        A user can Send and Delete messages. Messages are currently implemented using websockets.
+                        Users are able to:
+                        <ul>
+                            <li>Send Messages</li>
+                            <li>Delete Messages</li>
+                        </ul>
                     </div>
                     
                 </div>
