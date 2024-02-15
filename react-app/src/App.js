@@ -11,6 +11,7 @@ import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
 import TransactionCardSingle from "./components/TransactionCardSingle"
 import WelcomeMessage from "./components/WelcomeMessage"
+import AccountPageSingle from "./components/AccountPageSingle"
 
 function App() {
   const dispatch = useDispatch();
@@ -33,11 +34,15 @@ function App() {
               <Route exact path='/accounts/transactions/:transactionId'>
                 <TransactionCardSingle />
               </Route>
-              
+
               <Route exact path='/accounts/transactions'>
                 <TransactionsPage />
               </Route>
               
+              <Route exact path='/accounts/:accountId/transactions'>
+                <AccountPageSingle />
+              </Route>
+
               <Route path='/accounts'>
                 <AccountsPage />
               </Route>

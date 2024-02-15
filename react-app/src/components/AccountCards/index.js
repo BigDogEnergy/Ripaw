@@ -4,9 +4,11 @@ import { fetchTransactionsByAccountId } from '../../store/transactions';
 import './AccountCards.css';
 import TransactionCards from '../TransactionCards';
 import Spinner from '../Spinner';
+import { Link, useLocation } from 'react-router-dom';
 
 function AccountCards({ account }) {
 
+    const location = useLocation();
     const dispatch = useDispatch();
     const transactions = useSelector(state => state.transactions.accountTransactions[account.id] || []);
     const sortedTransactions = transactions.sort((a, b) => b.id - a.id);
@@ -15,6 +17,10 @@ function AccountCards({ account }) {
     const userId = useSelector(state => state.session.user.id);
     const [ hidden, setHidden ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(false);
+
+    // Determining Transactionsbased on current URL
+    const isAccountDetailPage = location.pathname.includes(`/accounts/${account.id}/transactions`);
+    const transactionsToShow = isAccountDetailPage ? sortedTransactions : limitedTransactions;
 
     const toggleDisplay = () => {
         setHidden(!hidden);
@@ -42,27 +48,25 @@ function AccountCards({ account }) {
 
                     {!hidden && (
                         <>
-                        {isLoading ? (
-                            <Spinner />
-                        ) : (
-                            transactions.length === 0 ? (
+                            {isLoading ? (
+                                <Spinner />
+                            ) : transactions.length === 0 ? (
                                 <div className='account-transaction__empty'>No transaction history available</div>
                             ) : (
-                                <div className='account-transaction__list'>
-                                    {limitedTransactions.map(transaction => (
-                                        <TransactionCards 
-                                        key={transaction.id} 
-                                        transaction={transaction} 
-                                        accounts={accounts}
-                                        userId={userId}
-                                        />
-                                    ))}
-                                    {transactions.length > 5 && (
-                                        <a href="/accounts/transactions">View all transactions</a>
-                                    )}
-                                </div>
-                            )
-                        )}
+                                <>
+                                    <div className='account-transaction__list'>
+                                        {transactionsToShow.map(transaction => (
+                                            <TransactionCards 
+                                                key={transaction.id} 
+                                                transaction={transaction} 
+                                                accounts={accounts}
+                                                userId={userId}
+                                            />
+                                        ))}
+                                        {!isAccountDetailPage && <Link to={`/accounts/${account.id}/transactions`}>View {account.accountName}'s history</Link>}
+                                    </div>
+                                </>
+                            )}
                         </>
                     )}
                 </div>
