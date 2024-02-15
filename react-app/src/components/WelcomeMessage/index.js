@@ -15,11 +15,10 @@ function WelcomeMessage() {
                 Welcome to Ripaw! 
             </div>
             <div className="homepage-message__body-1">
-                This banking app was originally designed as a fun way to help track my dog's acorn collection. 
-                It should be considered actively in development as I refine and improve my skills. 
+                Did you know: This app was originally designed as a fun way to help track my dog's acorn collection. 
             </div>
             <div className="homepage-message__body-2">
-                Please: Sign Up to create a test account, or alternatively utilize the Demo User available in the Log In. 
+                To review the CRUDs please Sign Up to create a test account, or alternatively utilize the Demo User available in the Log In. 
             </div>
             
             <div className="homepage-message__list">
