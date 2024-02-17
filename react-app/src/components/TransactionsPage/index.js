@@ -88,23 +88,35 @@ function TransactionsPage() {
                     ))}
                 </select>
                 
-                <select onChange={handleTypeChange} defaultValue="">
-                    <option value="">All Types</option>
-                    <option value="Withdrawal">Withdrawal</option>
-                    <option value="Deposit">Deposit</option>
-                </select>
+                        {selectedAccountId && 
+                        <>
+                            <select onChange={handleTypeChange} defaultValue="">
+                                <option value="">All Types</option>
+                                <option value="Withdrawal">Withdrawal</option>
+                                <option value="Deposit">Deposit</option>
+                            </select>
+
+                            <select onChange={handleStatusChange} defaultValue="">
+                                <option value="">All Statuses</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+
+                        </>
+                        }
+
                 
-                <select onChange={handleStatusChange} defaultValue="">
-                    <option value="">All Statuses</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
+                
+                
             </div>
             <div>
                 {filteredTransactions.length} transaction{filteredTransactions.length === 1 ? '' : 's'}:
             </div>
+
+            <TransactionOptions />
+
 
             <div className='transaction-card__filtered_container'>
             {filteredTransactions.length > 0 ? (
@@ -121,9 +133,8 @@ function TransactionsPage() {
             )}
 
             </div>
-            <div className="transaction-card__options">
-                <TransactionOptions />
-            </div>
+            
+
         </div>
             
         </>

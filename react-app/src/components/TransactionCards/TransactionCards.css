@@ -10,7 +10,6 @@
     margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     transition: box-shadow 0.3s ease;
-    max-width: auto;
 }
 
 .transaction-card__details {
@@ -24,9 +23,4 @@
 
 .transaction-card__container--withdrawal {
     background-color: #ffe0e0;
-}
-
-.transaction-card__options {
-    display: flex;
-    justify-content: center;
 }

@@ -35,9 +35,6 @@ function TransactionOptions() {
 
   return (
     <>
-      {/* <button className='transaction-options__button' type="button" onClick={openMenu}>
-        Transaction Options
-      </button> */}
       <div className="transaction-options__container">
         <ul className={ulClassName} ref={ulRef}>
           {(
