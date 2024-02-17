@@ -18,7 +18,7 @@ function AccountCards({ account }) {
     const [ hidden, setHidden ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    // Determining Transactionsbased on current URL
+    // Determining Transactions based on current URL
     const isAccountDetailPage = location.pathname.includes(`/accounts/${account.id}/transactions`);
     const transactionsToShow = isAccountDetailPage ? sortedTransactions : limitedTransactions;
 
@@ -63,7 +63,7 @@ function AccountCards({ account }) {
                                                 userId={userId}
                                             />
                                         ))}
-                                        {!isAccountDetailPage && <Link to={`/accounts/${account.id}/transactions`}>View {account.accountName}'s history</Link>}
+                                        {!isAccountDetailPage && <Link to={`/accounts/transactions`}>View transaction history</Link>}
                                     </div>
                                 </>
                             )}

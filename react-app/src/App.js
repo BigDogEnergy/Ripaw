@@ -38,10 +38,6 @@ function App() {
               <Route exact path='/accounts/transactions'>
                 <TransactionsPage />
               </Route>
-              
-              <Route exact path='/accounts/:accountId/transactions'>
-                <AccountPageSingle />
-              </Route>
 
               <Route path='/accounts'>
                 <AccountsPage />
