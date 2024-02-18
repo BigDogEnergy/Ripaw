@@ -25,10 +25,6 @@ function AccountsPage() {
         
     }, [dispatch, reloadNeeded]);
 
-    if (isLoaded === false) {
-        <Spinner />
-    };
-
     let accountsList;
     if (accounts.length > 0) {
         accountsList = (
@@ -42,6 +38,10 @@ function AccountsPage() {
         )
     };
 
+    if (isLoaded === false || !accountsList) {
+        <Spinner />
+    };
+
     const reloadAccounts = () => {
         setReloadNeeded(true);
     };
@@ -51,9 +51,7 @@ function AccountsPage() {
             
                 {accountsList}
             
-            <div className='account-card__options'>
                 <AccountOptions reloadAccounts={reloadAccounts}/>
-            </div>
         </div>
     )
 }
