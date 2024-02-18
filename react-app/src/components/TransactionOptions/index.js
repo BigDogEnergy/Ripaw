@@ -10,10 +10,10 @@ function TransactionOptions() {
   const ulRef = useRef();
   const userType = useSelector( state => state.session.user.type);
 
-  // const openMenu = () => {
-  //   if (showMenu) return;
-  //   setShowMenu(true);
-  // };
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };
 
   useEffect(() => {
     if (!showMenu) return;
@@ -30,12 +30,15 @@ function TransactionOptions() {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const ulClassName = "transaction-dropdown" + (showMenu ? "" : "-hidden");
+  const ulClassName = "account-dropdown" + (showMenu ? "" : "-hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (
     <>
-      <div className="transaction-options__container">
+      <button className="account-options__button" type="button" onClick={openMenu}>
+        Options
+      </button>
+
         <ul className={ulClassName} ref={ulRef}>
           {(
             <>
@@ -45,13 +48,13 @@ function TransactionOptions() {
               modalComponent={<TransactionForm />}
               />
               <OpenModalButton 
-              buttonText="Update a Pending transaction"
+              buttonText="Update transaction"
               onItemClick={closeMenu}
               modalComponent={<UpdateTransactionForm />}
               />
               {userType === 'Admin' && (
                 <OpenModalButton
-                buttonText="Delete a Transaction"
+                buttonText="Delete transaction"
                 onItemClick={closeMenu}
                 modalComponent={<DeleteTransactionForm />}
                 />
@@ -59,7 +62,6 @@ function TransactionOptions() {
             </>
           )}
         </ul>
-      </div>
       
     </>
   );

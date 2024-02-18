@@ -1,5 +1,6 @@
-.account-page .account-options__button {
+.account-options__button {
     background-color: #008080;
+    width: 150px;
     color: white; 
     padding: 10px 20px;
     border: none;
@@ -11,40 +12,27 @@
     margin-bottom: 20px; 
 }
 
-.account-page .account-options__button:active {
+.account-options__button:active {
     transform: scale(0.95); 
     background-color: #006666; 
 }
 
-.account-page .account-dropdown {
-    list-style-type: none;
+.account-dropdown {
     padding: 0;
     margin: 0;
-    position: absolute;
+    width: 30%;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-dropdown-hidden {
     display: none;
 }
 
-.account-page .account-dropdown li {
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.account-page .account-dropdown {
-    display: block;
-}
-
-.account-page .account-dropdown-hidden {
-    display: none;
-}
-
-.account-page .account-dropdown button {
+.account-dropdown button {
     width: 100%;
-    text-align: center;
     background: none;
     border: none;
     padding: 0;
@@ -53,10 +41,6 @@
     transition: background-color 0.3s ease;
 }
 
-.account-page .account-dropdown button:hover {
+.account-dropdown button:hover {
     background-color: #f2f2f2; 
-}
-
-.account-page .account-dropdown .close-account-button {
-    color: red; 
 }

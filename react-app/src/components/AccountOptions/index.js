@@ -36,7 +36,7 @@ function AccountOptions({reloadAccounts}) {
   return (
     <>
       <button className='account-options__button' type="button" onClick={openMenu}>
-        Account Options
+        Options
       </button>
 
       <ul className={ulClassName} ref={ulRef}>
