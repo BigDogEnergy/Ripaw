@@ -10,15 +10,7 @@ export function splitDateTime(dateTimeString) {
 
 export function convertToAMPM(timeString) {
     const [hour, minute] = timeString.split(':');
-    let amOrPm = 'AM';
     let adjustedHour = parseInt(hour, 10);
 
-    if (adjustedHour >= 12) {
-        amOrPm = 'PM';
-        if (adjustedHour > 12) {
-            adjustedHour -= 12;
-        }
-    }
-
-    return `${adjustedHour}:${minute} ${amOrPm}`;
+    return `${adjustedHour}:${minute}`;
 };

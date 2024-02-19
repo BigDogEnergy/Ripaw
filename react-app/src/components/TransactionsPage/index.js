@@ -70,6 +70,8 @@ function TransactionsPage() {
         setIsFilterLoaded(true);
     }, [transactions, selectedAccountId, selectedStatus, transType, userId, accounts]);
 
+
+    //LOADING CHECK
     if (isAccountsLoaded === false || isTransLoaded === false || isFilterLoaded === false) {
         return <Spinner />
     };
@@ -118,7 +120,6 @@ function TransactionsPage() {
             <TransactionOptions />
 
 
-            <div className='transaction-card__filtered_container'>
             {filteredTransactions.length > 0 ? (
                 filteredTransactions.map(transaction => (
                     <TransactionCards
@@ -132,7 +133,6 @@ function TransactionsPage() {
                 <div className="no-transactions__text">No transactions for this account</div>
             )}
 
-            </div>
             
 
         </div>

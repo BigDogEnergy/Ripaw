@@ -32,12 +32,10 @@
   
   .signup-form__button:hover {
     background-color: rgba(9, 81, 11, 0.996);
-
   }
   
   .signup-form__button:active {
     transform: scale(0.95);
-
   }
   
   .signup-form__error-list {
