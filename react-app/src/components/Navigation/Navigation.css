@@ -1,12 +1,3 @@
-.navbar__container {
-  flex-direction: row;
-  background-color: #CCE0FF;
-  color: white;
-  padding: 10px 20px;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -37,11 +28,12 @@
   background-color: white;
   border: none;
   border-radius: 15%;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .navbar__button button:hover {
-  
   font-weight: bold;
+  transform: translateY(-2px); 
 }
 
 .navbar__button button:active {
@@ -52,30 +44,24 @@
 
 .profile-dropdown {
   display: flex;
-  right: 0;
   flex-direction: column;
   justify-content:center;
   position: absolute;
   top: 100%;
-  border-radius: 5%;
+  right: 30%;
   background-color: white;
   color: black;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .hidden {
   display: none;
 }
 
-.dropdown-content__container{
-  display: flex;
-  flex-direction: column;
-  justify-content:center;
-  align-items: center;
-}
-
-.dropdown-content__text{
-  display: flex;
-  align-items: center;
-  justify-content:center;
-
+.profile-dropdown:focus,
+.profile-dropdown:hover {
+  outline: none; 
+  transform: translateY(-2px); 
 }
