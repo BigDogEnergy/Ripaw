@@ -26,8 +26,12 @@ function AccountForm() {
 
   return (
     <>
-      <div className="account-form__title">Please name your new account</div>
       <form className="account-form" onSubmit={handleSubmit}>
+        
+        <div className="account-form__title">
+          Please name your new account
+        </div>
+
         <ul className="account-form__error-list">
           {errors.map((error, idx) => (
             <li className="account-form__error-item" key={idx}>{error}</li>
