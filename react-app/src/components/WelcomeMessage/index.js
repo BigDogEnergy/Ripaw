@@ -3,11 +3,17 @@ import OpenModalButton from '../OpenModalButton';
 import './WelcomeMessage.css'; 
 import LoginFormModal from "../LoginFormModal"
 import SignupFormModal from "../SignupFormModal"
-import { useSelector } from 'react-redux';
+import { useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function WelcomeMessage() {
 
-    const user = useSelector(state=> state.session.user)
+    const user = useSelector(state=> state.session.user);
+    const history = useHistory();
+
+    const navigateTo = (path) => {
+        history.push(path);
+    };
 
     const messageContent = (
         <div className="homepage-message__container">
@@ -22,7 +28,7 @@ function WelcomeMessage() {
             </div>
             
             <div className="homepage-message__list">
-                <div className="homepage-message__list-item">
+                <div className="homepage-message__list-item" onClick={() => navigateTo("/accounts")}>
                     <div className="homepage-message__list-item-title">
                         Accounts 
                     </div>
@@ -36,7 +42,7 @@ function WelcomeMessage() {
                     </div>
                 </div>
 
-                <div className="homepage-message__list-item">
+                <div className="homepage-message__list-item" onClick={() => navigateTo("/accounts/transactions")}>
                     <div className="homepage-message__list-item-title">
                         Transactions:
                     </div> 
@@ -55,7 +61,7 @@ function WelcomeMessage() {
                     </div>
                 </div>
 
-                <div className="homepage-message__list-item">
+                <div className="homepage-message__list-item" onClick={() => navigateTo("/messages")}>
                     <div className="homepage-message__list-item-title">
                         Messaging: 
                     </div>

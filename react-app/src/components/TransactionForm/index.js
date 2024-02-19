@@ -39,8 +39,12 @@ function TransactionForm() {
 
   return (
     <>
-      <div className="transaction-form__title">Transaction request:</div>
       <form className="account-form" onSubmit={handleSubmit}>
+        
+        <div className="transaction-form__title">
+          Transaction request:
+        </div>
+
         <ul className="account-form__error-list">
         {errors.map((error, idx) => (
             <li className="account-form__error-item" key={idx}>{error}</li>
@@ -50,14 +54,14 @@ function TransactionForm() {
           Amount
           <input
             className="account-form__input"
-            type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             required
           />
         </label>
+
         <label>
-          Outbound Account
+          From:
           <select 
             value={senderId} 
             className="account-form__input"
@@ -67,16 +71,17 @@ function TransactionForm() {
             ))}
           </select>
         </label>
+
         <label>
-          Receiver Account
+          To account ID #:
           <input
             className="account-form__input"
-            type="number"
             value={receiverId}
             onChange={(e) => setReceiverId(e.target.value)}
             required
           />
         </label>
+
         <label>
           Message
           <input
@@ -86,14 +91,15 @@ function TransactionForm() {
             onChange={(e) => setMessage(e.target.value)}
           />
         </label>
+
         <label>
           Status
           <select 
             className="account-form__input"
             value={status} 
             onChange={(e) => setStatus(e.target.value)}>
-            <option value="Processing">Immediate Processing</option>
-            <option value="Pending">Prepare without Processing</option>
+            <option value="Processing">Processing</option>
+            <option value="Pending">Pending</option>
           </select>
             
           

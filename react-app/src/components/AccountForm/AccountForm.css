@@ -46,4 +46,5 @@
   
   .account-form__error-item {
     margin-bottom: 5px;
+    display: flex;
   }
