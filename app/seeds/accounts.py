@@ -4,39 +4,39 @@ from decimal import Decimal
 def seed_accounts():
     account1 = Account(accountName="Checking",
                        status='Open',
-                       accountBalance=Decimal('150.47'),
+                       accountBalance=Decimal('1500.47'),
                        userId=1)
     account2 = Account(accountName="Beau's Acorn Collection",
                        status='Open',
-                       accountBalance=Decimal('999.99'),
+                       accountBalance=Decimal('9999.99'),
                        userId=1)
     account3 = Account(accountName="Savings",
                        status='Open',
-                       accountBalance=Decimal('3.21'),
+                       accountBalance=Decimal('300.21'),
                        userId=1)
     account4 = Account(accountName="Checking",
                        status='Open',
-                       accountBalance=Decimal('143.00'),
+                       accountBalance=Decimal('1430.00'),
                        userId=2)
     account5 = Account(accountName="Stray Backyard Cats College Fund",
                        status='Open',
-                       accountBalance=Decimal('0.01'),
+                       accountBalance=Decimal('1000.01'),
                        userId=2)
     account6 = Account(accountName="Savings",
                        status='Open',
-                       accountBalance=Decimal('500.91'),
+                       accountBalance=Decimal('1500.91'),
                        userId=2)
     account7 = Account(accountName="Checking",
                        status='Open',
-                       accountBalance=Decimal('15.00'),
+                       accountBalance=Decimal('1500.00'),
                        userId=3)
     account8 = Account(accountName="Vacation Fund",
                        status='Open',
-                       accountBalance=Decimal('0.00'),
+                       accountBalance=Decimal('1000.00'),
                        userId=3)
     account9 = Account(accountName="Savings",
                        status='Open',
-                       accountBalance=Decimal('0.00'),
+                       accountBalance=Decimal('1000.00'),
                        userId=3)
 
     

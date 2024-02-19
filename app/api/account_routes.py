@@ -187,7 +187,8 @@ def create_transaction():
                 amount=form.amount.data,
                 message=form.message.data if 'message' in form.data and form.message.data else None,
                 status=status,
-                completed_at=completedAt
+                completed_at=completedAt,
+                accBalance=sender_account.accountBalance
             )
         else:
             transaction = Transaction(
@@ -243,6 +244,7 @@ def update_transaction(id):
                         sender_account.accountBalance -= amount
                         receiver_account.accountBalance += amount
                         transaction.status = 'Completed'
+                        transaction.accBalance = sender_account.accountBalance
                         transaction.completedAt = datetime.now()
                     else:
                         return jsonify({'error': 'Insufficient funds'}), 400

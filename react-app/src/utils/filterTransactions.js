@@ -6,7 +6,7 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
         filtered = filtered.filter(transaction =>
             transaction.senderId == selectedAccountId || transaction.receiverId == selectedAccountId
         );
-    };
+    }
 
     // Filter by Status if one is selected
     if (selectedStatus) {
@@ -21,9 +21,15 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
             filtered = filtered.filter(transaction => transaction.receiverId == selectedAccountId && accounts.some(account => account.id == selectedAccountId && account.userId == userId));
         }
     };
-    
-    // Sort the filtered transactions
-    filtered.sort((a, b) => b.id - a.id);
+
+    filtered.sort((a,b) => b.id - a.id)
+
+    // // Sort the filtered transactions by Date
+    // filtered.sort((a, b) => {
+    //     const dateA = new Date(a.created_at);
+    //     const dateB = new Date(b.created_at);
+    //     return dateB - dateA;
+    // });
 
     return filtered;
 };

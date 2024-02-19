@@ -6,8 +6,24 @@
 }
 
 .homepage-buttons__container button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.2s; 
     margin: 5px
 }
+
+.homepage-buttons__container button:hover {
+    background-color: rgba(9, 81, 11, 0.996);
+  }
+  
+.homepage-buttons__container button:active {
+    transform: scale(0.95);
+  }
 
 .homepage-message__container {
     display: flex;

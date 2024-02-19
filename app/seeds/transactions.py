@@ -1,4 +1,4 @@
-from app.models import db, Transaction, environment, SCHEMA
+from app.models import db, Transaction, environment, SCHEMA, Account
 from sqlalchemy.sql import text
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -26,7 +26,7 @@ def seed_transactions():
             receiver_id = random.randint(1, 9)
 
         amount = Decimal(random.uniform(0.01, 100.00)).quantize(Decimal('0.01'))
-        status = random.choice(['Pending', 'Completed'])
+        status = 'Completed'
         include_message = random.choice([True, False])
 
         message = generate_lorem_ipsum() if include_message else None

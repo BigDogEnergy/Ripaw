@@ -1,5 +1,10 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from datetime import datetime
+from datetime import datetime, timedelta
+
+# Fixed PST offset
+PST_OFFSET_HOURS = -8
+PST_OFFSET = timedelta(hours=PST_OFFSET_HOURS)
+
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
@@ -10,11 +15,13 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     senderId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     receiverId = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow() + PST_OFFSET)
     completed_at = db.Column(db.DateTime, default=None)
     amount = db.Column(db.Numeric(scale=2), nullable=False)
     message = db.Column(db.String(200))
-    status = db.Column(db.String)
+    status = db.Column(db.String(200))
+    accBalance = db.Column(db.Numeric(scale=2))
+
 
 
     sender = db.relationship('User', backref=db.backref('transactions'))
@@ -29,5 +36,6 @@ class Transaction(db.Model):
             "completed_at": self.completed_at.isoformat() if self.completed_at else None,
             "amount": self.amount,
             "message": self.message,
-            "status": self.status
+            "status": self.status,
+            "accBalance": self.accBalance
         }

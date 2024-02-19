@@ -1,27 +1,32 @@
-.transaction-card__link-container {
-    text-decoration: none;
-    color: black;
-}
-
-.transaction-card__container {
+.transaction-card__container--deposit {
+    background-color: #e0f0ff; 
     border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
-    margin: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    transition: box-shadow 0.3s ease;
-    /* width: 100%; */
-}
-
-.transaction-card__details {
-    display: flex;
-    flex-direction: column;
-}
-
-.transaction-card__container--deposit {
-    background-color: #e0f0ff; 
 }
 
 .transaction-card__container--withdrawal {
     background-color: #ffe0e0;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.trasaction-card__sections {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.transaction-card__visible {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.transaction-card__visible-left {
+    display: flex;
+    flex-direction: row;
 }
