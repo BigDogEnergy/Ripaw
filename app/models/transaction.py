@@ -20,7 +20,8 @@ class Transaction(db.Model):
     amount = db.Column(db.Numeric(scale=2), nullable=False)
     message = db.Column(db.String(200))
     status = db.Column(db.String(200))
-    accBalance = db.Column(db.Numeric(scale=2))
+    senderBalance = db.Column(db.Numeric(scale=2))
+    receiverBalance = db.Column(db.Numeric(scale=2))
 
 
 
@@ -37,5 +38,6 @@ class Transaction(db.Model):
             "amount": self.amount,
             "message": self.message,
             "status": self.status,
-            "accBalance": self.accBalance
+            "senderBalance": self.senderBalance,
+            "receiverBalance": self.receiverBalance
         }

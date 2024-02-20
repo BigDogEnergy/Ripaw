@@ -1,17 +1,21 @@
 .transaction-card__container--deposit {
-    background-color: #e0f0ff; 
     border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    margin-top: 10px;
 }
 
 .transaction-card__container--withdrawal {
-    background-color: #ffe0e0;
     border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    margin-top: 10px;
+}
+
+.transaction-card__container--withdrawal .transaction-card__amount {
+    color: red;
 }
 
 .trasaction-card__sections {
@@ -25,8 +29,22 @@
     flex-direction: column;
 }
 
+.transaction-card__date {
+    font-size: 0.8rem;
+}
+
+.transaction-card__balance {
+    font-size: 0.8rem;
+}
 
 .transaction-card__visible-left {
     display: flex;
     flex-direction: row;
+}
+
+.transaction-card__not-shown {
+    font-size: 0.8rem;
+    border-top: 1px solid black;
+    margin-top: 10px;
+    padding-top: 10px;
 }
