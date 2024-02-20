@@ -72,7 +72,8 @@ def upgrade():
     sa.Column('amount', sa.Float(), nullable=False),
     sa.Column('status', sa.String(), nullable=False),
     sa.Column('message', sa.String(200)),
-    sa.Column('accBalance', sa.Float()),
+    sa.Column('senderBalance', sa.Float()),
+    sa.Column('receiverBalance', sa.Float()),
     sa.PrimaryKeyConstraint('id'),
     sa.ForeignKeyConstraint(['senderId'], ['users.id']),
     )

@@ -22,15 +22,6 @@ function TransactionCards({ transaction, userId, accounts }) {
     const senderAccount = getAccountName(transaction.senderId, accounts, userId);
     const receiverAccount = getAccountName(transaction.receiverId, accounts, userId);
 
-    // ACCOUNT BALANCE
-    const getAccountBalance = (accountId) => {
-        const account = accounts.find(acc => acc.id === accountId && acc.accountName !== 'External Account');
-        return account ? parseFloat(account.accountBalance) : null;
-    };
-
-    const balance = getAccountBalance(isWithdrawal ? parseFloat(transaction.senderId) : parseFloat(transaction.receiverId));
-    const newBalance = isWithdrawal ? parseFloat(balance) - parseFloat(transaction.amount) : parseFloat(balance) + parseFloat(transaction.amount);
-    
     //ETC HELPER FUNCTIONS
     const toggleDetails = () => {
         setShowDetails(prevShowDetails => !prevShowDetails);
@@ -39,7 +30,7 @@ function TransactionCards({ transaction, userId, accounts }) {
     return (
             <div className={cardClass} onClick={toggleDetails}>
                     <div className='transaction-card__visible'>
-                        <div className='transaction-card__date-id'>
+                        <div className='transaction-card__date'>
                             {createdDate}
                         </div>
                         
@@ -48,9 +39,11 @@ function TransactionCards({ transaction, userId, accounts }) {
                                 <div>
                                     Transaction ID: {transaction.id}
                                 </div>
-                                <div>
-                                    {transaction.accBalance != null ? `$${parseFloat(transaction.accBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}` : null}
-                                </div>
+
+                                {transaction.senderBalance ? 
+                                    <div className='transaction-card__balance'>
+                                        {isWithdrawal ? `$${parseFloat(transaction.senderBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}` : `$${parseFloat(transaction.receiverBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}
+                                    </div> : null}
 
                             </div>
 
@@ -72,6 +65,14 @@ function TransactionCards({ transaction, userId, accounts }) {
                                     Type: {transactionType}
                                 </div>
 
+                                <div className='transaction-card__sender'>
+                                    From: #{transaction.senderId}, {senderAccount}
+                                </div>
+            
+                                <div className='transaction-card__receiver'>
+                                    To: #{transaction.receiverId}, {receiverAccount}
+                                </div>
+
                                 {isCompleted && (
                                     <div className='transaction-card__completed_at'>
                                         Processing Date: {date}, {formattedTime}
@@ -85,18 +86,13 @@ function TransactionCards({ transaction, userId, accounts }) {
                                 <div className='transaction-card__status'>
                                     Status: {transaction.status}
                                 </div>
+                                
+                                {transaction.message && (
+                                    <div className='transaction-card__message'>
+                                        Memo: {transaction.message}
+                                    </div>
+                                )}
 
-                                <div className='transaction-card__message'>
-                                    Memo: {transaction.message}
-                                </div>
-
-                                <div className='transaction-card__sender'>
-                                    From: #{transaction.senderId}, {senderAccount}
-                                </div>
-            
-                                <div className='transaction-card__receiver'>
-                                    To: #{transaction.receiverId}, {receiverAccount}
-                                </div>
                             
                             </div>
                         </>

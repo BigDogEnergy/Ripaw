@@ -12,7 +12,7 @@ function AccountCards({ account }) {
     const dispatch = useDispatch();
     const transactions = useSelector(state => state.transactions.accountTransactions[account.id] || []);
     const sortedTransactions = transactions.sort((a, b) => b.id - a.id);
-    const limitedTransactions = sortedTransactions.slice(0, 5);
+    const limitedTransactions = sortedTransactions.slice(0, 3);
     const accounts = useSelector(state => state.accounts.accounts);
     const userId = useSelector(state => state.session.user.id);
     const [ hidden, setHidden ] = useState(true);
@@ -43,7 +43,9 @@ function AccountCards({ account }) {
                     </div>
 
                     <div className={`account-card__balance ${account.accountBalance < 0 ? 'account-card__balance--negative' : ''}`}>
-                        ${account.accountBalance}
+                        
+                        {account.accountBalance != null ? `$${parseFloat(account.accountBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}` : null}
+
                     </div>
 
                     {!hidden && (
