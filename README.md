@@ -60,33 +60,37 @@ npm start
 ## Functionality & MVPs
 
 ### Authentication
+
 A user can:
--Sign Up
--Log In
--Log Out
+- Sign Up
+- Log In
+- Log Out
 
 Demo User available
 
 ### Accounts
+
 A user can:
--View their account(s)
--Open an account
--Edit an account
--Close an account
+- View their account(s)
+- Open an account
+- Edit an account
+- Close an account
 
 ### Transactions
-A user can:
--View transactions for their account(s)
--Create a transaction request
--Cancel a pending transcation
--Edit a pending transaction
 
-Admins can delete a transcaction.
+A user can:
+- View transactions for their account(s)
+- Create a transaction request
+- Cancel a pending transaction
+- Edit a pending transaction
+
+Admins can delete a transaction.
 
 ### Messaging
+
 A user can:
--Send messages
--Delete their last message sent
+- Send messages
+- Delete their last message sent
 
 Upcoming Features:
 Friends
