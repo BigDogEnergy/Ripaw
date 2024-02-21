@@ -247,7 +247,7 @@ def update_transaction(id):
                         transaction.status = 'Completed'
                         transaction.senderBalance = sender_account.accountBalance
                         transaction.receiverBalance = receiver_account.accountBalance
-                        transaction.completedAt = datetime.now()
+                        transaction.completed_at = datetime.now()
                     else:
                         return jsonify({'error': 'Insufficient funds'}), 400
         else:

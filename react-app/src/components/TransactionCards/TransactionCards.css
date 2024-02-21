@@ -1,17 +1,17 @@
 .transaction-card__container--deposit {
-    border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     margin-top: 10px;
+    background-color: white;
 }
 
 .transaction-card__container--withdrawal {
-    border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     margin-top: 10px;
+    background-color: white;
 }
 
 .transaction-card__container--withdrawal .transaction-card__amount {
@@ -44,7 +44,7 @@
 
 .transaction-card__not-shown {
     font-size: 0.8rem;
-    border-top: 1px solid black;
+    border-top: 1px solid lightgrey;
     margin-top: 10px;
     padding-top: 10px;
 }

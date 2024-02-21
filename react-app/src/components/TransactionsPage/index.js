@@ -30,6 +30,8 @@ function TransactionsPage() {
 
     const handleAccountChange = (e) => {
         setSelectedAccountId(e.target.value || null);
+        setSelectedStatus(null);
+        setTransType(null);
     };
     
     const handleStatusChange = (e) => {
@@ -117,22 +119,25 @@ function TransactionsPage() {
                 {filteredTransactions.length} transaction{filteredTransactions.length === 1 ? '' : 's'}:
             </div>
 
-            <TransactionOptions />
 
 
             {filteredTransactions.length > 0 ? (
-                filteredTransactions.map(transaction => (
-                    <TransactionCards
-                        key={transaction.id}
-                        transaction={transaction}
-                        accounts={accounts}
-                        userId={userId}
-                        chosenId={selectedAccountId}
-                    />
-                ))
+                <>
+                    <TransactionOptions />
+                    {filteredTransactions.map(transaction => (
+                        <TransactionCards
+                            key={transaction.id}
+                            transaction={transaction}
+                            accounts={accounts}
+                            userId={userId}
+                            chosenId={selectedAccountId}
+                        />
+                    ))}
+                </>
             ) : (
                 <div className="no-transactions__text">No transactions for this account</div>
             )}
+
 
             
 

@@ -4,7 +4,7 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
     // Filter by Account ID if one is selected
     if (selectedAccountId) {
         filtered = filtered.filter(transaction =>
-            transaction.senderId == selectedAccountId || transaction.receiverId == selectedAccountId
+            parseInt(transaction.senderId) === parseInt(selectedAccountId) || parseInt(transaction.receiverId) === parseInt(selectedAccountId)
         );
     }
 
@@ -16,9 +16,9 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
     // Adjust Filter by Transaction Type based on user's involvement
     if (transType) {
         if (transType === 'Withdrawal') {
-            filtered = filtered.filter(transaction => transaction.senderId == selectedAccountId && accounts.some(account => account.id == selectedAccountId && account.userId == userId));
+            filtered = filtered.filter(transaction => parseInt(transaction.senderId) === parseInt(selectedAccountId) && accounts.some(account => account.id === parseInt(selectedAccountId) && parseInt(account.userId) === parseInt(userId)));
         } else if (transType === 'Deposit') {
-            filtered = filtered.filter(transaction => transaction.receiverId == selectedAccountId && accounts.some(account => account.id == selectedAccountId && account.userId == userId));
+            filtered = filtered.filter(transaction => parseInt(transaction.receiverId) === parseInt(selectedAccountId) && accounts.some(account => account.id === parseInt(selectedAccountId) && parseInt(account.userId) === parseInt(userId)));
         }
     };
 

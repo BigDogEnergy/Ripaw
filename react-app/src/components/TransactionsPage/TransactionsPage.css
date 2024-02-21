@@ -30,3 +30,9 @@
     transform: scale(0.95); 
     background-color: #006666; 
 }
+
+.no-transactions__text {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}

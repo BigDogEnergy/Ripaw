@@ -89,9 +89,9 @@ function TransactionCards({ transaction, userId, accounts, chosenId }) {
                                         Processing Date: {date}, {formattedTime}
                                     </div>
                                 )}
-                                <div className='transaction-card__created-at'>
+                                {/* <div className='transaction-card__created-at'>
                                     Request Received: {createdDate}, {createdTime}
-                                </div>
+                                </div> */}
 
 
                                 <div className='transaction-card__status'>
