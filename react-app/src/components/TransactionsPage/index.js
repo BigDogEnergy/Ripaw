@@ -86,7 +86,7 @@ function TransactionsPage() {
                 <select onChange={handleAccountChange} defaultValue="">
                     <option value="">All Accounts</option>
                     {accounts.map(account => (
-                        <option value={account.id} key={account.id}> {account.accountName} </option>
+                        <option value={account.id} key={account.id}> {account.id}:  {account.accountName} </option>
                     ))}
                 </select>
                 
@@ -127,6 +127,7 @@ function TransactionsPage() {
                         transaction={transaction}
                         accounts={accounts}
                         userId={userId}
+                        chosenId={selectedAccountId}
                     />
                 ))
             ) : (

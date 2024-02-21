@@ -23,14 +23,14 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
     };
 
     // Sort based on Transaction ID
-    // filtered.sort((a,b) => b.id - a.id)
+    filtered.sort((a,b) => b.id - a.id)
 
     // Sort the filtered transactions by Date
-    filtered.sort((a, b) => {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateB - dateA;
-    });
+    // filtered.sort((a, b) => {
+    //     const dateA = new Date(a.created_at);
+    //     const dateB = new Date(b.created_at);
+    //     return dateB - dateA;
+    // });
 
     return filtered;
 };

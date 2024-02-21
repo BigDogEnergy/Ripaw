@@ -27,8 +27,11 @@ function AccountsPage() {
 
     let accountsList;
     if (accounts.length > 0) {
+        const sortedAccounts = accounts.slice().sort((a, b) => {
+            return a.id - b.id;
+        });
         accountsList = (
-            accounts.map(account => (<AccountCards key={account.id} account={account}/>))
+            sortedAccounts.map(account => (<AccountCards key={account.id} account={account}/>))
         )
     } else {
         accountsList = (
