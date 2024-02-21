@@ -37,7 +37,15 @@
 .messenger-options__button {
     border: none;
     border-radius: 25%;
-    margin-left: 15px;
+}
+
+.messenger-options__button:hover {
+    transform: translateY(-2px); 
+    cursor: pointer;
+}
+
+.messenger-options__button:active {
+    transform: scale(0.95);
 }
 
 .messenger-input__container {
@@ -50,12 +58,16 @@
 
 .messenger-input__text {
     width: 80%;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .messenger-input__button {
     width: 10%;
     margin-left: 5px;
+}
+
+.messenger-input__button:active {
+    transform: scale(0.95);
 }
 
 .messenger-content__greeting {
