@@ -3,6 +3,12 @@
     color: black;
 }
 
+
+.account-transaction__textLink {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 .account-card__container {
     display: flex;
     flex-direction: column;

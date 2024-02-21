@@ -11,11 +11,7 @@ function AccountCards({ account }) {
     const location = useLocation();
     const dispatch = useDispatch();
     const transactions = useSelector(state => state.transactions.accountTransactions[account.id] || []);
-    const sortedTransactions = transactions.sort((a, b) => {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateB - dateA;
-    });
+    const sortedTransactions = transactions.sort((a,b) => b.id - a.id);
     const limitedTransactions = sortedTransactions.slice(0, 3);
     const accounts = useSelector(state => state.accounts.accounts);
     const userId = useSelector(state => state.session.user.id);
@@ -67,9 +63,10 @@ function AccountCards({ account }) {
                                                 transaction={transaction} 
                                                 accounts={accounts}
                                                 userId={userId}
+                                                chosenId={account.id}
                                             />
                                         ))}
-                                        {!isAccountDetailPage && <Link to={`/accounts/transactions`}>View transaction history</Link>}
+                                        {!isAccountDetailPage && <Link className="account-transaction__textLink" to={`/accounts/transactions`}>View transaction history</Link>}
                                     </div>
                                 </>
                             )}
