@@ -5,7 +5,7 @@ function MessageOptionsDropdownMenu ({deleteMessage, lastMessageId}) {
 
   return (
     <div className='messenger-options__dropdown'>
-      <button onClick={() => {deleteMessage(lastMessageId)}}>Undo Message</button>
+      <button onClick={() => {deleteMessage(lastMessageId)}}>Undo Last Message</button>
     </div>
   );
 

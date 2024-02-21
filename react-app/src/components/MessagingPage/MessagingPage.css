@@ -8,7 +8,19 @@
     display: flex;
     flex-direction: column;
     width: 87.5%;
-    max-height: 900px;
+    background-color: white;
+}
+
+.messenger-content__greeting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.messenger-content__greeting-title {
+    font-weight: bold;
+    padding: 20px
 }
 
 .messenger-userlist__container {
@@ -29,8 +41,11 @@
 }
 
 .messenger-input__container {
+    margin: 15px 0px 0px;
+    padding: 0 10px 10px;
     display: flex;
     height: 25px;
+    position: relative;
 }
 
 .messenger-input__text {

@@ -4,6 +4,8 @@ import './MessagingUserTile.css';
 
 function UserTiles({ setTargetUser, handleConversationSelect }) {
     
+    // This users variable needs to be replaced with 'friends' once
+    // that feature is completed
     const users = useSelector(state => state.users.availableUsers);
     const currentUser = useSelector(state => state.session.user.id);
 

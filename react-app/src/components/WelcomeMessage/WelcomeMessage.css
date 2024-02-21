@@ -19,6 +19,8 @@
 
 .homepage-buttons__container button:hover {
     background-color: rgba(9, 81, 11, 0.996);
+    /* cursor: pointer; */
+
   }
   
 .homepage-buttons__container button:active {
@@ -61,6 +63,10 @@
 .homepage-message__list-item:hover {
     transform: translateY(-5px); 
     cursor: pointer;
+}
+
+.homepage-message__list-item:active {
+    transform: scale(0.95);
 }
 
 .homepage-message__list-item-title {
