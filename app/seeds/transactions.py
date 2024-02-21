@@ -25,27 +25,35 @@ def seed_transactions():
             receiver_id = random.randint(1, 9)
 
         amount = Decimal(random.uniform(0.01, 100.00)).quantize(Decimal('0.01'))
-        status = 'Completed'
+        status = 'Processing'
         include_message = random.choice([True, False])
 
         message = generate_lorem_ipsum() if include_message else None
 
-        if status == 'Completed':
+        if status == 'Processing':
             created_at = datetime.now() - timedelta(days=random.randint(1, 60))
-            completed_at = created_at + timedelta(days=random.randint(1, 5))
+
+            # Fetch sender and receiver
+            sender = Account.query.get(sender_id)
+            receiver = Account.query.get(receiver_id)
+
+            # Update sender and receiver balances
+            sender.accountBalance -= amount
+            receiver.accountBalance += amount
+
+
+            status = 'Completed'
+            completed_at = datetime.now()
+            
             transaction = Transaction(senderId=sender_id, 
                                       receiverId=receiver_id, 
                                       amount=amount,
                                       status=status,
                                       created_at=created_at,
                                       completed_at=completed_at,
-                                      message=message)
-        else:
-            transaction = Transaction(senderId=sender_id, 
-                                      receiverId=receiver_id, 
-                                      amount=amount,
-                                      status=status,
-                                      message=message)
+                                      message=message,
+                                      senderBalance=sender.accountBalance,
+                                      receiverBalance=receiver.accountBalance)
 
         additional_transactions.append(transaction)
 
