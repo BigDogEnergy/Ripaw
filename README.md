@@ -92,6 +92,6 @@ A user can:
 - Send messages
 - Delete their last message sent
 
-Upcoming Features:
+## Upcoming Features:
 Friends
 Sending Transactions through messaging (via websockets)
