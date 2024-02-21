@@ -57,11 +57,36 @@ npm start
 
 7. The application will now be running at [http://localhost:3000/](http://localhost:3000/).
 
+## Functionality & MVPs
 
-Update Needed:
+### Authentication
+A user can:
+-Sign Up
+-Log In
+-Log Out
 
-Add User experience
-Add all routes
+Demo User available
+
+### Accounts
+A user can:
+-View their account(s)
+-Open an account
+-Edit an account
+-Close an account
+
+### Transactions
+A user can:
+-View transactions for their account(s)
+-Create a transaction request
+-Cancel a pending transcation
+-Edit a pending transaction
+
+Admins can delete a transcaction.
+
+### Messaging
+A user can:
+-Send messages
+-Delete their last message sent
 
 Upcoming Features:
 Friends
