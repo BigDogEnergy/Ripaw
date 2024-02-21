@@ -1,7 +1,7 @@
 from app.models import db, Transaction, environment, SCHEMA, Account
 from sqlalchemy.sql import text
 from decimal import Decimal
-from datetime import datetime, timedelta
+from datetime import datetime
 import random
 
 def generate_lorem_ipsum():
@@ -18,42 +18,38 @@ def seed_transactions():
     additional_transactions = []
 
     for i in range(1, 61):
-        sender_id = random.randint(1, 9)
-        receiver_id = random.randint(1, 9)
+        sender_id = random.randint(1, 3)
+        receiver_id = random.randint(1, 3)
         
         while sender_id == receiver_id:
-            receiver_id = random.randint(1, 9)
+            receiver_id = random.randint(1, 3)
 
-        amount = Decimal(random.uniform(0.01, 100.00)).quantize(Decimal('0.01'))
+        amount = Decimal(random.uniform(15, 100.00)).quantize(Decimal('0.01'))
         status = 'Processing'
         include_message = random.choice([True, False])
-
         message = generate_lorem_ipsum() if include_message else None
+        created_at = datetime.now()
 
-        if status == 'Processing':
-            created_at = datetime.now() - timedelta(days=random.randint(1, 60))
+        # Fetch sender and receiver
+        sender = Account.query.get(sender_id)
+        receiver = Account.query.get(receiver_id)
 
-            # Fetch sender and receiver
-            sender = Account.query.get(sender_id)
-            receiver = Account.query.get(receiver_id)
+        # Update sender and receiver balances
+        sender.accountBalance -= amount
+        receiver.accountBalance += amount
 
-            # Update sender and receiver balances
-            sender.accountBalance -= amount
-            receiver.accountBalance += amount
-
-
-            status = 'Completed'
-            completed_at = datetime.now()
-            
-            transaction = Transaction(senderId=sender_id, 
-                                      receiverId=receiver_id, 
-                                      amount=amount,
-                                      status=status,
-                                      created_at=created_at,
-                                      completed_at=completed_at,
-                                      message=message,
-                                      senderBalance=sender.accountBalance,
-                                      receiverBalance=receiver.accountBalance)
+        status = 'Completed'
+        completed_at = datetime.now()
+        
+        transaction = Transaction(senderId=sender_id, 
+                                    receiverId=receiver_id, 
+                                    amount=amount,
+                                    status=status,
+                                    created_at=created_at,
+                                    completed_at=completed_at,
+                                    message=message,
+                                    senderBalance=sender.accountBalance,
+                                    receiverBalance=receiver.accountBalance)
 
         additional_transactions.append(transaction)
 
