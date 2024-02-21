@@ -2,12 +2,29 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    border-right: 1px solid #d1d1d6; 
     padding: 10px;
+    
 }
 
 .user-tile__main {
-    border: 1px solid black;
+    display: flex;
+    align-items: center;
     cursor: pointer;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    width: auto;
+    border: 0;
+    padding: 0px 0px 0px;
+    margin: 0px 10px 10px 0px;
+    background-color: white;
+
+}
+
+.user-tile__main:hover {
+    transform: translateY(-5px); 
+    cursor: pointer;
+}
+
+.user-tile__main:active {
+    transform: scale(0.95);
 }

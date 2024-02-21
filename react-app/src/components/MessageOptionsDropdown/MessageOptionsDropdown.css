@@ -1,0 +1,20 @@
+.messenger-options__dropdown{
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    bottom: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+
+}
+
+.messenger-options__dropdown button {
+    width: 150px;
+    color: #008080; 
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    background-color: white;
+}

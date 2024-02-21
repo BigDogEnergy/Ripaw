@@ -1,5 +1,5 @@
 import { useSocket } from "../../context/SocketProvider"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchConversation, deleteMessageThunk } from "../../store/messages";
@@ -16,6 +16,7 @@ export default function MessagingPage() {
     const dispatch = useDispatch();
     const conversations = useSelector(state => state.messages.chats);
     const currentUser = useSelector(state => state.session.user.id);
+    const { sendMessage, deleteMessage, socket } = useSocket();
     const [ activeConversation, setActiveConversation ] = useState(null);
     const [ targetUser, setTargetUser ] = useState('');
     const [ content, setContent ] = useState('');
@@ -23,10 +24,7 @@ export default function MessagingPage() {
     const [ convoLoading, setConvoLoading ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState(null);
     const [ showDropdown, setShowDropdown ] = useState(false);
-    const { sendMessage, deleteMessage, socket } = useSocket();
 
-    // This is a PLACEHOLDER for presentation. Update later.
-    // or return an empty array if there are no messages or if no conversation is selected
     const currentMessages = activeConversation ? conversations[activeConversation]?.messages || [] : [];
 
     // Identifying last message for Delete
@@ -42,8 +40,6 @@ export default function MessagingPage() {
             setUsersLoading(false);
         });
     }, [currentUser, dispatch])
-
-
 
 
     // ********** Messenger-related useEffect ********** //
@@ -89,9 +85,6 @@ export default function MessagingPage() {
     
     }, [dispatch, currentUser, targetUser, socket, conversations, convoLoading, errorMessage]);
     
-
-
-    
     // ********** Helper Functions ********** //
     const handleConversationSelect = (targetUser) => {
         dispatch(fetchConversation(currentUser, targetUser)).then(() => {
@@ -124,8 +117,8 @@ export default function MessagingPage() {
         return null;
     };
     
-    if (usersLoading === false || convoLoading === false) {
-        <Spinner />
+    if (usersLoading || convoLoading) {
+        return <Spinner />
     };
 
     return (
@@ -133,9 +126,6 @@ export default function MessagingPage() {
             <div className='messenger-main__container'>
                 
                 <div className='messenger-userlist__container'>
-                    <div className='messenger-userlist__title'> 
-                    Friends:
-                    </div>
                     {!usersLoading && <UserTiles 
                         setTargetUser={setTargetUser} 
                         handleConversationSelect={handleConversationSelect} 
@@ -149,12 +139,20 @@ export default function MessagingPage() {
                         />
                     ) : (
                         !convoLoading && !activeConversation && (
-                            <div className="messenger-content__greeting"> 
-                                Welcome to Ripaw Messaging! We utilize websockets
-                                to deliver messages as seamlessly as possible between users. In the future, 
-                                I plan to implement other features (such as transactions) through the messaging.
-                                Please select a friend from the list to the left to test features.
-                            </div>
+                            <>
+                                <div className="messenger-content__greeting-container">
+                                    <div className="messenger-content__greeting-title"> 
+                                        Welcome to Ripaw Messaging!
+                                    </div>
+
+                                    <div className="messenger-content__greeting"> 
+                                        We utilize websockets to deliver messages as seamlessly as possible between users. In the future, 
+                                        I plan to implement other features (such as transactions) through the messaging.
+                                        Please select a friend from the list to the left to test my currently implemented features.
+                                    </div>
+                                </div>
+
+                            </>
                         )
                     )}
 
@@ -167,7 +165,7 @@ export default function MessagingPage() {
                             >
                                 <i className="fas fa-plus"></i>
                             </button>
-                                {showDropdown && <MessageOptionsDropdownMenu 
+                            {showDropdown && <MessageOptionsDropdownMenu 
                                     deleteMessage={deleteMessage}
                                     lastMessageId={lastMessageId} 
                                 />}
@@ -176,7 +174,7 @@ export default function MessagingPage() {
                                 className='messenger-input__text'
                                 value={content} 
                                 onChange={handleInputChange}
-                                placeholder="Type a message..."
+                                placeholder="Ripaw"
                             />
                             <button 
                                 className='messenger-input__button' 
