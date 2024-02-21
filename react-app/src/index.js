@@ -8,11 +8,6 @@ import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
 import "./index.css";
-import ReactGA from 'react-ga';
-
-//Google Analytics Related
-const TRACKING_ID = "G-6KS8P37NGV";
-ReactGA.initialize(TRACKING_ID);
 
 const store = configureStore();
 

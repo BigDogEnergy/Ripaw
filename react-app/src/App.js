@@ -12,10 +12,17 @@ import MessagingPage from "./components/MessagingPage";
 import WelcomeMessage from "./components/WelcomeMessage"
 import PrivateRoute from './utils/routeUtils'
 import RouteChangeTracker from "./components/RouteChangeTracker";
+import ReactGA from 'react-ga';
+
+
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
+  //Google Analytics Related
+  const TRACKING_ID = "G-6KS8P37NGV";
+  ReactGA.initialize(TRACKING_ID);
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
