@@ -9,7 +9,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
-import TransactionCardSingle from "./components/TransactionCardSingle"
+// import TransactionCardSingle from "./components/TransactionCardSingle"
 import WelcomeMessage from "./components/WelcomeMessage"
 import PrivateRoute from './utils/routeUtils'
 
@@ -31,7 +31,7 @@ function App() {
           <div className="app-main__content">
             <Switch>
               
-              <PrivateRoute path='/accounts/transactions/:transactionId' component={TransactionCardSingle} />
+              {/* <PrivateRoute path='/accounts/transactions/:transactionId' component={TransactionCardSingle} /> */}
 
               <PrivateRoute path='/accounts/transactions' component={TransactionsPage} />
 

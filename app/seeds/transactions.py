@@ -15,43 +15,42 @@ def generate_lorem_ipsum():
     return lorem_ipsum[:message_length]
 
 def seed_transactions():
-    return
-#     additional_transactions = []
+    additional_transactions = []
 
-#     for i in range(1, 61):
-#         sender_id = random.randint(1, 9)
-#         receiver_id = random.randint(1, 9)
+    for i in range(1, 61):
+        sender_id = random.randint(1, 9)
+        receiver_id = random.randint(1, 9)
         
-#         while sender_id == receiver_id:
-#             receiver_id = random.randint(1, 9)
+        while sender_id == receiver_id:
+            receiver_id = random.randint(1, 9)
 
-#         amount = Decimal(random.uniform(0.01, 100.00)).quantize(Decimal('0.01'))
-#         status = 'Completed'
-#         include_message = random.choice([True, False])
+        amount = Decimal(random.uniform(0.01, 100.00)).quantize(Decimal('0.01'))
+        status = 'Completed'
+        include_message = random.choice([True, False])
 
-#         message = generate_lorem_ipsum() if include_message else None
+        message = generate_lorem_ipsum() if include_message else None
 
-#         if status == 'Completed':
-#             created_at = datetime.now() - timedelta(days=random.randint(1, 60))
-#             completed_at = created_at + timedelta(days=random.randint(1, 5))
-#             transaction = Transaction(senderId=sender_id, 
-#                                       receiverId=receiver_id, 
-#                                       amount=amount,
-#                                       status=status,
-#                                       created_at=created_at,
-#                                       completed_at=completed_at,
-#                                       message=message)
-#         else:
-#             transaction = Transaction(senderId=sender_id, 
-#                                       receiverId=receiver_id, 
-#                                       amount=amount,
-#                                       status=status,
-#                                       message=message)
+        if status == 'Completed':
+            created_at = datetime.now() - timedelta(days=random.randint(1, 60))
+            completed_at = created_at + timedelta(days=random.randint(1, 5))
+            transaction = Transaction(senderId=sender_id, 
+                                      receiverId=receiver_id, 
+                                      amount=amount,
+                                      status=status,
+                                      created_at=created_at,
+                                      completed_at=completed_at,
+                                      message=message)
+        else:
+            transaction = Transaction(senderId=sender_id, 
+                                      receiverId=receiver_id, 
+                                      amount=amount,
+                                      status=status,
+                                      message=message)
 
-#         additional_transactions.append(transaction)
+        additional_transactions.append(transaction)
 
-#     db.session.add_all(additional_transactions)
-#     db.session.commit()
+    db.session.add_all(additional_transactions)
+    db.session.commit()
 
 def undo_transactions():
     if environment == "production":
