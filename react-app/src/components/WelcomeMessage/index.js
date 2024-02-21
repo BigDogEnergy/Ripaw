@@ -35,6 +35,7 @@ function WelcomeMessage() {
                     <div className="homepage-message__list-item-body">
                         Users are able to:
                         <ul>
+                            <li> View their account(s) </li>
                             <li> Open a new account </li>
                             <li> Edit an account's name </li>
                             <li> Close an account</li>
@@ -49,8 +50,8 @@ function WelcomeMessage() {
                     <div className="homepage-message__list-item-body">
                         Users are able to: 
                         <ul>
+                            <li>View transactions for their account(s)</li>
                             <li>Create a transaction request</li>
-                            <li>Update a transaction</li>
                             <li>Cancel a pending transaction</li>
                             <li>Edit a pending transaction</li>
                         </ul>
@@ -69,7 +70,7 @@ function WelcomeMessage() {
                         Users are able to:
                         <ul>
                             <li>Send Messages</li>
-                            <li>Delete Messages</li>
+                            <li>Delete their last message</li>
                         </ul>
                     </div>
                     
