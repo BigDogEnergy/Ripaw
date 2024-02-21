@@ -11,6 +11,7 @@ import TransactionsPage from "./components/TransactionsPage";
 import MessagingPage from "./components/MessagingPage";
 import WelcomeMessage from "./components/WelcomeMessage"
 import PrivateRoute from './utils/routeUtils'
+import RouteChangeTracker from "./components/RouteChangeTracker";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ function App() {
 
           <FooterIcons/>
           
+          <div className="GA-related">
+            <RouteChangeTracker />
+          </div>
         </>
       )}
     </>
