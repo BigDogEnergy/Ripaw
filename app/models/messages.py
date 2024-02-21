@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Message(db.Model):
     __tablename__ = 'messages'
@@ -11,7 +11,8 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.utcnow() - timedelta(hours=8))
+
 
     # Relationships
     sender = db.relationship('User', foreign_keys=[sender_id], backref=db.backref('sent_messages'))
