@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 function MessageContentTiles({ messages }) {
 
+    console.log(messages)
     const currentUser = useSelector(state => state.session.user.id);
 
     return (
@@ -16,7 +17,7 @@ function MessageContentTiles({ messages }) {
                         {message.content}
                     </div>
                     <div className="message-tile__timestamp">
-                        {new Date(message.created_at).toLocaleTimeString()}
+                        {new Date(message.created_at).toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles', hour12: false })}
                     </div>
                 </div>
             ))}
