@@ -30,7 +30,7 @@ function WelcomeMessage() {
             <div className="homepage-message__list">
                 <div className="homepage-message__list-item" onClick={() => navigateTo("/accounts")}>
                     <div className="homepage-message__list-item-title">
-                        Accounts 
+                        Accounts:
                     </div>
                     <div className="homepage-message__list-item-body">
                         Users are able to:

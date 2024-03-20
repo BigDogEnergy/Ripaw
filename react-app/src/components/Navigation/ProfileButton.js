@@ -65,12 +65,14 @@ function ProfileButton({ user }) {
                 buttonText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
+                aria-label="Open login modal"
               />
 
               <OpenModalButton
                 buttonText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
+                aria-label="Open sign-up modal"
               />
 
             </>
