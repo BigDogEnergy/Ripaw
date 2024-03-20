@@ -6,6 +6,8 @@
     "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.30",
     "@types/react-router-dom": "^5.3.3"
   },
   "scripts": {
