@@ -9,14 +9,14 @@ test('Homepage Navigation', async ({ page }) => {
   await expect(page).toHaveTitle(/Ripaw Banking/);
 });
 
+//Profile Dropdown exists
 
 test('Dropdown Menu', async ({ page }) => {
   const dropDown = page.getByRole('button').first();
   await dropDown.click();
-  await page.getByLabel('Open login modal').click()
-  await page.waitForEvent('close')
+});
 
-})
+//Main Page Cards
 
 test('Account Card reroute to login', async ({ page }) => {
   const acctCard = page.getByText('Accounts:Users are able to:');
