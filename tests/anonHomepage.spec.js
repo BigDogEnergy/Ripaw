@@ -35,7 +35,7 @@ test.describe('Homepage Cards', () => {
 
 // Login & Signup Buttons
 
-test.describe('Login & Signup Actions', () => {
+test.describe('Login & Signup Pages', () => {
  
   test('Dropdown Menu Login', async ({ page }) => {
 
@@ -53,7 +53,21 @@ test.describe('Login & Signup Actions', () => {
   
   });
 
-  
+  test('Dropdown Menu Signup', async ({ page }) => {
+
+    const dropDown = page.getByRole('button').first();
+    await dropDown.click();
+
+    const signupButton = page.locator('button', { hasText: 'Sign Up' }).first();
+    await signupButton.click();
+
+    await expect(page.getByLabel('Email')).toBeVisible();
+    await expect(page.getByLabel('Username')).toBeVisible();
+    await expect(page.getByLabel('Password', {exact: true})).toBeVisible();
+    await expect(page.getByLabel('Confirm Password')).toBeVisible();
+
+
+  })
 
   test('Footer Login', async ({ page }) => {
 
@@ -68,5 +82,14 @@ test.describe('Login & Signup Actions', () => {
 
   });
 
+  test('Footer Signup', async ({ page }) => {
+
+    await page.getByRole('button', { name: 'Sign Up' }).click();
+
+    await expect(page.getByLabel('Email')).toBeVisible();
+    await expect(page.getByLabel('Username')).toBeVisible();
+    await expect(page.getByLabel('Password', {exact: true})).toBeVisible();
+    await expect(page.getByLabel('Confirm Password')).toBeVisible();
+  });
 
 })
