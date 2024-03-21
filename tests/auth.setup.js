@@ -5,7 +5,7 @@ import { test as setup } from '@playwright/test';
 
 const userFile = 'playwright/.auth/user.json';
 
-setup('authenticate as user', async ({ request }) => {
+setup('Authenticate - Set storageState user.json', async ({ request }) => {
   await request.post('https://ripbawbanking.onrender.com/login', {
     form: {
       'user': 'demo@aa.io',

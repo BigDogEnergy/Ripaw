@@ -5,27 +5,27 @@ test.beforeEach(async ({ page }) => {
   await page.goto('https://ripbawbanking.onrender.com/');
 })
 
-test('Homepage Live', async ({ page }) => {
+test('Homepage - Live', async ({ page }) => {
   await expect(page).toHaveTitle(/Ripaw Banking/);
 });
 
 //Main Page Cards
 
-test.describe('Homepage Cards', () => {
+test.describe('Homepage - Cards', () => {
   
-  test('Account Card reroute to login', async ({ page }) => {
+  test('Account Card - Reroute', async ({ page }) => {
     const acctCard = page.getByText('Accounts:Users are able to:');
     await acctCard.click();
     await page.waitForURL('**/login');
 });
 
-  test('Transaction Card reroute to login', async({ page }) => {
+  test('Transaction Card - Reroute', async({ page }) => {
     const transCard = page.getByText('Transactions:Users are able to:');
     await transCard.click();
     await page.waitForURL('**/login');
   });
 
-  test('Messaging Card reroute to login', async({ page }) => {
+  test('Messaging Card - Reroute', async({ page }) => {
     const transCard = page.getByText('Messaging:Users are able to:');
     await transCard.click();
     await page.waitForURL('**/login');
@@ -37,7 +37,7 @@ test.describe('Homepage Cards', () => {
 
 test.describe('Login & Signup Pages', () => {
  
-  test('Dropdown Menu Login', async ({ page }) => {
+  test('Dropdown Menu - Login', async ({ page }) => {
 
     const dropDown = page.getByRole('button').first();
     await dropDown.click();
@@ -53,7 +53,7 @@ test.describe('Login & Signup Pages', () => {
   
   });
 
-  test('Dropdown Menu Signup', async ({ page }) => {
+  test('Dropdown Menu - Signup', async ({ page }) => {
 
     const dropDown = page.getByRole('button').first();
     await dropDown.click();
@@ -69,7 +69,7 @@ test.describe('Login & Signup Pages', () => {
 
   })
 
-  test('Footer Login', async ({ page }) => {
+  test('Footer - Login', async ({ page }) => {
 
     const footerLogin = page.getByRole('button', { name: 'Log In' });
     await footerLogin.click();
@@ -82,7 +82,7 @@ test.describe('Login & Signup Pages', () => {
 
   });
 
-  test('Footer Signup', async ({ page }) => {
+  test('Footer - Signup', async ({ page }) => {
 
     await page.getByRole('button', { name: 'Sign Up' }).click();
 
@@ -92,4 +92,4 @@ test.describe('Login & Signup Pages', () => {
     await expect(page.getByLabel('Confirm Password')).toBeVisible();
   });
 
-})
+});
