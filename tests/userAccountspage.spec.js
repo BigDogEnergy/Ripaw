@@ -11,9 +11,9 @@ test('Accounts - Page Live', async ({ page }) => {
 test('Accounts - Displays accounts', async ({ page }) => {
     await page.getByRole('button', { name: 'Demo User' }).click();
     await page.getByText('Accounts:Users are able to:').click();
-    await page.getByText('#1').click();
-    await page.getByText('#2').click();
-    await page.getByText('#3').click();
+    await page.getByText('#1 - Checking').click();
+    const transHistory = page.getByRole('link', { name: 'View transaction history' })
+    await expect(transHistory).toBeVisible();
 });
 
 test('Accounts - Displays transactions for account', async ({ page }) => {
