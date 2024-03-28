@@ -11,9 +11,12 @@ test('Accounts - Page Live', async ({ page }) => {
 test('Accounts - Displays accounts', async ({ page }) => {
     await page.getByRole('button', { name: 'Demo User' }).click();
     await page.getByText('Accounts:Users are able to:').click();
-    await page.getByText('#1').click();
-    await page.getByText('#2').click();
-    await page.getByText('#3').click();
+    const firstAcct = page.locator('text=#1').first();
+    const secondAcct = page.locator('text=#2').first();
+    const thirdAcct = page.locator('text=#3').first();
+    await expect (firstAcct).toBeVisible();
+    await expect (secondAcct).toBeVisible();
+    await expect (thirdAcct).toBeVisible();
 });
 
 test('Accounts - Displays transactions for account', async ({ page }) => {
