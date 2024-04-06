@@ -63,3 +63,5 @@ test('Accounts - New Account Creation', async ({ page }) => {
 // Need to be ready to do this fasttttt
 // Add automations for account closure.
 // Add automations for transactions
+// Add automations for messaging
+// Add unit tests
