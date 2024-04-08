@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('https://ripbawbanking.onrender.com/login');
   await page.getByRole('button', { name: 'Demo User' }).click();
   await page.getByText('Accounts:Users are able to:').click();
-})
+});
 
 test('Accounts - Page Live', async ({ page }) => {
   await expect(page).toHaveTitle(/Ripaw Banking/);
@@ -24,7 +24,6 @@ test('Accounts - Displays transactions for account', async ({ page }) => {
   const transaction = page.locator('div').filter({ hasText: /\d{4}-\d{2}-\d{2}/ }).first();
   await expect(transaction).toBeVisible();
 });
-
 
 test('Accounts - Transaction History Reroute', async ({ page }) => {
   page.locator('text=/^#\\d+ - .*$/').first().click();
@@ -49,6 +48,7 @@ test('Accounts - Edit an Account', async ({ page }) => {
   await expect(page.getByText('No transaction history')).toBeVisible();
   await page.getByRole('button', { name: 'Options' }).click();
   await page.getByRole('button', { name: 'Edit an Account' }).click();
+  await page.getByLabel('Account').selectOption({ label: 'Test Account 4' });
   await page.getByLabel('New Name').fill('Deletion Target');
   await page.getByRole('button', { name: 'Submit' }).click();
   await expect(page.getByText('Deletion Target')).toBeVisible()
@@ -59,13 +59,7 @@ test('Accounts - Delete an Account', async ({ page }) => {
   await expect(page.getByText('No transaction history')).toBeVisible();
   await page.getByRole('button', { name: 'Options' }).click();
   await page.getByRole('button', { name: 'Close an Account' }).click();
+  await page.getByLabel('Account').selectOption({ label: 'Deletion Target' });
   await page.getByRole('button', { name: 'Submit' }).click();
-  await expect(page.getByText('No transaction history')).not.toBeVisible();
+  await expect(page.getByText('No transaction history')).toHaveCount(0);;
 });
-
-// Need to add unit testing
-// Need to be ready to do this fasttttt
-// Add automations for account closure.
-// Add automations for transactions
-// Add automations for messaging
-// Add unit tests

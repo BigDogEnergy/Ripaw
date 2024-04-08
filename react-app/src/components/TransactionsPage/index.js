@@ -85,8 +85,8 @@ function TransactionsPage() {
                 <div className="transaction-filter__title">
                     Filters:         
                 </div>
-                <select onChange={handleAccountChange} defaultValue="">
-                    <option value="">All Accounts</option>
+                <select onChange={handleAccountChange} defaultValue={accounts.length > 0 ? accounts[0].id : ""}>
+                    {/* <option value="">All Accounts</option> */}
                     {accounts.map(account => (
                         <option value={account.id} key={account.id}> {account.id}:  {account.accountName} </option>
                     ))}
