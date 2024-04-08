@@ -19,7 +19,7 @@ function TransactionsPage() {
     const [ isTransLoaded, setIsTransLoaded ] = useState(false);
     const [ isAccountsLoaded, setIsAccountsLoaded ] = useState(false);
     
-    const [ selectedAccountId, setSelectedAccountId ] = useState(null);
+    const [ selectedAccountId, setSelectedAccountId ] = useState(accounts.length > 0 ? accounts[0].id : "");
     const [ selectedStatus, setSelectedStatus ] = useState(null);
     const [ transType, setTransType ] = useState(null);
 
