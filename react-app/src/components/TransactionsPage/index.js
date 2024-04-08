@@ -19,7 +19,7 @@ function TransactionsPage() {
     const [ isTransLoaded, setIsTransLoaded ] = useState(false);
     const [ isAccountsLoaded, setIsAccountsLoaded ] = useState(false);
     
-    const [ selectedAccountId, setSelectedAccountId ] = useState(accounts.length > 0 ? accounts[0].id : "");
+    const [ selectedAccountId, setSelectedAccountId ] = useState("");
     const [ selectedStatus, setSelectedStatus ] = useState(null);
     const [ transType, setTransType ] = useState(null);
 
@@ -61,6 +61,12 @@ function TransactionsPage() {
             setIsAccountsLoaded(false);
         });
     }, [dispatch]);
+
+    useEffect(() => {
+        if (accounts.length > 0) {
+          setSelectedAccountId(accounts[0].id);
+        }
+      }, [accounts]);
     
 
     // FILTER TRANSACTIONS
@@ -86,7 +92,6 @@ function TransactionsPage() {
                     Filters:         
                 </div>
                 <select onChange={handleAccountChange} defaultValue={accounts.length > 0 ? accounts[0].id : ""}>
-                    {/* <option value="">All Accounts</option> */}
                     {accounts.map(account => (
                         <option value={account.id} key={account.id}> {account.id}:  {account.accountName} </option>
                     ))}
@@ -107,7 +112,6 @@ function TransactionsPage() {
                                 <option value="Processing">Processing</option>
                                 <option value="Cancelled">Cancelled</option>
                             </select>
-
                         </>
                         }
 
@@ -115,6 +119,7 @@ function TransactionsPage() {
                 
                 
             </div>
+
             <div>
                 {filteredTransactions.length} transaction{filteredTransactions.length === 1 ? '' : 's'}:
             </div>
