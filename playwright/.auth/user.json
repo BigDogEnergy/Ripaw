@@ -1,0 +1,25 @@
+{
+  "cookies": [
+    {
+      "name": "csrf_token",
+      "value": "ImIxN2M5MzU0ZjNhYzUwN2Y1ZDcyZGI4ZTBiZTljYTBjOTcwZmUwNmEi.ZhOPRQ.VNVMeJhgm8bRDhZxszzLULM335k",
+      "domain": "ripbawbanking.onrender.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "session",
+      "value": "eyJjc3JmX3Rva2VuIjoiYjE3YzkzNTRmM2FjNTA3ZjVkNzJkYjhlMGJlOWNhMGM5NzBmZTA2YSJ9.ZhOPRQ.5FigoVvOEq7lc0ofbLnSX2ktvwo",
+      "domain": "ripbawbanking.onrender.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
