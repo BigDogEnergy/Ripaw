@@ -10,5 +10,11 @@ test('Transactions - Page Live', async ({ page }) => {
     await expect(page).toHaveTitle(/Ripaw Banking/);
 });
 
+
+
+test('Transactions - Displays transactions', async ({ page }) => {
+    
+});
+
 // Add automations for transactions
 // Add automations for messaging
