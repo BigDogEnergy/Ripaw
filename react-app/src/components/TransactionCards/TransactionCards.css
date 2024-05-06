@@ -39,6 +39,11 @@
     font-size: 0.8rem;
 }
 
+.transaction-card__balance-negative {
+    color: red;
+    font-size: 0.8rem;
+}
+
 .transaction-card__visible-left {
     display: flex;
     flex-direction: row;

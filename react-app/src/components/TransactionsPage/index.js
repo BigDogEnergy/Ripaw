@@ -25,6 +25,8 @@ function TransactionsPage() {
 
     const [ filteredTransactions, setFilteredTransactions ] = useState([]);
 
+    const transactionsPerPage = 5; 
+    const [currentPage, setCurrentPage] = useState(1);
 
     // HELPER FUNCTIONS
 
@@ -78,6 +80,13 @@ function TransactionsPage() {
         setIsFilterLoaded(true);
     }, [transactions, selectedAccountId, selectedStatus, transType, userId, accounts]);
 
+    // PAGINATION-RELATED
+    const totalPages = Math.ceil(filteredTransactions.length / transactionsPerPage);
+    const indexOfLastTransaction = currentPage * transactionsPerPage;
+    const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
+    const currentTransactions = filteredTransactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
     //LOADING CHECK
     if (isAccountsLoaded === false || isTransLoaded === false || isFilterLoaded === false) {
@@ -129,7 +138,7 @@ function TransactionsPage() {
             {filteredTransactions.length > 0 ? (
                 <>
                     <TransactionOptions />
-                    {filteredTransactions.map(transaction => (
+                    {currentTransactions.map(transaction => (
                         <TransactionCards
                             key={transaction.id}
                             transaction={transaction}
@@ -138,6 +147,17 @@ function TransactionsPage() {
                             chosenId={selectedAccountId}
                         />
                     ))}
+                    {/* PAGINATION RELATED */}
+                        <div className='transaction-pagination__main'>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button 
+                                    key={index + 1} 
+                                    onClick={() => paginate(index + 1)} className={currentPage === index + 1 ? 'active' : ''}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
+                        </div>
                 </>
             ) : (
                 <div className="no-transactions__text">No transactions for this account</div>

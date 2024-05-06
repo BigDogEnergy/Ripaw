@@ -29,9 +29,12 @@ function TransactionCards({ transaction, userId, accounts, chosenId }) {
     const { date: createdDate, time: createdTime } = splitDateTime(transaction.created_at)
     const formattedTime = convertToAMPM(time)
     
-    // ACCOUNT NAME
+    // ACCOUNT
     const senderAccount = getAccountName(transaction.senderId, accounts, userId);
     const receiverAccount = getAccountName(transaction.receiverId, accounts, userId);
+    const balance = isWithdrawal ? parseFloat(transaction.senderBalance) : parseFloat(transaction.receiverBalance);
+    const formattedBalance = `$${balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+    const balanceClass = balance < 0 ? 'balance-negative' : 'balance';
 
     //ETC HELPER FUNCTIONS
     const toggleDetails = () => {
@@ -52,8 +55,8 @@ function TransactionCards({ transaction, userId, accounts, chosenId }) {
                                 </div>
 
                                 {transaction.senderBalance ? 
-                                    <div className='transaction-card__balance'>
-                                        {isWithdrawal ? `$${parseFloat(transaction.senderBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}` : `$${parseFloat(transaction.receiverBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}
+                                    <div className={`transaction-card__${balanceClass}`}>
+                                        {formattedBalance}
                                     </div> : null}
 
                             </div>

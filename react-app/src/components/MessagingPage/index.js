@@ -1,5 +1,5 @@
 import { useSocket } from "../../context/SocketProvider"
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchConversation, deleteMessageThunk } from "../../store/messages";
