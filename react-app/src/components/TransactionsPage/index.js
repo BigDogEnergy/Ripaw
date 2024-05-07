@@ -101,7 +101,11 @@ function TransactionsPage() {
                 <div className="transaction-filter__title">
                     Filters:         
                 </div>
-                <select onChange={handleAccountChange} defaultValue={accounts.length > 0 ? accounts[0].id : ""}>
+                <select 
+                    onChange={handleAccountChange} 
+                    defaultValue={accounts.length > 0 ? accounts[0].id : ""}
+                    className='transaction-filter__account'
+                >
                     {accounts.map(account => (
                         <option value={account.id} key={account.id}> {account.id}:  {account.accountName} </option>
                     ))}
@@ -109,18 +113,26 @@ function TransactionsPage() {
                 
                         {selectedAccountId && 
                             <>
-                                <select onChange={handleTypeChange} defaultValue="">
+                                <select 
+                                    onChange={handleTypeChange} 
+                                    defaultValue=""
+                                    className='transaction-filter__type'
+                                >
                                     <option value="">All Types</option>
                                     <option value="Withdrawal">Withdrawal</option>
                                     <option value="Deposit">Deposit</option>
                                 </select>
 
-                                <select onChange={handleStatusChange} defaultValue="">
-                                    <option value="">All Statuses</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Completed">Completed</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Cancelled">Cancelled</option>
+                                <select 
+                                    onChange={handleStatusChange} 
+                                    defaultValue=""
+                                    className='transaction-filter__status'
+                                >
+                                        <option value="">All Statuses</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Processing">Processing</option>
+                                        <option value="Cancelled">Cancelled</option>
                                 </select>
                             </>
                         }

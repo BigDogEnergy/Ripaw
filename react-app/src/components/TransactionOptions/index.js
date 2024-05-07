@@ -4,6 +4,7 @@ import OpenModalButton from "../OpenModalButton";
 import TransactionForm from "../TransactionForm";
 import UpdateTransactionForm from "../UpdateTransactionForm";
 import DeleteTransactionForm from "../DeleteTransactionForm";
+import './TransactionOptions.css'
 
 function TransactionOptions() {
   const [showMenu, setShowMenu] = useState(false);
@@ -30,12 +31,12 @@ function TransactionOptions() {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const ulClassName = "account-dropdown" + (showMenu ? "" : "-hidden");
+  const ulClassName = "transaction-dropdown" + (showMenu ? "" : "-hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (
     <>
-      <button className="account-options__button" type="button" onClick={openMenu}>
+      <button className="transaction-options__button" type="button" onClick={openMenu}>
         Options
       </button>
 

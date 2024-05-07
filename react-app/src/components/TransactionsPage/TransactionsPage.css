@@ -30,6 +30,12 @@
     transform: scale(0.95);
 }
 
+.transaction-filter__type, .transaction-filter__account,
+.transaction-filter__status {
+    border-radius: 4%;
+    margin: 0px 4px 0px 0px;
+}
+
 .no-transactions__text {
     margin-top: 20px;
     display: flex;
