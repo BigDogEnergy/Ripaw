@@ -17,6 +17,7 @@
     height: 25px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
+    box-sizing: border-box;
   }
   
   .account-form__button {
