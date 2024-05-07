@@ -142,13 +142,20 @@ export default function MessagingPage() {
                             <>
                                 <div className="messenger-content__greeting-container">
                                     <div className="messenger-content__greeting-title"> 
-                                        Welcome to Ripaw Messaging!
+                                        Under Construction: Ripaw Messaging
                                     </div>
 
                                     <div className="messenger-content__greeting"> 
-                                        We utilize websockets to deliver messages as seamlessly as possible between users. In the future, 
-                                        I plan to implement other features (such as transactions) through the messaging.
-                                        Please select a friend from the list to the left to test my currently implemented features.
+                                        <div>
+                                            This is an early implementation of a websockets messaging experiment.
+                                        </div>
+                                        <div>
+                                            I realized I need to create user-related friend connections first to make this more meaningful.
+                                            The plan is to implement the design and functionality similar to Apple Cash. 
+                                        </div>
+                                        
+
+            
                                     </div>
                                 </div>
 
