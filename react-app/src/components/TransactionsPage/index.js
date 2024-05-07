@@ -5,6 +5,7 @@ import { fetchAllAccounts } from "../../store/accounts";
 import './TransactionsPage.css'
 import TransactionCards from "../TransactionCards";
 import TransactionOptions from "../TransactionOptions";
+import TransactionPagination from "../TransactionPagination";
 import Spinner from "../Spinner";
 import { filterTransactions } from "../../utils/filterTransactions";
 
@@ -107,26 +108,22 @@ function TransactionsPage() {
                 </select>
                 
                         {selectedAccountId && 
-                        <>
-                            <select onChange={handleTypeChange} defaultValue="">
-                                <option value="">All Types</option>
-                                <option value="Withdrawal">Withdrawal</option>
-                                <option value="Deposit">Deposit</option>
-                            </select>
+                            <>
+                                <select onChange={handleTypeChange} defaultValue="">
+                                    <option value="">All Types</option>
+                                    <option value="Withdrawal">Withdrawal</option>
+                                    <option value="Deposit">Deposit</option>
+                                </select>
 
-                            <select onChange={handleStatusChange} defaultValue="">
-                                <option value="">All Statuses</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Processing">Processing</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
-                        </>
+                                <select onChange={handleStatusChange} defaultValue="">
+                                    <option value="">All Statuses</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </>
                         }
-
-                
-                
-                
             </div>
 
             <div>
@@ -148,16 +145,11 @@ function TransactionsPage() {
                         />
                     ))}
                     {/* PAGINATION RELATED */}
-                        <div className='transaction-pagination__main'>
-                            {Array.from({ length: totalPages }, (_, index) => (
-                                <button 
-                                    key={index + 1} 
-                                    onClick={() => paginate(index + 1)} className={currentPage === index + 1 ? 'active' : ''}
-                                >
-                                    {index + 1}
-                                </button>
-                            ))}
-                        </div>
+                    <TransactionPagination 
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        paginate={paginate}
+                    />
                 </>
             ) : (
                 <div className="no-transactions__text">No transactions for this account</div>
