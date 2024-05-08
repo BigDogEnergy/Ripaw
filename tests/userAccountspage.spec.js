@@ -28,7 +28,7 @@ test('Accounts - Displays transactions for account', async ({ page }) => {
 test('Accounts - Transaction History Reroute', async ({ page }) => {
   page.locator('text=/^#\\d+ - .*$/').first().click();
   await page.getByRole('link', { name: 'View transaction history' }).click();
-  const filterText = page.locator('div').filter({ hasText: /Filters: \d+: .*/ }).nth(0);
+  const filterText = page.getByText('Filters:');
   await expect(filterText).toBeVisible();
 });
 
