@@ -34,7 +34,8 @@ export default function MessagingPage() {
         : null;
 
 
-    //Fix this: We only want to grab friends. Need some more code to create that.
+    // Fix this in future: We only want to grab friends. 
+    // Need some more code implementations to create that.
     useEffect(() => {
         dispatch(fetchAllUsers()).then(() => {
             setUsersLoading(false);
