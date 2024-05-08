@@ -22,7 +22,7 @@ function DeleteTransactionForm() {
     const data = await dispatch(deleteTransactionRequest(selectedTransactionId));
 
     if (data && data.error) {
-      console.error('this is error Data', data)
+      // console.error('this is error Data', data)
       setErrors([data.error]);
     } else {
         await dispatch(fetchAllTransactions())
@@ -35,7 +35,7 @@ function DeleteTransactionForm() {
 
   return (
     <>
-      <div className="transaction-form__title">Delete a Transaction:</div>
+      <div className="account-form__title">Delete a Transaction:</div>
       <form className="account-form" onSubmit={handleSubmit}>
         <ul className="account-form__error-list">
         {errors.map((error, idx) => (

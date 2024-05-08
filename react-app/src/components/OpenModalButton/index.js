@@ -17,7 +17,14 @@ function OpenModalButton({
   };
 
   return (
-    <button onClick={onClick} aria-label={ariaLabel}>{buttonText}</button>
+    <button 
+      onClick={onClick} 
+      aria-label={ariaLabel}
+    >
+
+      {buttonText}
+      
+    </button>
   );
 }
 

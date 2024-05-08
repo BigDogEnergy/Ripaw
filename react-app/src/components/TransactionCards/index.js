@@ -13,6 +13,7 @@ function TransactionCards({ transaction, userId, accounts, chosenId }) {
     const isDeposit = chosenId ? parseInt(transaction.receiverId) === parseInt(chosenId) : accounts.some(account => parseInt(account.id) === parseInt(transaction.receiverId));
     const isUserAccountTransfer = isWithdrawal && isDeposit;
 
+    // HELPERS
     let transactionType;
     if (isUserAccountTransfer) {
         transactionType = 'User Account Transfer';
@@ -67,6 +68,20 @@ function TransactionCards({ transaction, userId, accounts, chosenId }) {
                                 </div>
                             </div>
                         </div>
+
+                        <div className='transaction-card__tran-info'>
+                            <div className='transaction-card__type'>
+                                Type: {transactionType}
+                            </div>
+
+                            <div className='transaction-card__sender'>
+                                From: {senderAccount} (ID#{transaction.senderId}) 
+                            </div>
+        
+                            <div className='transaction-card__receiver'>
+                                To: {receiverAccount} (ID#{transaction.receiverId})
+                            </div>
+                        </div>
                         
 
                     </div>
@@ -74,22 +89,11 @@ function TransactionCards({ transaction, userId, accounts, chosenId }) {
                     {showDetails && (
                         <>
                             <div className='transaction-card__not-shown'>
-                                
-                                <div className='transaction-card__type'>
-                                    Type: {transactionType}
-                                </div>
-
-                                <div className='transaction-card__sender'>
-                                    From: #{transaction.senderId}, {senderAccount}
-                                </div>
-            
-                                <div className='transaction-card__receiver'>
-                                    To: #{transaction.receiverId}, {receiverAccount}
-                                </div>
+                            
 
                                 {isCompleted && (
                                     <div className='transaction-card__completed_at'>
-                                        Processing Date: {date}, {formattedTime}
+                                        Processing Date: {date} - {formattedTime}
                                     </div>
                                 )}
                                 {/* <div className='transaction-card__created-at'>

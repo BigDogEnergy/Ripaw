@@ -107,7 +107,12 @@ function TransactionsPage() {
                     className='transaction-filter__account'
                 >
                     {accounts.map(account => (
-                        <option value={account.id} key={account.id}> {account.id}:  {account.accountName} </option>
+                        <option 
+                            value={account.id} 
+                            key={account.id}
+                        > 
+                            {account.id}:  {account.accountName} 
+                        </option>
                     ))}
                 </select>
                 
