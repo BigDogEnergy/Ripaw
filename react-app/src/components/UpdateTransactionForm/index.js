@@ -42,7 +42,7 @@ function UpdateTransactionForm() {
 
   return (
     <>
-      <div className="transaction-form__title">Update a Pending Transaction:</div>
+      <div className="account-form__title">Update a Pending Transaction:</div>
       <form className="account-form" onSubmit={handleSubmit}>
         <ul className="account-form__error-list">
         {errors.map((error, idx) => (

@@ -22,11 +22,11 @@ function AccountCards({ account }) {
     });
     const limitedTransactions = sortedTransactions.slice(0, 3);
 
-    // State-related goodies
+    // State-related
     const [ hidden, setHidden ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    // Determining Transactions based on current URL
+    // Determining Transaction display based on current URL
     const isAccountDetailPage = location.pathname.includes(`/accounts/${account.id}/transactions`);
     const transactionsToShow = isAccountDetailPage ? sortedTransactions : limitedTransactions;
 
@@ -51,9 +51,7 @@ function AccountCards({ account }) {
                     </div>
 
                     <div className={`account-card__balance ${account.accountBalance < 0 ? 'account-card__balance--negative' : ''}`}>
-                        
                         {account.accountBalance != null ? `$${parseFloat(account.accountBalance).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}` : null}
-
                     </div>
 
                     {!hidden && (
@@ -74,7 +72,12 @@ function AccountCards({ account }) {
                                                 chosenId={account.id}
                                             />
                                         ))}
-                                        {!isAccountDetailPage && <Link className="account-transaction__textLink" to={`/accounts/transactions`}>View transaction history</Link>}
+                                        {!isAccountDetailPage && <Link 
+                                                                    className="account-transaction__textLink" 
+                                                                    to={`/accounts/transactions`}
+                                                                 >
+                                                                    View transaction history
+                                                                 </Link>}
                                     </div>
                                 </>
                             )}

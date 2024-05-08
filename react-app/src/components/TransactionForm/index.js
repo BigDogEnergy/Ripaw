@@ -41,7 +41,7 @@ function TransactionForm() {
     <>
       <form className="account-form" onSubmit={handleSubmit}>
         
-        <div className="transaction-form__title">
+        <div className="account-form__title">
           Transaction request:
         </div>
 
