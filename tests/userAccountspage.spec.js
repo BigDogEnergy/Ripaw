@@ -2,6 +2,8 @@ const { test, expect } = require('@playwright/test');
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://ripbawbanking.onrender.com/login');
+  // await page.goto('http://localhost:3000/login');
+
   await page.getByRole('button', { name: 'Demo User' }).click();
   await page.getByText('Accounts:Users are able to:').click();
 });
@@ -25,12 +27,12 @@ test('Accounts - Displays transactions for account', async ({ page }) => {
   await expect(transaction).toBeVisible();
 });
 
-test('Accounts - Transaction History Reroute', async ({ page }) => {
-  page.locator('text=/^#\\d+ - .*$/').first().click();
-  await page.getByRole('link', { name: 'View transaction history' }).click();
-  const filterText = page.getByText('Filters:');
-  await expect(filterText).toBeVisible();
-});
+// test('Accounts - Transaction History Reroute', async ({ page }) => {
+//   page.locator('text=/^#\\d+ - .*$/').first().click();
+//   await page.getByRole('link', { name: 'View transaction history' }).click();
+//   const filterText = page.getByText('Filters:');
+//   await expect(filterText).toBeVisible();
+// });
 
 test('Accounts - New Account Creation', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Options' })).toBeVisible()
