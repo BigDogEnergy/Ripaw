@@ -55,8 +55,10 @@ test('Accounts - Edit an Account', async ({ page }) => {
 });
 
 test('Accounts - Delete an Account', async ({ page }) => {
-  await page.locator('text=Deletion Target').last().click();
-  await expect(page.getByText('No transaction history')).toBeVisible();
+
+  const deletionTargetCard = page.locator('.account-card__container >> text=Deletion Target');
+  await deletionTargetCard.last().click();
+  await expect(page.locator('text=No transaction history')).toHaveCount(1);
   await page.getByRole('button', { name: 'Options' }).click();
   await page.getByRole('button', { name: 'Close an Account' }).click();
   await page.getByLabel('Account').selectOption({ label: 'Deletion Target' });
