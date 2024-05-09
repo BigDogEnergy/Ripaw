@@ -39,8 +39,8 @@ function CloseAccountForm() {
       <div className="account-form__title">Select an Account to close:</div>
       <form className="account-form" onSubmit={handleSubmit}>
         <ul className="account-form__error-list">
-         {errors.map((error, idx) => (
-            <li className="account-form__error-item" key={idx}>{error}</li>
+         {errors.map((error, index) => (
+            <li className="account-form__error-item" key={index}>{error}</li>
           ))}
         </ul>
         <label>

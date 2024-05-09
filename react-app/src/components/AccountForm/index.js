@@ -33,8 +33,8 @@ function AccountForm() {
         </div>
 
         <ul className="account-form__error-list">
-          {errors.map((error, idx) => (
-            <li className="account-form__error-item" key={idx}>{error}</li>
+          {errors.map((error, index) => (
+            <li className="account-form__error-item" key={index}>{error}</li>
           ))}
         </ul>
         <label>

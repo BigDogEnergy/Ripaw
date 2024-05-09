@@ -3,6 +3,8 @@ const { test, expect } = require('@playwright/test');
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://ripbawbanking.onrender.com/');
+  // await page.goto('http://localhost:3000/');
+
 })
 
 test('Homepage - Live', async ({ page }) => {
