@@ -21,7 +21,7 @@ function WelcomeMessage() {
                 Welcome to Ripaw! 
             </div>
             <div className="homepage-message__body-1">
-                Did you know: This app was originally designed as a fun way to help track my dog's acorn collection. 
+                
             </div>
             <div className="homepage-message__body-2">
                 To review the CRUDs please Sign Up to create a test account, or alternatively utilize the Demo User available in the Log In. 

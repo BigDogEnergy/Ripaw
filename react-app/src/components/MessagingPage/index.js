@@ -150,12 +150,6 @@ export default function MessagingPage() {
                                         <div>
                                             This is an early implementation of a websockets messaging experiment.
                                         </div>
-                                        <div>
-                                            I realized I need to create user-related friend connections first to make this more meaningful.
-                                            The plan is to implement the design and functionality similar to Apple Cash. 
-                                        </div>
-                                        
-
             
                                     </div>
                                 </div>
