@@ -22,6 +22,15 @@
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
+.transaction-options__button:hover {
+    transform: translateY(-4px); 
+}
+
+.transaction-options__button:active {
+    background-color: #006666;
+    transform: translateY(-1px); 
+}
+
 .transaction-dropdown {
     display: flex;
     flex-direction: column;

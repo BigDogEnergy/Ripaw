@@ -17,6 +17,15 @@
     background-color: #006666; 
 }
 
+.account-options__button:hover {
+    transform: translateY(-4px); 
+}
+
+.account-options__button:active {
+    background-color: #006666;
+    transform: translateY(-1px); 
+}
+
 .account-dropdown {
     padding: 0;
     margin: 0;

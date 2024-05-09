@@ -4,6 +4,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     margin-top: 10px;
     background-color: white;
+    cursor: pointer;
 }
 
 .transaction-card__container--withdrawal {
@@ -12,6 +13,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     margin-top: 10px;
     background-color: white;
+    cursor: pointer;
 }
 
 .transaction-card__container--withdrawal .transaction-card__amount {

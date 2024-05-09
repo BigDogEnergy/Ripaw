@@ -25,11 +25,8 @@ function TransactionForm() {
         message: message,
         status: status
     };
-
-    console.log('transaction', transaction)
     
     const data = await dispatch(transactionRequest(transaction));
-    console.log('transaction request sent')
 
     if (data && data.error) {
       setErrors([data.error.error]);
@@ -39,6 +36,8 @@ function TransactionForm() {
         })
     }
   };
+
+
 
   return (
     <>
@@ -65,13 +64,15 @@ function TransactionForm() {
 
         <label>
           From:
-          <select 
-            value={senderId} 
-            className="account-form__input"
-            onChange={(e) => setSenderId(e.target.value)} required>
-            {accounts.map(account => (
-              <option key={account.id} value={account.id}>{account.accountName}</option>
-            ))}
+            <select 
+              value={senderId} 
+              className="account-form__input"
+              onChange={(e) => setSenderId(e.target.value)} 
+              required
+            >
+              {accounts.map(account => (
+                <option key={account.id} value={account.id}>{account.accountName} (ID:{account.id}) - ${account.accountBalance}</option>
+              ))}
           </select>
         </label>
 
