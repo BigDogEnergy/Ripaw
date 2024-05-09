@@ -15,8 +15,8 @@ test('Login Functionality Test', async ({ page }) => {
 });
 
 test('Demo User Functionality Test', async ({ page }) => {
-    // await page.goto('https://ripbawbanking.onrender.com/login');
-    await page.goto('http://localhost:3000/login');
+    await page.goto('https://ripbawbanking.onrender.com/login');
+    // await page.goto('http://localhost:3000/login');
     await page.getByRole('button', { name: 'Demo User' }).click();
     await expect(page.getByRole('link', { name: 'Accounts Account Details' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Transactions Transactions' })).toBeVisible();
