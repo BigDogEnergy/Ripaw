@@ -40,6 +40,11 @@
     margin: 20px 0;
 }
 
+.homepage-message__body-1,
+.homepage-message__body-2 {
+    text-align: center;
+}
+
 .homepage-message__list {
     display: flex;
     flex-direction: row;

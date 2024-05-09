@@ -21,10 +21,10 @@ function WelcomeMessage() {
                 Welcome to Ripaw! 
             </div>
             <div className="homepage-message__body-1">
-                
+                To review the CRUDs please Sign Up to create a test account.
             </div>
             <div className="homepage-message__body-2">
-                To review the CRUDs please Sign Up to create a test account, or alternatively utilize the Demo User available in the Log In. 
+                Alternatively utilize the Demo User available in the Log In. 
             </div>
             
             <div className="homepage-message__list">
