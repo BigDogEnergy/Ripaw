@@ -42,7 +42,7 @@ function TransactionForm() {
 
   return (
     <>
-      <form className="transaction-form" onSubmit={handleSubmit}>
+      <form className="account-form" onSubmit={handleSubmit}>
         
         <div className="account-form__title">
           Transaction request:
