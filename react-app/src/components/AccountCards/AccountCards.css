@@ -1,6 +1,7 @@
 .account-card__link-container {
     text-decoration: none;
     color: black;
+    
 }
 
 .account-transaction__textLink {
@@ -36,7 +37,8 @@
 }
 
 .account-card-container:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
     transform: translateY(-5px);
 }
 

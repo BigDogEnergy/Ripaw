@@ -23,6 +23,8 @@
 .user-tile__main:hover {
     transform: translateY(-3px); 
     cursor: pointer;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
 }
 
 .user-tile__main:active {

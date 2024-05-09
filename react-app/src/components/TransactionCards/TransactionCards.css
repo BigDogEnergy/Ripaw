@@ -6,6 +6,9 @@
     background-color: white;
     cursor: pointer;
 }
+.transaction-card__container--deposit:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
 
 .transaction-card__container--withdrawal {
     border-radius: 8px;
@@ -15,6 +18,11 @@
     background-color: white;
     cursor: pointer;
 }
+
+.transaction-card__container--withdrawal:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
 
 .transaction-card__container--withdrawal .transaction-card__amount {
     color: red;
