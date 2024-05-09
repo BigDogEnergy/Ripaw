@@ -26,10 +26,10 @@ export const filterTransactions = (transactions, selectedAccountId, selectedStat
 
     // Sort the filtered transactions by Date
     filtered.sort((a, b) => {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        if (dateA < dateB) return 1;
-        if (dateA > dateB) return -1;
+        // const dateA = new Date(a.created_at);
+        // const dateB = new Date(b.created_at);
+        // if (dateA < dateB) return 1;
+        // if (dateA > dateB) return -1;
         return b.id - a.id;
     });
 
