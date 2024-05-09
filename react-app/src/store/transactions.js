@@ -107,6 +107,7 @@ export const fetchTransactionsByAccountId = (accountId) => async dispatch => {
 
 export const transactionRequest = (transaction) => async dispatch => {
     try {
+        console.log('this is transaction', transaction)
         const response = await fetch(`/api/accounts/transactions`, {
             method: 'POST',
             headers: {
