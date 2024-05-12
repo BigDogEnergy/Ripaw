@@ -69,6 +69,7 @@ function WelcomeMessage() {
                     <div className="homepage-message__list-item-body">
                         Users are able to:
                         <ul>
+                            <li>View their Messages</li>
                             <li>Send Messages</li>
                             <li>Delete their last message</li>
                         </ul>

@@ -19,8 +19,6 @@
 
 .homepage-buttons__container button:hover {
     background-color: rgba(9, 81, 11, 0.996);
-    /* cursor: pointer; */
-
   }
   
 .homepage-buttons__container button:active {
