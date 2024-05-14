@@ -12,7 +12,8 @@ test('Transactions - Page Live', async ({ page }) => {
     await expect(page).toHaveTitle(/Ripaw Banking/);
 });
 
-// Finish these
+// Finish these after studying
+// We got the job.
 
 // test('Transactions - Displays transactions', async ({ page }) => {
     
